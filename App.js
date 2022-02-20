@@ -8,13 +8,14 @@ import Home from './app/screens/Home';
 import MealPlan from './app/screens/MealPlan';
 import NewRecipe from './app/screens/NewRecipe';
 import ViewMealPlans from './app/screens/ViewMealPlans';
+import MiscItems from './app/screens/MiscItems';
 import AddMiscItems from './app/screens/AddMiscItems';
 
 export default function App() {
   const Stack = createStackNavigator();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer style={{ flex: 1, backgroundColor: 'transparent' }}>
       <Stack.Navigator>
         <Stack.Screen
           name="WelcomeScreen"
@@ -44,6 +45,11 @@ export default function App() {
         <Stack.Screen
           name="ViewMealPlans"
           component={ViewMealPlans}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MiscItems"
+          component={MiscItems}
           options={{ headerShown: false }}
         />
         <Stack.Screen
