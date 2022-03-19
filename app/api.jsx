@@ -10,6 +10,8 @@ exports.addMiscItem = async(itemName, itemCategory) => {
     });
     const result = await promise
     return result.status;
-
-
 };
+
+exports.getMiscItems = async() => {
+     return axios.get(`${baseURL}/miscItem`);
+}

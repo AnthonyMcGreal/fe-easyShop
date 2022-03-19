@@ -19,7 +19,7 @@ function MiscItems({ navigation }) {
           <Text style={styles.text}>Add a misc. Item</Text>
         </Pressable>
 
-        <Pressable style={styles.button} onPress={() => {}}>
+        <Pressable style={styles.button} onPress={() => {navigation.navigate('DeleteMiscItems');}}>
           <Text style={styles.text}>Delete a misc. Item</Text>
         </Pressable>
       </View>

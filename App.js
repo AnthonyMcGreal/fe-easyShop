@@ -10,6 +10,7 @@ import NewRecipe from './app/screens/NewRecipe';
 import ViewMealPlans from './app/screens/ViewMealPlans';
 import MiscItems from './app/screens/MiscItems';
 import AddMiscItems from './app/screens/AddMiscItems';
+import DeleteMiscItem from './app/screens/DeleteMiscItem';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -55,6 +56,11 @@ export default function App() {
         <Stack.Screen
           name="AddMiscItems"
           component={AddMiscItems}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DeleteMiscItems"
+          component={DeleteMiscItem}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Text, StyleSheet, Pressable, Modal, View, ActivityIndicator } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,22 +16,18 @@ const AddMiscItems = ({ navigation }) => {
   const [apiResult, setApiResult] = useState(0)
 
   const backButton = () => {
-return (
-
-  <Pressable 
-  style={styles.button} 
-  onPress={() => {
-    navigation.navigate('MiscItems');
-  }}>
-    <Text style={styles.text}>Back to Misc Items</Text>
-    </Pressable>
-      )
-  }
+    return (
+      <Pressable 
+        style={styles.button} 
+        onPress={() => {
+        navigation.navigate('MiscItems');
+        }}>
+        <Text style={styles.text}>Back to Misc Items</Text>
+      </Pressable>
+      )}
 
   return (
     <SafeAreaView style={styles.background}>
-
-
       <Modal
       animationType="fade"
       visible={modalVisible}
