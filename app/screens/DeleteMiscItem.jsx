@@ -4,22 +4,37 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import {getMiscItems} from '../api';
+import {getMiscItems, deleteMiscItemById} from '../api';
 
 const DeleteMiscItem = ({navigation}) => {
- const [miscItems, onChangeMiscItems] = useState('')
+ const [miscItems, onChangeMiscItems] = useState([])
  const [itemNames, setItemNames] = useState([]);
  const [itemToDelete, onChangeItemToDelete] = useState('')
+ const [itemIdToDeleted ,setItemIdToDeleted] = useState()
  const [modalVisible, setModalVisible] = useState(true)
  const [apiResult, setApiResult] = useState(0)
+ const [getMiscItemsBeenCalled, setGetMiscItemsBeenCalled] = useState(false)
 
   useEffect( async () => {
    const items = await getMiscItems()
    onChangeMiscItems(items.data.miscItems)
    setApiResult(items.status)
-   if (apiResult === 200) setItemNames(miscItems.map((item) => item.name))
-  }, [apiResult]);
+   setGetMiscItemsBeenCalled(true)
+   setItemNames(miscItems.map((item) => item.name))
+   setModalVisible(false)
+  }, [getMiscItemsBeenCalled]);
   
+  useEffect(() => {
+    const itemId = miscItems.filter((item) => item.name === itemToDelete).map((item) => {return item.item_id})
+    setItemIdToDeleted(itemId[0])
+  },[itemToDelete])
+
+  const handleDeleteItemButton = async () => {
+    setModalVisible(true)
+    let result = await deleteMiscItemById(itemIdToDeleted)
+    setApiResult(result.status)
+  }
+
 
   const backButton = () => {
     return (
@@ -39,17 +54,16 @@ const DeleteMiscItem = ({navigation}) => {
       visible={modalVisible}
       onRequestClose={() => {
         Alert.alert("Modal has been closed.");
-        setModalVisible(!modalVisible);
+        setModalVisible(modalVisible);
       }}
       >
         <View style={styles.background}>
           <View style={styles.modelContainer}>
-         {apiResult===200? <Text>{setTimeout(()=>{setModalVisible(false)},100)}</Text>:null}
-         {apiResult===500? <View><Text style={styles.afterActionText}>Ooops! Something went wrong on our side, try again later</Text>{backButton()}</View>:null}
-         {apiResult >0 && apiResult!== 201 && apiResult !==500? <View><Text style={styles.afterActionText}>Ooops! Something went wrong, try again</Text>{backButton()}</View>:null}
-         {apiResult === 0? <ActivityIndicator size="large" color='#6D2D55' animating={true}/>: null}
+            {apiResult===204? <View><Text style={styles.afterActionText}>Item Deleted</Text>{backButton()}</View>:null}
+            {apiResult >0 && apiResult !==204? <View><Text style={styles.afterActionText}>Ooops! Something went wrong, try again</Text>{backButton()}</View>:null}
+            {apiResult === 0? <ActivityIndicator size="large" color='#6D2D55' animating={true}/>: null}
           </View>
-        </View>
+        </View> 
       </Modal>
       <View style={styles.contentContainer}>
         <Text style={styles.text}>Pick a misc. item to delete</Text>
@@ -69,6 +83,13 @@ const DeleteMiscItem = ({navigation}) => {
           rowStyle={styles.rowStyle}
       />
       </View>
+      <Pressable
+        style={styles.button}
+        disabled={!itemToDelete}
+        onPress = {() => handleDeleteItemButton()}
+        >
+        <Text style={styles.text}>Delete Item</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -82,7 +103,7 @@ const styles = StyleSheet.create({
       width: '100%',
     },
     contentContainer:{
-      height:'90%',
+      height:'40%',
       width: '80%',
       alignItems: 'center'
     },
@@ -98,29 +119,45 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         backgroundColor: 'lightgrey',
         marginBottom: 60,
-      },
-      dropDownText: {
-        lineHeight: 20,
-        fontSize: 16,
-        paddingLeft: 10,
-        fontFamily: 'Nunito',
-      },
-      rowStyle: {
-        backgroundColor: 'lightgrey',
-      },
-      modelContainer:{
-        backgroundColor:'#2d556d',
-        width:'80%',
-        height:'80%',
-        borderColor: '#6D2D55',
-        borderWidth: 5,
-        borderRadius:25,
-        display:'flex',
-        flexDirection:'column',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-      },
-      
+    },
+    dropDownText: {
+      lineHeight: 20,
+      fontSize: 16,
+      paddingLeft: 10,
+      fontFamily: 'Nunito',
+    },
+    rowStyle: {
+      backgroundColor: 'lightgrey',
+    },
+    modelContainer:{
+      backgroundColor:'#2d556d',
+      width:'80%',
+      height:'80%',
+      borderColor: '#6D2D55',
+      borderWidth: 5,
+      borderRadius:25,
+      display:'flex',
+      flexDirection:'column',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+    },
+    afterActionText:{
+      color:'#6D2D55',
+      fontSize:30,
+      textAlign:'center',
+      marginBottom: 70,
+      fontFamily: 'Nunito',
+      textShadowColor: 'white',
+      textShadowRadius: 12,
+    },
+    button: {
+      backgroundColor: '#6D2D55',
+      width: 200,
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+    }
 });
 
 export default DeleteMiscItem;

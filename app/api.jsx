@@ -15,3 +15,7 @@ exports.addMiscItem = async(itemName, itemCategory) => {
 exports.getMiscItems = async() => {
      return axios.get(`${baseURL}/miscItem`);
 }
+
+exports.deleteMiscItemById = async(itemId) => {
+    return axios.delete(`${baseURL}/miscItem/${itemId}`)
+}
