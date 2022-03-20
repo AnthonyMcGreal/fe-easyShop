@@ -6,11 +6,16 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import LogIn from './app/screens/LogIn';
 import Home from './app/screens/Home';
 import MealPlan from './app/screens/MealPlan';
-import NewRecipe from './app/screens/NewRecipe';
+import RecipesHome from './app/screens/RecipesHome';
 import ViewMealPlans from './app/screens/ViewMealPlans';
 import MiscItems from './app/screens/MiscItems';
 import AddMiscItems from './app/screens/AddMiscItems';
 import DeleteMiscItem from './app/screens/DeleteMiscItem';
+import AddNewRecipe from './app/screens/AddNewRecipe';
+import UpdateRecipe from './app/screens/UpdateRecipe';
+import DeleteRecipe from './app/screens/DeleteRecipe';
+import AddIngredient from './app/screens/AddIngredient';
+import DeleteIngredient from './app/screens/DeleteIngredient';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -39,8 +44,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="NewRecipe"
-          component={NewRecipe}
+          name="RecipesHome"
+          component={RecipesHome}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -61,6 +66,31 @@ export default function App() {
         <Stack.Screen
           name="DeleteMiscItems"
           component={DeleteMiscItem}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddNewRecipe"
+          component={AddNewRecipe}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="UpdateRecipe"
+          component={UpdateRecipe}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DeleteRecipe"
+          component={DeleteRecipe}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddIngredient"
+          component={AddIngredient}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DeleteIngredient"
+          component={DeleteIngredient}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

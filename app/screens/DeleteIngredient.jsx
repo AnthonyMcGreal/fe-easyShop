@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-function NewRecipe(props) {
+function DeleteIngredient(props) {
   return (
     <SafeAreaView style={styles.background}>
-      <Text>New recipe Page</Text>
+      <Text>Delete an ingredient page</Text>
     </SafeAreaView>
   );
 }
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewRecipe;
+export default DeleteIngredient;

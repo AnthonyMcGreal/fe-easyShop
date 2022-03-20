@@ -1,53 +1,41 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-function Home({ navigation }) {
-  
+function RecipesHome({ navigation }) {
   return (
     <SafeAreaView style={styles.background}>
       <View style={styles.contentContainer}>
-      <View>
+        <View>
           <Text style={styles.name}>EasyShop</Text>
         </View>
       <View style={styles.buttonContainer}>
         <Pressable
           style={styles.button}
           onPress={() => {
-            navigation.navigate('MealPlan');
+            navigation.navigate('AddNewRecipe');
           }}
-          >
-          <Text style={styles.text}>Create a meal plan</Text>
+        >
+          <Text style={styles.text}>Add a new recipe</Text>
         </Pressable>
 
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate('ViewMealPlans');
-          }}
-          >
-          <Text style={styles.text}>View meal plans</Text>
+        <Pressable style={styles.button} onPress={() => {navigation.navigate('UpdateRecipe');}}>
+          <Text style={styles.text}>Update a recipe</Text>
         </Pressable>
 
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate('RecipesHome');
-          }}
-          >
-          <Text style={styles.text}>Recipes</Text>
+        <Pressable style={styles.button} onPress={() => {navigation.navigate('DeleteRecipe');}}>
+          <Text style={styles.text}>Delete a recipe</Text>
         </Pressable>
 
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate('MiscItems');
-          }}
-          >
-          <Text style={styles.text}>Misc. item</Text>
+        <Pressable style={styles.button} onPress={() => {navigation.navigate('AddIngredient');}}>
+          <Text style={styles.text}>Add an Ingredient</Text>
+        </Pressable>
+
+        <Pressable style={styles.button} onPress={() => {navigation.navigate('DeleteIngredient');}}>
+          <Text style={styles.text}>Delete an Ingredient</Text>
         </Pressable>
       </View>
-     </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -55,10 +43,10 @@ function Home({ navigation }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#2d556d',
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   contentContainer:{
     height:'90%',
@@ -75,9 +63,10 @@ const styles = StyleSheet.create({
     margin:'10%'
   },
   buttonContainer: {
-    height: '65%',
+    height: '70%',
     justifyContent: 'space-around',
     alignItems: 'center',
+    marginTop:'5%'
   },
   button: {
     backgroundColor: '#6D2D55',
@@ -94,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default RecipesHome;
