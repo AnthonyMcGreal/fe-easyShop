@@ -12,7 +12,6 @@ const AddMiscItems = ({ navigation }) => {
   const [itemCategory, onChangeItemCategory] = useState('');
   const categories = ['Cleaning', 'Hygiene', 'Household Items', 'Other'];
   const [modalVisible, setModalVisible] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(true)
   const [apiResult, setApiResult] = useState(0)
 
   const backButton = () => {
@@ -41,7 +40,7 @@ const AddMiscItems = ({ navigation }) => {
          {apiResult===201? <View><Text style={styles.afterActionText}>Item Added</Text>{backButton()}</View>:null}
          {apiResult===500? <View><Text style={styles.afterActionText}>Ooops! Something went wrong on our side, try again later</Text>{backButton()}</View>:null}
          {apiResult >0 && apiResult!== 201 && apiResult !==500? <View><Text style={styles.afterActionText}>Ooops! Something went wrong, try again</Text>{backButton()}</View>:null}
-         {apiResult === 0? <ActivityIndicator size="large" color='#6D2D55' animating={isAnimating}/>: null}
+         {apiResult === 0? <ActivityIndicator size="large" color='#6D2D55' animating={true}/>: null}
           </View>
         </View>
       </Modal>

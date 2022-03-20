@@ -10,12 +10,7 @@ function RecipesHome({ navigation }) {
           <Text style={styles.name}>EasyShop</Text>
         </View>
       <View style={styles.buttonContainer}>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate('AddNewRecipe');
-          }}
-        >
+        <Pressable style={styles.button} onPress={() => {navigation.navigate('AddNewRecipe');}}>
           <Text style={styles.text}>Add a new recipe</Text>
         </Pressable>
 
