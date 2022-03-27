@@ -30,3 +30,11 @@ exports.addIngredient = async(ingredientName, ingredientUOM, ingredientStorageTy
         return result.status
     })
 }
+
+exports.getIngredients = async() => {
+    return axios.get(`${baseURL}/ingredients`)
+}
+
+exports.deleteIngredientById = async (ingredientId) => {
+    return axios.delete(`${baseURL}/ingredients/${ingredientId}`)
+}
