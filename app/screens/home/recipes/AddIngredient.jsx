@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import {addIngredient} from '../api'
+import {addIngredient} from '../../../api'
 
 function AddIngredient({ navigation }) {
   const [ingredientName, setIngredientName] = useState('');

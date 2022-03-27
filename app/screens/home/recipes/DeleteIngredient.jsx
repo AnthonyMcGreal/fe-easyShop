@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import {getIngredients, deleteIngredientById} from '../api';
+import {getIngredients, deleteIngredientById} from '../../../api';
 
 const DeleteMiscItem = ({navigation}) => {
  const [ingredients, setIngredients] = useState([])

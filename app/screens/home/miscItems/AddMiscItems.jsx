@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { addMiscItem } from '../api';
+import { addMiscItem } from '../../../api';
 
 const AddMiscItems = ({ navigation }) => {
   const [itemName, onChangeItemName] = useState('');
