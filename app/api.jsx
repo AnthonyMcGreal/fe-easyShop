@@ -19,3 +19,14 @@ exports.getMiscItems = async() => {
 exports.deleteMiscItemById = async(itemId) => {
     return axios.delete(`${baseURL}/miscItem/${itemId}`)
 }
+
+exports.addIngredient = async(ingredientName, ingredientUOM, ingredientStorageType) => {
+    return axios.post(`${baseURL}/ingredients`, {
+            name: ingredientName,
+            unit_of_measurement: ingredientUOM,
+            storage_type: ingredientStorageType,
+            username: "Anthony",
+    }).then((result) => {
+        return result.status
+    })
+}

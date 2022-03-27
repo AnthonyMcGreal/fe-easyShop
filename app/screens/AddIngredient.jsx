@@ -5,6 +5,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import {addIngredient} from '../api'
 
 function AddIngredient({ navigation }) {
   const [ingredientName, setIngredientName] = useState('');
@@ -13,16 +14,16 @@ function AddIngredient({ navigation }) {
   const [modalVisible, setModalVisible] = useState('false');
   const [apiResult, setApiResult] = useState(0);
   const storageCategories = ['Frozen', 'Chilled', 'Ambient', 'Produce']
-  const measurementCategories = []
+  const measurementCategories = ["individual", "tsp","tbsp", "fl oz", "cup", "ml", "l", "lb", "oz", "mg", "g", "kg"]
 
   const backButton = () => {
     return (
       <Pressable 
-        style={styles.button} 
+        style={styles.afterActionButton} 
         onPress={() => {
-        navigation.navigate('MiscItems');
+        navigation.navigate('RecipesHome');
         }}>
-        <Text style={styles.text}>Back to Misc Items</Text>
+        <Text style={styles.text}>Back to Recipes</Text>
       </Pressable>
       )}
 
@@ -33,7 +34,7 @@ function AddIngredient({ navigation }) {
       visible={modalVisible}
       onRequestClose={() => {
         Alert.alert("Modal has been closed.");
-        setModalVisible(!modalVisible);
+        setModalVisible(false);
       }}
       >
         <View style={styles.background}>
@@ -55,16 +56,22 @@ function AddIngredient({ navigation }) {
           setIngredientName(formattedVal)
         }}
       ></TextInput>
-
       <Text style={styles.text}>Ingredients unit of measurement</Text>
-      <TextInput
-        style={styles.input}
-        value={unitOfMeasurement}
-        onChangeText={(val) => {
-          const formattedVal = val.charAt(0).toUpperCase() + val.slice(1);
-          setUnitOfMeasurement(formattedVal)
+      <SelectDropdown
+        data={measurementCategories}
+        onSelect={(selectedItem, index) => {
+          setUnitOfMeasurement(selectedItem);
         }}
-      ></TextInput>
+        buttonTextAfterSelection={(selectedItem, index) => {
+          return `${selectedItem}`;
+        }}
+        renderDropdownIcon={() => {
+          return <FontAwesomeIcon icon={faChevronDown} />;
+        }}
+        buttonStyle={styles.dropDownStyle}
+        buttonTextStyle={styles.dropDownText}
+        rowStyle={styles.rowStyle}
+      />
       <Text style={styles.text}>Ingredient storage type</Text>
       <SelectDropdown
         data={storageCategories}
@@ -85,8 +92,8 @@ function AddIngredient({ navigation }) {
         style={styles.button}
         disabled={ingredientName && unitOfMeasurement && storageType ? false : true}
         onPress={async() => {
-          setModalVisible(!modalVisible)
-          const result = 
+          setModalVisible(true)
+          const result = await addIngredient(ingredientName, unitOfMeasurement, storageType)
           setApiResult(result)
         }}
       >
@@ -126,6 +133,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 10,
+      marginTop:60
     },
     dropDownStyle: {
       width: '60%',
@@ -133,7 +141,6 @@ const styles = StyleSheet.create({
       margin: 12,
       borderWidth: 1,
       backgroundColor: 'lightgrey',
-      marginBottom: 60,
     },
     dropDownText: {
       lineHeight: 20,
@@ -151,19 +158,27 @@ const styles = StyleSheet.create({
       borderColor: '#6D2D55',
       borderWidth: 5,
       borderRadius:25,
-      display:'flex',
-      flexDirection:'column',
-      justifyContent: 'space-around',
-      alignItems: 'center',
     },
     afterActionText:{
       color:'#6D2D55',
       fontSize:30,
       textAlign:'center',
       marginBottom: 70,
+      marginTop:120,
       fontFamily: 'Nunito',
       textShadowColor: 'white',
       textShadowRadius: 12,
+    },
+    afterActionButton: {
+      backgroundColor: '#6D2D55',
+      width: "60%",
+      height: 50,
+      marginLeft:"20%",
+      marginTop:60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+
     }
   });
 
