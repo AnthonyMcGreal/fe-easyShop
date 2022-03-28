@@ -16,6 +16,7 @@ import UpdateRecipe from './app/screens/home/recipes/UpdateRecipe';
 import DeleteRecipe from './app/screens/home/recipes/DeleteRecipe';
 import AddIngredient from './app/screens/home/recipes/AddIngredient';
 import DeleteIngredient from './app/screens/home/recipes/DeleteIngredient';
+import AddIngredientToRecipe from './app/screens/home/recipes/AddIngredientToRecipe';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -91,6 +92,11 @@ export default function App() {
         <Stack.Screen
           name="DeleteIngredient"
           component={DeleteIngredient}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddIngredientToRecipe"
+          component={AddIngredientToRecipe}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

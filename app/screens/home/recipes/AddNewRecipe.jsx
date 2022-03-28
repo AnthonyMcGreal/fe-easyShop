@@ -1,17 +1,22 @@
-import {useState} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {useState, useEffect} from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-gesture-handler';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-function AddNewRecipe(props) {
+function AddNewRecipe({navigation}) {
 
   const [recipeName, setRecipeName] = useState('')
   const [recipeLink, setRecipeLink] = useState('')
   const [recipePortionSize, setRecipePortionSize] = useState('')
+  const [disableButton, setDisableButton] = useState(true)
   const portionSizeOptions = [1,2,3,4,5,6,7,8,9,10]
+
+  useEffect(() =>{
+    if(recipeName && recipeLink && recipePortionSize) setDisableButton(false)
+  },[recipeName, recipeLink, recipePortionSize])
 
   const handleNameChange = (val) => {
     const formattedVal = val.charAt(0).toUpperCase() + val.slice(1);
@@ -50,6 +55,13 @@ function AddNewRecipe(props) {
         buttonTextStyle={styles.dropDownText}
         rowStyle={styles.rowStyle}
       />
+      <Pressable
+        style={styles.button}
+        disabled={disableButton}
+        onPress={() => navigation.navigate('AddIngredientToRecipe')}
+      >
+        <Text style={styles.text}>Add Ingredients to Recipe</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -92,6 +104,15 @@ const styles = StyleSheet.create({
   },
   rowStyle: {
     backgroundColor: 'lightgrey',
+  },
+  button: {
+    backgroundColor: '#6D2D55',
+    width: '60%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop:60
   },
 });
 
