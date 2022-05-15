@@ -1,25 +1,24 @@
-import react from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native'
 
-import WelcomeScreen from './app/screens/WelcomeScreen';
-import LogIn from './app/screens/LogIn';
-import Home from './app/screens/home/Home';
-import MealPlan from './app/screens/home/mealPlans/MealPlan';
-import RecipesHome from './app/screens/home/recipes/RecipesHome';
-import ViewMealPlans from './app/screens/home/mealPlans/ViewMealPlans';
-import MiscItems from './app/screens/home/miscItems/MiscItems';
-import AddMiscItems from './app/screens/home/miscItems/AddMiscItems';
-import DeleteMiscItem from './app/screens/home/miscItems/DeleteMiscItem';
-import AddNewRecipe from './app/screens/home/recipes/AddNewRecipe';
-import UpdateRecipe from './app/screens/home/recipes/UpdateRecipe';
-import DeleteRecipe from './app/screens/home/recipes/DeleteRecipe';
-import AddIngredient from './app/screens/home/recipes/AddIngredient';
-import DeleteIngredient from './app/screens/home/recipes/DeleteIngredient';
-import AddIngredientToRecipe from './app/screens/home/recipes/AddIngredientToRecipe';
+import WelcomeScreen from './app/screens/WelcomeScreen'
+import LogIn from './app/screens/LogIn'
+import Home from './app/screens/home/Home'
+import MealPlan from './app/screens/home/mealPlans/MealPlan'
+import RecipesHome from './app/screens/home/recipes/RecipesHome'
+import ViewMealPlans from './app/screens/home/mealPlans/ViewMealPlans'
+import MiscItems from './app/screens/home/miscItems/MiscItems'
+import AddMiscItems from './app/screens/home/miscItems/AddMiscItems'
+import DeleteMiscItem from './app/screens/home/miscItems/DeleteMiscItem'
+import AddNewRecipe from './app/screens/home/recipes/AddNewRecipe'
+import UpdateRecipe from './app/screens/home/recipes/UpdateRecipe'
+import DeleteRecipe from './app/screens/home/recipes/DeleteRecipe'
+import AddIngredient from './app/screens/home/recipes/AddIngredient'
+import DeleteIngredient from './app/screens/home/recipes/DeleteIngredient'
+import AddIngredientToRecipe from './app/screens/home/recipes/AddIngredientToRecipe'
 
-export default function App() {
-  const Stack = createStackNavigator();
+export default function App () {
+  const Stack = createStackNavigator()
 
   return (
     <NavigationContainer style={{ flex: 1, backgroundColor: 'transparent' }}>
@@ -101,5 +100,5 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }
