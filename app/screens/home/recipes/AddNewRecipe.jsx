@@ -15,8 +15,8 @@ function AddNewRecipe({navigation}) {
   const portionSizeOptions = [1,2,3,4,5,6,7,8,9,10]
 
   useEffect(() =>{
-    if(recipeName && recipeLink && recipePortionSize) setDisableButton(false)
-  },[recipeName, recipeLink, recipePortionSize])
+    if(recipeName && recipePortionSize) setDisableButton(false)
+  },[recipeName, recipePortionSize])
 
   const handleNameChange = (val) => {
     const formattedVal = val.charAt(0).toUpperCase() + val.slice(1);
@@ -58,7 +58,11 @@ function AddNewRecipe({navigation}) {
       <Pressable
         style={styles.button}
         disabled={disableButton}
-        onPress={() => navigation.navigate('AddIngredientToRecipe')}
+        onPress={() => navigation.navigate('AddIngredientToRecipe',{
+          recipe_name:recipeName,
+          link:recipeLink,
+          portions:recipePortionSize
+        })}
       >
         <Text style={styles.text}>Add Ingredients to Recipe</Text>
       </Pressable>
