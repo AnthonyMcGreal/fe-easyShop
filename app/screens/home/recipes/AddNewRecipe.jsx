@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    width: '60%',
+    width: '70%',
     margin: 12,
     borderWidth: 1,
     backgroundColor: 'lightgrey',
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito',
   },
   dropDownStyle: {
-    width: '60%',
+    width: '70%',
     height: 50,
     margin: 12,
     borderWidth: 1,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#6D2D55',
-    width: '60%',
+    width: '70%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',

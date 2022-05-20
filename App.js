@@ -1,5 +1,5 @@
-import { createStackNavigator } from '@react-navigation/stack'
-import { NavigationContainer } from '@react-navigation/native'
+import {createStackNavigator} from '@react-navigation/stack'
+import {NavigationContainer} from '@react-navigation/native'
 
 import WelcomeScreen from './app/screens/WelcomeScreen'
 import LogIn from './app/screens/LogIn'
@@ -17,86 +17,86 @@ import AddIngredient from './app/screens/home/recipes/AddIngredient'
 import DeleteIngredient from './app/screens/home/recipes/DeleteIngredient'
 import AddIngredientToRecipe from './app/screens/home/recipes/AddIngredientToRecipe'
 
-export default function App () {
+export default function App() {
   const Stack = createStackNavigator()
 
   return (
-    <NavigationContainer style={{ flex: 1, backgroundColor: 'transparent' }}>
+    <NavigationContainer style={{flex: 1, backgroundColor: 'transparent'}}>
       <Stack.Navigator>
         <Stack.Screen
           name="WelcomeScreen"
           component={WelcomeScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="LogIn"
           component={LogIn}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="MealPlan"
           component={MealPlan}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="RecipesHome"
           component={RecipesHome}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="ViewMealPlans"
           component={ViewMealPlans}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="MiscItems"
           component={MiscItems}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="AddMiscItems"
           component={AddMiscItems}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="DeleteMiscItems"
           component={DeleteMiscItem}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="AddNewRecipe"
           component={AddNewRecipe}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="UpdateRecipe"
           component={UpdateRecipe}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="DeleteRecipe"
           component={DeleteRecipe}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="AddIngredient"
           component={AddIngredient}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="DeleteIngredient"
           component={DeleteIngredient}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="AddIngredientToRecipe"
           component={AddIngredientToRecipe}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

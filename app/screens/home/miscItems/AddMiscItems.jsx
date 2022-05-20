@@ -31,7 +31,6 @@ const AddMiscItems = ({ navigation }) => {
       animationType="fade"
       visible={modalVisible}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
         setModalVisible(!modalVisible);
       }}
       >

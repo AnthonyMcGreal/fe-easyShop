@@ -5,24 +5,30 @@ import {
   Pressable,
   Modal,
   View,
-  ActivityIndicator,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput } from "react-native-gesture-handler";
 import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { getIngredients } from "../../../api";
+import { faChevronDown,} from "@fortawesome/free-solid-svg-icons";
+import { getIngredients, addRecipe } from "../../../api";
 
 const AddIngredientToRecipe = ({ navigation, route }) => {
   const [ingredientsInRecipe, setIngredientsInRecipe] = useState([]);
-  const [modalVisible, setModalVisible] = useState("false");
+  const [addModalVisible, setAddModalVisible] = useState("false");
+  const [removeModalVisible, setRemoveModalVisible] = useState("false")
+  const [confirmModalVisible, setConfirmModalVisible] = useState("false")
+  const [submitModalVisible, setSubmitModalVisible] = useState("false")
   const [usersIngredients, setUsersIngredients] = useState([]);
   const [selectedIngredientToAdd, setSelectedIngredientToAdd] = useState("");
+  const [selectedIngredientToRemove, setSelectedIngredientToRemove] = useState("")
   const [selectedItemUOM, setItemSelectedUOM] = useState("");
   const [selectedItemStorageType, setSelectedItemStorageType] = useState("");
-  const [quantity, setQuantity] = useState(0);
+  const [selectedIngredientId, setSelectedIngredientId] = useState("")
+  const [quantity, setQuantity] = useState("");
+  const [apiResult, setApiResult] = useState(0)
 
   const recipe_name = route.params.recipe_name;
   const link = route.params.link;
@@ -34,29 +40,28 @@ const AddIngredientToRecipe = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    setIngredientsInRecipe([{ name: "cornflakes" }, { name: "milk" }]);
-  }, []);
-
-  useEffect(() => {
     let selectedQuantity = "";
     let selectedIngredientStorageType = "";
+    let selectedIngredientId = "";
     for (let i = 0; i < usersIngredients.length; i++) {
       if (usersIngredients[i].name === selectedIngredientToAdd) {
         selectedQuantity = usersIngredients[i].unit_of_measurement;
         selectedIngredientStorageType = usersIngredients[i].storage_type;
+        selectedIngredientId = usersIngredients[i].ingredient_id
       }
     }
     setItemSelectedUOM(selectedQuantity);
     setSelectedItemStorageType(selectedIngredientStorageType);
+    setSelectedIngredientId(selectedIngredientId)
   }, [selectedIngredientToAdd]);
 
   const handleAddIngredientSelection = (selectedIngredient) => {
     setSelectedIngredientToAdd(selectedIngredient);
-    setQuantity(0);
+    setQuantity("");
   };
 
   const handleQuantityChange = (quantity) => {
-    setQuantity(quantity);
+    setQuantity(parseInt(quantity));
   };
 
   const handleAddIngredientToRecipe = () => {
@@ -68,24 +73,62 @@ const AddIngredientToRecipe = ({ navigation, route }) => {
       unit_of_measurement: selectedItemUOM,
       portions: portions,
       storage_type: selectedItemStorageType,
+      ingredients: selectedIngredientId
     };
 
     setIngredientsInRecipe([...ingredientsInRecipe, newIngredient]);
-    setModalVisible(false);
+    setQuantity("");
+    setAddModalVisible(false);
   };
+
+  const handleRemoveIngredientFromRecipe = () => {
+    setIngredientsInRecipe(ingredientsInRecipe.filter(ingredient => ingredient.name !== selectedIngredientToRemove))
+    setRemoveModalVisible(false)
+  }
+
+  const handleRemoveIngredientSelection = (selectedIngredient) =>{
+    setSelectedIngredientToRemove(selectedIngredient)
+  }
+
+  const confirmRecipe = async (ingredientsInRecipe) => {
+    setSubmitModalVisible(true)
+    const recipeToSubmit = ingredientsInRecipe.map((ingredient) => {
+      return {
+        ingredients:ingredient.ingredients,
+        recipe_name:ingredient.recipe_name,
+        link:ingredient.link,
+        ingredient_quantity:ingredient.ingredient_quantity,
+        portions:ingredient.portions,
+      }
+    })
+    const result = await addRecipe(recipeToSubmit)
+    setApiResult(result)
+  }
+
+  const backButton = () => {
+    return (
+      <Pressable 
+        style={styles.button} 
+        onPress={() => {
+        navigation.navigate('RecipesHome');
+        }}>
+        <Text style={styles.text}>Back to Recipes</Text>
+      </Pressable>
+      )}
 
   return (
     <SafeAreaView style={styles.background}>
+{/* add an ingredient modal */}  
       <Modal
         animationType="fade"
-        visible={modalVisible}
+        visible={addModalVisible}
         onRequestClose={() => {
-          setModalVisible(false);
+          setAddModalVisible(false);
         }}
       >
         <View style={styles.background}>
           <View style={styles.modelContainer}>
-            <Text>Pick an ingredient:</Text>
+            <Text style={styles.text}>Pick an ingredient:</Text>
             <SelectDropdown
               data={usersIngredients.map((ingredient) => `${ingredient.name}`)}
               onSelect={handleAddIngredientSelection}
@@ -99,7 +142,7 @@ const AddIngredientToRecipe = ({ navigation, route }) => {
               buttonTextStyle={styles.dropDownText}
               rowStyle={styles.rowStyle}
             />
-            <Text>Enter ingredient quantity({selectedItemUOM}):</Text>
+            <Text style={styles.text}>Enter quantity({selectedItemUOM}):</Text>
             <TextInput
               style={styles.input}
               value={`${quantity}`}
@@ -115,24 +158,136 @@ const AddIngredientToRecipe = ({ navigation, route }) => {
           </View>
         </View>
       </Modal>
+{/* Remove an ingredient modal */}
+      <Modal
+        animationType="fade"
+        visible={removeModalVisible}
+        onRequestClose={() => {
+          setRemoveModalVisible(false);
+        }}
+      >
+        <View style={styles.background}>
+          <View style={styles.removeModelContainer}>
+            <Text style={styles.text}>Select an ingredient :</Text>
+            <SelectDropdown
+              data={ingredientsInRecipe.map((ingredient) => `${ingredient.name}`)}
+              onSelect={handleRemoveIngredientSelection}
+              buttonTextAfterSelection={(selectedIngredient) =>
+                `${selectedIngredient}`
+              }
+              renderDropdownIcon={() => (
+                <FontAwesomeIcon icon={faChevronDown} />
+              )}
+              buttonStyle={styles.addIngredientDropDownStyle}
+              buttonTextStyle={styles.dropDownText}
+              rowStyle={styles.rowStyle}
+            />
+            <Pressable
+              style={styles.button}
+              onPress={handleRemoveIngredientFromRecipe}
+            >
+              <Text style={styles.text}>Remove from recipe</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+{/* confirm recipe modal */}        
+      <Modal
+        animationType="fade"
+        visible={confirmModalVisible}
+        onRequestClose={() => {
+          setConfirmModalVisible(false);
+        }}
+      >
+        <View style={styles.background}>
+        <View style={styles.flatListContainer}>
+        <Text style={styles.title}>{recipe_name}</Text>
+        <FlatList
+          style={styles.flatList}
+          data={ingredientsInRecipe}
+          renderItem={({ item, index }) => (
+              <Text style={styles.text}>
+              - {item.name} ({item.ingredient_quantity} {item.unit_of_measurement})
+              </Text>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        ></FlatList>
+      </View>
+          <Pressable 
+          style={styles.button}
+          onPress={() => {
+            confirmRecipe(ingredientsInRecipe)
+          }}>
+            <Text style={styles.text}>
+              Confirm recipe?
+            </Text>
+          </Pressable>
+        </View>
+      </Modal> 
+{/* submit recipe modal */}  
+      <Modal
+      animationType="fade"
+      visible={submitModalVisible}
+      onRequestClose={() => {
+        Alert.alert("Modal has been closed.");
+        setSubmitModalVisible(!modalVisible);
+      }}
+      >
+        <View style={styles.background}>
+          <View style={styles.recipeAddedContainer}>
+         {apiResult===201? <View><Text style={styles.afterActionText}>Recipe Added</Text>{backButton()}</View>:null}
+         {apiResult===500? <View><Text style={styles.afterActionText}>Ooops! Something went wrong on our side, try again later</Text>{backButton()}</View>:null}
+         {apiResult >0 && apiResult!== 201 && apiResult !==500? <View><Text style={styles.afterActionText}>Ooops! Something went wrong, try again</Text>{backButton()}</View>:null}
+         {apiResult === 0? <ActivityIndicator size="large" color='#6D2D55' animating={true}/>: null}
+          </View>
+        </View>
+      </Modal>
+{/* add recipe screen */}       
       <View style={styles.flatListContainer}>
+        <Text style={styles.title}>{recipe_name}</Text>
         <FlatList
           style={styles.flatList}
           data={ingredientsInRecipe}
           renderItem={({ item }) => (
-            <Text style={styles.listText}>{item.name}</Text>
+            <Text style={styles.text} key={item.id}>
+              - {item.name} ({item.ingredient_quantity} {item.unit_of_measurement})
+              </Text>
           )}
+          keyExtractor={(item, index) => index.toString()}
         ></FlatList>
       </View>
-      <Pressable
+      <View style={styles.buttonContainer}> 
+        <Pressable
+          style={styles.roundButton}
+          disabled={false}
+          onPress={async () => {
+            setAddModalVisible(true)
+          }}
+          >
+          <Text style={styles.roundButtonText}>+</Text>
+        </Pressable>
+        <Pressable
+          style={styles.roundButton}
+          disabled={ingredientsInRecipe.length===0}
+          onPress={() => {
+            setRemoveModalVisible(true)
+          }}
+          >
+          <Text style={styles.roundButtonText}>-</Text>
+        </Pressable>
+      </View>
+      <View>
+        <Pressable 
         style={styles.button}
-        disabled={false}
+        disabled={ingredientsInRecipe.length===0}
         onPress={async () => {
-          setModalVisible(true)
-        }}
-      >
-        <Text style={styles.text}>Add Ingredient</Text>
-      </Pressable>
+          setConfirmModalVisible(true)
+        }}>
+          <Text style={styles.text}>
+            Add Recipe
+          </Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 };
@@ -144,6 +299,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#2d556d",
     width: "100%",
+  },
+  buttonContainer:{
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-around",
+    width:"100%",
   },
   text: {
     color: "white",
@@ -157,14 +318,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    marginTop: 60,
+    marginTop: 50,
+  },
+  roundButton: {
+    backgroundColor: "#6D2D55",
+    width: 80,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  roundButtonText: {
+    color: "white",
+    fontSize: 50,
+    fontFamily: "Nunito",
+    marginBottom:10
   },
   addIngredientDropDownStyle: {
     width: "80%",
     height: 50,
-    margin: 50,
     borderWidth: 1,
-    backgroundColor: 'lightgrey'
+    backgroundColor: 'lightgrey',
   },
   dropDownText: {
     lineHeight: 20,
@@ -178,16 +352,22 @@ const styles = StyleSheet.create({
   modelContainer: {
     backgroundColor: "#2d556d",
     width: "80%",
-    height: "80%",
-    borderColor: "#6D2D55",
-    borderWidth: 5,
-    borderRadius: 25,
+    height: 500,
     alignItems: "center",
+    display:"flex",
+    justifyContent:"space-between"
+  },
+  removeModelContainer:{
+    backgroundColor: "#2d556d",
+    width: "80%",
+    height: 300,
+    alignItems: "center",
+    display:"flex",
+    justifyContent:"space-between"
   },
   input: {
     height: 50,
-    width: "60%",
-    margin: 12,
+    width: "80%",
     borderWidth: 1,
     backgroundColor: "lightgrey",
     fontSize: 16,
@@ -199,11 +379,40 @@ const styles = StyleSheet.create({
     height: 400,
   },
   flatList: {
-    backgroundColor: "white",
+    backgroundColor: "#2d556d",
   },
   listText: {
-    color: "black",
+    color: "white",
     fontSize: 20,
+    backgroundColor: "#2d556d"
+  },
+  title:{
+    color: "white",
+    fontSize:30,
+    fontFamily: "Nunito",
+    textAlign:"center",
+    marginBottom:10,
+  },
+  afterActionText:{
+    color:'#6D2D55',
+    fontSize:30,
+    textAlign:'center',
+    marginBottom: 70,
+    fontFamily: 'Nunito',
+    textShadowColor: 'white',
+    textShadowRadius: 12,
+  },
+  recipeAddedContainer:{
+    backgroundColor:'#2d556d',
+    width:'80%',
+    height:'80%',
+    borderColor: '#6D2D55',
+    borderWidth: 5,
+    borderRadius:25,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });
 

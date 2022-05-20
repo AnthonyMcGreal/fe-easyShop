@@ -38,3 +38,10 @@ exports.getIngredients = async() => {
 exports.deleteIngredientById = async (ingredientId) => {
     return axios.delete(`${baseURL}/ingredients/${ingredientId}`)
 }
+
+exports.addRecipe = async (recipe) => {
+    const recipeWithUser = recipe.map((ingredient) => {return {...ingredient, username:"Anthony" }})
+    return axios.post(`${baseURL}/recipe`, recipeWithUser)
+                .then((result)=>{return result.status})
+                .catch((err) => console.log(err))
+}
