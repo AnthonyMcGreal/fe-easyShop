@@ -45,3 +45,11 @@ exports.addRecipe = async (recipe) => {
                 .then((result)=>{return result.status})
                 .catch((err) => console.log(err))
 }
+
+exports.getRecipes = async () => {
+    return axios.get(`${baseURL}/recipe`)
+}
+
+exports.deleteRecipeByName = async (name) => {
+    return axios.delete(`${baseURL}/recipe/${name}`)
+}

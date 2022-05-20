@@ -7,9 +7,9 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import {getMiscItems, deleteMiscItemById} from '../../../api';
 
 const DeleteMiscItem = ({navigation}) => {
- const [miscItems, onChangeMiscItems] = useState([])
+ const [miscItems, setChangeMiscItems] = useState([])
  const [itemNames, setItemNames] = useState([]);
- const [itemToDelete, onChangeItemToDelete] = useState('')
+ const [itemToDelete, setChangeItemToDelete] = useState('')
  const [itemIdToDeleted ,setItemIdToDeleted] = useState()
  const [modalVisible, setModalVisible] = useState(true)
  const [apiResult, setApiResult] = useState(0)
@@ -17,7 +17,7 @@ const DeleteMiscItem = ({navigation}) => {
 
   useEffect( async () => {
    const items = await getMiscItems()
-   onChangeMiscItems(items.data.miscItems)
+   setChangeMiscItems(items.data.miscItems)
    setApiResult(items.status)
    setGetMiscItemsBeenCalled(true)
    setItemNames(miscItems.map((item) => item.name))
@@ -70,7 +70,7 @@ const DeleteMiscItem = ({navigation}) => {
         <SelectDropdown 
           data={itemNames}
           onSelect={(selectedItem, index) => {
-            onChangeItemToDelete(selectedItem);
+            setChangeItemToDelete(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return `${selectedItem}`;
