@@ -19,92 +19,92 @@ import AddIngredientToRecipe from './app/screens/home/recipes/AddIngredientToRec
 import UpdateRecipeIngredients from './app/screens/home/recipes/UpdateRecipeIngredients'
 
 export default function App() {
-  const Stack = createStackNavigator()
+	const Stack = createStackNavigator()
 
-  return (
-    <NavigationContainer style={{flex: 1, backgroundColor: 'transparent'}}>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="WelcomeScreen"
-          component={WelcomeScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="LogIn"
-          component={LogIn}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="MealPlan"
-          component={MealPlan}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="RecipesHome"
-          component={RecipesHome}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ViewMealPlans"
-          component={ViewMealPlans}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="MiscItems"
-          component={MiscItems}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="AddMiscItems"
-          component={AddMiscItems}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="DeleteMiscItems"
-          component={DeleteMiscItem}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="AddNewRecipe"
-          component={AddNewRecipe}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="UpdateRecipe"
-          component={UpdateRecipe}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="DeleteRecipe"
-          component={DeleteRecipe}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="AddIngredient"
-          component={AddIngredient}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="DeleteIngredient"
-          component={DeleteIngredient}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="AddIngredientToRecipe"
-          component={AddIngredientToRecipe}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="UpdateRecipeIngredients"
-          component={UpdateRecipeIngredients}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+	return (
+		<NavigationContainer style={{flex: 1, backgroundColor: 'transparent'}}>
+			<Stack.Navigator>
+				<Stack.Screen
+					name="WelcomeScreen"
+					component={WelcomeScreen}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="LogIn"
+					component={LogIn}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="Home"
+					component={Home}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="MealPlan"
+					component={MealPlan}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="RecipesHome"
+					component={RecipesHome}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="ViewMealPlans"
+					component={ViewMealPlans}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="MiscItems"
+					component={MiscItems}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="AddMiscItems"
+					component={AddMiscItems}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="DeleteMiscItems"
+					component={DeleteMiscItem}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="AddNewRecipe"
+					component={AddNewRecipe}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="UpdateRecipe"
+					component={UpdateRecipe}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="DeleteRecipe"
+					component={DeleteRecipe}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="AddIngredient"
+					component={AddIngredient}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="DeleteIngredient"
+					component={DeleteIngredient}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="AddIngredientToRecipe"
+					component={AddIngredientToRecipe}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="UpdateRecipeIngredients"
+					component={UpdateRecipeIngredients}
+					options={{headerShown: false}}
+				/>
+			</Stack.Navigator>
+		</NavigationContainer>
+	)
 }
