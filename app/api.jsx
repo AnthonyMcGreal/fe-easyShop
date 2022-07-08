@@ -53,3 +53,7 @@ exports.getRecipes = async () => {
 exports.deleteRecipeByName = async (name) => {
     return axios.delete(`${baseURL}/recipe/${name}`)
 }
+
+exports.getRecipeByName = async ( name ) => {
+    return axios.get(`${baseURL}/recipe/${name}`)
+}

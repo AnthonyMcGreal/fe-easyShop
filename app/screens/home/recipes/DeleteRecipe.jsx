@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SelectDropdown from 'react-native-select-dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import {getRecipes, deleteRecipeByName} from '../../../api'
+import { getRecipes, deleteRecipeByName } from '../../../api'
 
 function DeleteRecipe({navigation}) {
   const [recipes, setRecipes] = useState([])
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito',
   },
   dropDownStyle: {
-      width: '60%',
+      width: 200,
       height: 50,
       margin: 12,
       borderWidth: 1,
