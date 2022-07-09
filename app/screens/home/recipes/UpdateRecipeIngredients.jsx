@@ -9,7 +9,11 @@ import {
 	ActivityIndicator
 } from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import {getIngredients, getRecipeByName} from '../../../api'
+import {TextInput} from 'react-native-gesture-handler'
+import SelectDropdown from 'react-native-select-dropdown'
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
+import {getIngredients, getRecipeByName, deleteRecipeByName, addRecipe} from '../../../api'
 
 const UpdateRecipeIngredients = ({navigation, route}) => {
 	const [ingredientsInRecipe, setIngredientsInRecipe] = useState([])
@@ -20,21 +24,28 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 	const [submitModalVisible, setSubmitModalVisible] = useState('false')
 
 	const [selectedIngredientToAdd, setSelectedIngredientToAdd] = useState('')
+	const [selectedIngredientToRemove, setSelectedIngredientToRemove] =
+		useState('')
 	const [selectedItemUOM, setItemSelectedUOM] = useState('')
 	const [selectedItemStorageType, setSelectedItemStorageType] = useState('')
 	const [selectedIngredientId, setSelectedIngredientId] = useState('')
+	const [quantity, setQuantity] = useState('')
 
 	const [usersIngredients, setUsersIngredients] = useState([])
 
 	const [apiResult, setApiResult] = useState(0)
 
 	const recipe_name = route.params.recipe_name
+	let link
+	let portions
 
 	useEffect(async () => {
 		const items = await getIngredients()
 		const recipe = await getRecipeByName(recipe_name)
 		setUsersIngredients(items.data.ingredients)
 		setIngredientsInRecipe(recipe.data)
+		link = recipe.data[0].link
+		portions = recipe.data[0].portions
 	}, [])
 
 	useEffect(() => {
@@ -53,8 +64,156 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 		setSelectedIngredientId(selectedIngredientId)
 	}, [selectedIngredientToAdd])
 
+	const handleAddIngredientSelection = selectedIngredient => {
+		setSelectedIngredientToAdd(selectedIngredient)
+		setQuantity('')
+	}
+
+	const handleQuantityChange = quantity => {
+		setQuantity(parseInt(quantity))
+	}
+
+	const handleAddIngredientToRecipe = () => {
+		let newIngredient = {
+			recipe_name: recipe_name,
+			link: link,
+			name: selectedIngredientToAdd,
+			ingredient_quantity: quantity,
+			unit_of_measurement: selectedItemUOM,
+			portions: portions,
+			storage_type: selectedItemStorageType,
+			ingredients: selectedIngredientId
+		}
+		for (let i = 0; i<ingredientsInRecipe.length; i++){
+			if(newIngredient.name === ingredientsInRecipe[i].name){
+				ingredientsInRecipe[i].ingredient_quantity += newIngredient.ingredient_quantity
+				setQuantity('')
+				setAddModalVisible(false)
+				return;
+			}
+		}
+		setIngredientsInRecipe([...ingredientsInRecipe, newIngredient])
+		setQuantity('')
+		setAddModalVisible(false)
+	}
+
+	const handleRemoveIngredientFromRecipe = () => {
+		setIngredientsInRecipe(
+			ingredientsInRecipe.filter(
+				ingredient => ingredient.name !== selectedIngredientToRemove
+			)
+		)
+		setRemoveModalVisible(false)
+	}
+
+	const handleRemoveIngredientSelection = selectedIngredient => {
+		setSelectedIngredientToRemove(selectedIngredient)
+	}
+
+	const confirmRecipe = async ingredientsInRecipe => {
+		setSubmitModalVisible(true)
+		const recipeToSubmit = ingredientsInRecipe.map(ingredient => {
+			return {
+				ingredients: ingredient.ingredients,
+				recipe_name: ingredient.recipe_name,
+				link: ingredientsInRecipe[0].link,
+				ingredient_quantity: ingredient.ingredient_quantity,
+				portions: ingredientsInRecipe[0].portions
+			}
+		})
+		await deleteRecipeByName(recipe_name)
+		const result = await addRecipe(recipeToSubmit, recipe_name)
+		setApiResult(result)
+	}
+
+	const backButton = () => {
+		return (
+			<Pressable
+				style={styles.button}
+				onPress={() => {
+					navigation.navigate('RecipesHome')
+				}}
+			>
+				<Text style={styles.text}>Back to Recipes</Text>
+			</Pressable>
+		)
+	}
+
 	return (
 		<SafeAreaView style={styles.background}>
+			{/* add an ingredient modal */}
+			<Modal
+				animationType="fade"
+				visible={addModalVisible}
+				onRequestClose={() => {
+					setAddModalVisible(false)
+				}}
+			>
+				<View style={styles.background}>
+					<View style={styles.modelContainer}>
+						<Text style={styles.text}>Pick an ingredient:</Text>
+						<SelectDropdown
+							data={usersIngredients.map(ingredient => `${ingredient.name}`)}
+							onSelect={handleAddIngredientSelection}
+							buttonTextAfterSelection={selectedIngredient =>
+								`${selectedIngredient}`
+							}
+							renderDropdownIcon={() => (
+								<FontAwesomeIcon icon={faChevronDown} />
+							)}
+							buttonStyle={styles.addIngredientDropDownStyle}
+							buttonTextStyle={styles.dropDownText}
+							rowStyle={styles.rowStyle}
+						/>
+						<Text style={styles.text}>Enter quantity({selectedItemUOM}):</Text>
+						<TextInput
+							style={styles.input}
+							value={`${quantity}`}
+							onChangeText={handleQuantityChange}
+						/>
+						<Pressable
+							style={styles.button}
+							disabled={!quantity > 0 && !selectedIngredientToAdd}
+							onPress={handleAddIngredientToRecipe}
+						>
+							<Text style={styles.text}>Add to recipe</Text>
+						</Pressable>
+					</View>
+				</View>
+			</Modal>
+			{/* Remove an ingredient modal */}
+			<Modal
+				animationType="fade"
+				visible={removeModalVisible}
+				onRequestClose={() => {
+					setRemoveModalVisible(false)
+				}}
+			>
+				<View style={styles.background}>
+					<View style={styles.removeModelContainer}>
+						<Text style={styles.text}>Select an ingredient :</Text>
+						<SelectDropdown
+							data={ingredientsInRecipe.map(ingredient => `${ingredient.name}`)}
+							onSelect={handleRemoveIngredientSelection}
+							buttonTextAfterSelection={selectedIngredient =>
+								`${selectedIngredient}`
+							}
+							renderDropdownIcon={() => (
+								<FontAwesomeIcon icon={faChevronDown} />
+							)}
+							buttonStyle={styles.addIngredientDropDownStyle}
+							buttonTextStyle={styles.dropDownText}
+							rowStyle={styles.rowStyle}
+						/>
+						<Pressable
+							style={styles.button}
+							onPress={handleRemoveIngredientFromRecipe}
+						>
+							<Text style={styles.text}>Remove from recipe</Text>
+						</Pressable>
+					</View>
+				</View>
+			</Modal>
 			{/* confirm recipe modal */}
 
 			<Modal
@@ -103,7 +262,7 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 					<View style={styles.recipeAddedContainer}>
 						{apiResult === 201 ? (
 							<View>
-								<Text style={styles.afterActionText}>Recipe Added</Text>
+								<Text style={styles.afterActionText}>Recipe Updated</Text>
 								{backButton()}
 							</View>
 						) : null}
