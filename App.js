@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import WelcomeScreen from './app/screens/WelcomeScreen'
 import LogIn from './app/screens/LogIn'
 import Home from './app/screens/home/Home'
-import MealPlan from './app/screens/home/mealPlans/MealPlan'
+import CreateMealPlan from './app/screens/home/mealPlans/CreateMealPlan'
 import RecipesHome from './app/screens/home/recipes/RecipesHome'
 import ViewMealPlans from './app/screens/home/mealPlans/ViewMealPlans'
 import MiscItems from './app/screens/home/miscItems/MiscItems'
@@ -17,6 +17,7 @@ import AddIngredient from './app/screens/home/recipes/AddIngredient'
 import DeleteIngredient from './app/screens/home/recipes/DeleteIngredient'
 import AddIngredientToRecipe from './app/screens/home/recipes/AddIngredientToRecipe'
 import UpdateRecipeIngredients from './app/screens/home/recipes/UpdateRecipeIngredients'
+import AddRecipeToMealPlan from './app/screens/home/mealPlans/AddRecipeToMealPlan'
 
 export default function App() {
 	const Stack = createStackNavigator()
@@ -40,8 +41,8 @@ export default function App() {
 					options={{headerShown: false}}
 				/>
 				<Stack.Screen
-					name="MealPlan"
-					component={MealPlan}
+					name="CreateMealPlan"
+					component={CreateMealPlan}
 					options={{headerShown: false}}
 				/>
 				<Stack.Screen
@@ -102,6 +103,11 @@ export default function App() {
 				<Stack.Screen
 					name="UpdateRecipeIngredients"
 					component={UpdateRecipeIngredients}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="AddRecipeToMealPlan"
+					component={AddRecipeToMealPlan}
 					options={{headerShown: false}}
 				/>
 			</Stack.Navigator>

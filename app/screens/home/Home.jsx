@@ -13,7 +13,7 @@ function Home({navigation}) {
 					<Pressable
 						style={styles.button}
 						onPress={() => {
-							navigation.navigate('MealPlan')
+							navigation.navigate('CreateMealPlan')
 						}}
 					>
 						<Text style={styles.text}>Create a meal plan</Text>
