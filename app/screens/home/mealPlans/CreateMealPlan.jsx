@@ -7,10 +7,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 
 function CreateMealPlan({navigation}) {
-	const [mealPlanName, setmealPlanName] = useState('')
-	const [mealPlanLength, setmealPlanLength] = useState('')
+	const [mealPlanName, setMealPlanName] = useState('')
+	const [mealPlanLength, setMealPlanLength] = useState('')
 	const [disableButton, setDisableButton] = useState(true)
+	const [dayMealPlanStarts, setDayMealPlanStarts] = useState('')
+	const [mealPlanDays, setMealPlanDays] = useState([])
 	const mealPlanDaysOptions = [1, 2, 3, 4, 5, 6, 7]
+	const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 	useEffect(() => {
 		if (mealPlanName && mealPlanLength) setDisableButton(false)
@@ -18,12 +21,29 @@ function CreateMealPlan({navigation}) {
 
 	const handleNameChange = val => {
 		const formattedVal = val.charAt(0).toUpperCase() + val.slice(1)
-		setmealPlanName(formattedVal)
+		setMealPlanName(formattedVal)
 	}
 
 	const handleMealPlanLengthChange = val => {
-		setmealPlanLength(val)
+		setMealPlanLength(val)
 	}
+
+	const handleStartDay = val => {
+		setDayMealPlanStarts(val)
+	}
+
+	useEffect(() => {
+		const startingIndex = days.indexOf(dayMealPlanStarts)
+		const daysList = []
+		for (let i = startingIndex; i<startingIndex+mealPlanLength; i++){
+			if(i > 6){
+				daysList.push(days[(i-7)])
+			} else {
+				daysList.push(days[(i)])
+			}
+		}
+		setMealPlanDays(daysList)
+	},[mealPlanLength,dayMealPlanStarts])
 
 	return (
 		<SafeAreaView style={styles.background}>
@@ -32,6 +52,16 @@ function CreateMealPlan({navigation}) {
 				style={styles.input}
 				value={mealPlanName}
 				onChangeText={handleNameChange}
+			/>
+			<Text style={styles.text}>Meal plan start day</Text>
+			<SelectDropdown
+				data={days}
+				onSelect={handleStartDay}
+				buttonTextAfterSelection={() => dayMealPlanStarts}
+				renderDropdownIcon={() => <FontAwesomeIcon icon={faChevronDown} />}
+				buttonStyle={styles.dropDownStyle}
+				buttonTextStyle={styles.dropDownText}
+				rowStyle={styles.rowStyle}
 			/>
 			<Text style={styles.text}>Number of days in meal plan</Text>
 			<SelectDropdown
@@ -46,10 +76,11 @@ function CreateMealPlan({navigation}) {
 			<Pressable
 				style={styles.button}
 				disabled={disableButton}
-				onPress={() =>
+				onPress={() => 
 					navigation.navigate('AddRecipeToMealPlan', {
 						mealPlanName: mealPlanName,
-						mealPlanLength: mealPlanLength
+						mealPlanLength: mealPlanLength,
+						mealPlanDays: mealPlanDays
 					})
 				}
 			>

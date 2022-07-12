@@ -17,6 +17,7 @@ import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 const AddRecipeToMealPlan = ({navigation, route}) => {
     const mealPlanName = route.params.mealPlanName;
     const mealPlanLength = route.params.mealPlanLength;
+	const mealPlanDays = route.params.mealPlanDays;
 
     const [availableRecipes, setAvailableRecipes] = useState([])
     const [mealPlan, setMealPlan] = useState({})
@@ -38,9 +39,9 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
             mealPlanLength: mealPlanLength,
             recipes:[]
         }
-        for(let i = 1; i<= mealPlanLength; i++){
-            mealPlan.recipes.push({[`Day${i}`] : ["Test Recipe"]})
-            daysAvailable.push(`Day ${i}`)
+        for(let i = 0; i< mealPlanLength; i++){
+            mealPlan.recipes.push({[mealPlanDays[i]] : ["Test Recipe"]})
+            daysAvailable.push(mealPlanDays[i])
         }
         setMealPlan(mealPlan)
         setDaysAvailable(daysAvailable)
@@ -175,20 +176,20 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 {// Base Screen
 }
             <Text style={styles.title}>{mealPlanName}</Text>
+			<View style={styles.flatListContainer}>
             <FlatList
-                style={styles.flatList}
 			    data={mealPlan.recipes}
 				renderItem={({item}) => (
-                    <View>
+					<View>
                     <Text style={styles.subTitle} key={item.id}>
-                        Day {(mealPlan.recipes.indexOf(item)+1)}
+                        {daysAvailable[mealPlan.recipes.indexOf(item)]}
                     </Text>
                             <FlatList
                             style={styles.flatList}
-                            data={mealPlan.recipes[mealPlan.recipes.indexOf(item)][`Day${(mealPlan.recipes.indexOf(item)+1)}`]}
+                            data={mealPlan.recipes[mealPlan.recipes.indexOf(item)][daysAvailable[mealPlan.recipes.indexOf(item)]]}
                             renderItem={({item}) => (
-                                <Text style={styles.text} key={item.id}>
-                                    {item}
+								<Text style={styles.listText} key={item.id}>
+                                   - {item}
                                 </Text>
                             )}
                             keyExtractor={(item, index) => index.toString()}
@@ -196,7 +197,8 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
                 </View>
                 )}
                 keyExtractor={(item, index) => index.toString()}
-            ></FlatList>
+				></FlatList>
+				</View>
             <View style={styles.buttonContainer}>
 				<Pressable
 					style={styles.roundButton}
@@ -208,7 +210,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 				</Pressable>
 				<Pressable
 					style={styles.roundButton}
-					//disabled={ingredientsInRecipe.length === 0}
+					disabled={mealPlan.length === 0}
 					onPress={() => {
                         setSelectedRecipe('')
 						setRemoveModalVisible(true)
@@ -220,7 +222,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 			<View>
 				<Pressable
 					style={styles.button}
-					// disabled={ingredientsInRecipe.length === 0}
+					disabled={mealPlan.length === 0}
 					onPress={async () => {
 						setConfirmModalVisible(true)
 					}}
@@ -250,7 +252,14 @@ const styles = StyleSheet.create({
 	text: {
 		color: 'white',
 		fontSize: 18,
-		fontFamily: 'Nunito'
+		fontFamily: 'Nunito',
+		textAlign: 'center',
+	},
+	listText: {
+		color: 'white',
+		fontSize: 18,
+		fontFamily: 'Nunito',
+		textAlign: 'left',
 	},
 	button: {
 		backgroundColor: '#6D2D55',
@@ -259,7 +268,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 10,
-		marginTop: 50
+		marginTop: 30
 	},
 	roundButton: {
 		backgroundColor: '#6D2D55',
@@ -316,16 +325,12 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito'
 	},
 	flatListContainer: {
-		width: '80%',
-		height: 400
+		width:"70%",
+		height:350,
+		marginBottom: 20
 	},
 	flatList: {
-		backgroundColor: '#2d556d'
-	},
-	listText: {
-		color: 'white',
-		fontSize: 20,
-		backgroundColor: '#2d556d'
+		backgroundColor: '#2d556d',
 	},
 	title: {
 		color: 'white',
@@ -338,7 +343,8 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 22,
 		fontFamily: 'Nunito',
-		textAlign: 'center',
+		textAlign: 'left',
+		textDecorationLine: 'underline'
 	},
 	afterActionText: {
 		color: '#6D2D55',
