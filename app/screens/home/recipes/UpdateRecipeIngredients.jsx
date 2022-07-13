@@ -13,7 +13,12 @@ import {TextInput} from 'react-native-gesture-handler'
 import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
-import {getIngredients, getRecipeByName, deleteRecipeByName, addRecipe} from '../../../api'
+import {
+	getIngredients,
+	getRecipeByName,
+	deleteRecipeByName,
+	addRecipe
+} from '../../../api'
 
 const UpdateRecipeIngredients = ({navigation, route}) => {
 	const [ingredientsInRecipe, setIngredientsInRecipe] = useState([])
@@ -84,12 +89,13 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 			storage_type: selectedItemStorageType,
 			ingredients: selectedIngredientId
 		}
-		for (let i = 0; i<ingredientsInRecipe.length; i++){
-			if(newIngredient.name === ingredientsInRecipe[i].name){
-				ingredientsInRecipe[i].ingredient_quantity += newIngredient.ingredient_quantity
+		for (let i = 0; i < ingredientsInRecipe.length; i++) {
+			if (newIngredient.name === ingredientsInRecipe[i].name) {
+				ingredientsInRecipe[i].ingredient_quantity +=
+					newIngredient.ingredient_quantity
 				setQuantity('')
 				setAddModalVisible(false)
-				return;
+				return
 			}
 		}
 		setIngredientsInRecipe([...ingredientsInRecipe, newIngredient])

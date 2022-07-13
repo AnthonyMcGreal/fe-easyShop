@@ -15,66 +15,73 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 
 const AddRecipeToMealPlan = ({navigation, route}) => {
-    const mealPlanName = route.params.mealPlanName;
-    const mealPlanLength = route.params.mealPlanLength;
-	const mealPlanDays = route.params.mealPlanDays;
+	const mealPlanName = route.params.mealPlanName
+	const mealPlanLength = route.params.mealPlanLength
+	const mealPlanDays = route.params.mealPlanDays
 
-    const [availableRecipes, setAvailableRecipes] = useState([])
-    const [mealPlan, setMealPlan] = useState({})
-    const [daysAvailable, setDaysAvailable] = useState([])
-    const [selectedRecipe, setSelectedRecipe] = useState('')
-    const [selectedDay, setSelectedDay] = useState('')
-    const [dailyRecipeList, setDailyRecipeList]= useState('')
-    const [addModalVisible, setAddModalVisible] = useState(false)
-    const [removeModalVisible, setRemoveModalVisible] = useState(false)
-    const [confirmModalVisible, setConfirmModalVisible] = useState(false)
+	const [availableRecipes, setAvailableRecipes] = useState([])
+	const [mealPlan, setMealPlan] = useState({})
+	const [daysAvailable, setDaysAvailable] = useState([])
+	const [selectedRecipe, setSelectedRecipe] = useState('')
+	const [selectedDay, setSelectedDay] = useState('')
+	const [dailyRecipeList, setDailyRecipeList] = useState('')
+	const [addModalVisible, setAddModalVisible] = useState(false)
+	const [removeModalVisible, setRemoveModalVisible] = useState(false)
+	const [confirmModalVisible, setConfirmModalVisible] = useState(false)
 
-    useEffect( async () => {
-        const usersRecipes = await getRecipes()
-        const recipeNames = usersRecipes.data.recipes.map(recipe => {return recipe.recipe_name})
-        setAvailableRecipes(recipeNames)
-        const daysAvailable = []
-        const mealPlan = {
-            mealPlanName:mealPlanName,
-            mealPlanLength: mealPlanLength,
-            recipes:[]
-        }
-        for(let i = 0; i< mealPlanLength; i++){
-            mealPlan.recipes.push({[mealPlanDays[i]] : ["Test Recipe"]})
-            daysAvailable.push(mealPlanDays[i])
-        }
-        setMealPlan(mealPlan)
-        setDaysAvailable(daysAvailable)
-    },[])
+	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
 
-    const handleRecipeSelection = selectedRecipe => {
+	useEffect(async () => {
+		const usersRecipes = await getRecipes()
+		const recipeNames = usersRecipes.data.recipes.map(recipe => {
+			return recipe.recipe_name
+		})
+		setAvailableRecipes(recipeNames)
+		const daysAvailable = []
+		const mealPlan = {
+			mealPlanName: mealPlanName,
+			mealPlanLength: mealPlanLength,
+			recipes: []
+		}
+		for (let i = 0; i < mealPlanLength; i++) {
+			mealPlan.recipes.push({[mealPlanDays[i]]: ['Test Recipe']})
+			daysAvailable.push(mealPlanDays[i])
+		}
+		setMealPlan(mealPlan)
+		setDaysAvailable(daysAvailable)
+	}, [])
+
+	const handleRecipeSelection = selectedRecipe => {
+		dayIndex = mealPlanDays.indexOf(selectedDay)
 		setSelectedRecipe(selectedRecipe)
 	}
 
-    const handleDaySelection = selectedDay => {
-        const dayNumber = selectedDay.slice(-1)
-        setSelectedDay(selectedDay)
-        setDailyRecipeList(mealPlan.recipes[(dayNumber-1)][`Day${dayNumber}`])
-    }
+	const handleDaySelection = selectedDay => {
+		dayIndex = mealPlanDays.indexOf(selectedDay)
+		setSelectedDay(selectedDay)
+		setDailyRecipeList(mealPlan.recipes[dayIndex][selectedDay])
+	}
 
-    const handleAddRecipeToMealPlan = () => {
-        const dayNumber = selectedDay.slice(-1)
-        mealPlan.recipes[(dayNumber-1)][`Day${dayNumber}`].push(selectedRecipe)
-        setAddModalVisible(false)
-    }
+	const handleAddRecipeToMealPlan = () => {
+		mealPlan.recipes[dayIndex][selectedDay].push(selectedRecipe)
+		setAddModalVisible(false)
+	}
 
-    const handleRemoveRecipeFromMealPlan = () => {
-        const dayNumber = selectedDay.slice(-1)
-        const mealPlanCopy = [...mealPlan.recipes[(dayNumber-1)][`Day${dayNumber}`]]
-        const updatedDailyPlan = mealPlanCopy.filter(recipe => recipe !== selectedRecipe)
-        mealPlan.recipes[(dayNumber-1)][`Day${dayNumber}`] = updatedDailyPlan
-        setRemoveModalVisible(false)
-    }
+	const handleRemoveRecipeFromMealPlan = () => {
+		const mealPlanCopy = [...mealPlan.recipes[dayIndex][selectedDay]]
+		const updatedDailyPlan = mealPlanCopy.filter(
+			recipe => recipe !== selectedRecipe
+		)
+		mealPlan.recipes[dayIndex][selectedDay] = updatedDailyPlan
+		setRemoveModalVisible(false)
+	}
 
-    return (
-        <SafeAreaView style={styles.background}>
-
-            <Modal
+	return (
+		<SafeAreaView style={styles.background}>
+			{
+				// Remove recipe modal
+			}
+			<Modal
 				animationType="fade"
 				visible={removeModalVisible}
 				onRequestClose={() => {
@@ -83,28 +90,27 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 			>
 				<View style={styles.background}>
 					<View style={styles.modelContainer}>
-                        <Text style={styles.text}>Pick a day</Text>
-                        <SelectDropdown
-                            data={daysAvailable}
-                            onSelect={handleDaySelection}
-                            buttonTextAfterSelection={selectedDay =>
-                                `${selectedDay}`
-                            }
-                            renderDropdownIcon={() => (
-                                <FontAwesomeIcon icon={faChevronDown} />
-                            )}
-                            buttonStyle={styles.addIngredientDropDownStyle}
-                            buttonTextStyle={styles.dropDownText}
-                            rowStyle={styles.rowStyle}
-                        />
+						<Text style={styles.text}>Pick a day</Text>
+						<SelectDropdown
+							data={daysAvailable.filter(
+								(day, index) =>
+									Object.keys(mealPlan.recipes[index][day]).length !== 0
+							)}
+							onSelect={handleDaySelection}
+							buttonTextAfterSelection={selectedDay => `${selectedDay}`}
+							renderDropdownIcon={() => (
+								<FontAwesomeIcon icon={faChevronDown} />
+							)}
+							buttonStyle={styles.addIngredientDropDownStyle}
+							buttonTextStyle={styles.dropDownText}
+							rowStyle={styles.rowStyle}
+						/>
 						<Text style={styles.text}>Pick a recipe to remove:</Text>
 						<SelectDropdown
-                            disabled={selectedRecipe}
+							disabled={selectedRecipe}
 							data={dailyRecipeList}
 							onSelect={handleRecipeSelection}
-							buttonTextAfterSelection={selectedRecipe =>
-								`${selectedRecipe}`
-							}
+							buttonTextAfterSelection={selectedRecipe => `${selectedRecipe}`}
 							renderDropdownIcon={() => (
 								<FontAwesomeIcon icon={faChevronDown} />
 							)}
@@ -123,9 +129,10 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 				</View>
 			</Modal>
 
-{// Add recipe modal
-}
-            <Modal
+			{
+				// Add recipe modal
+			}
+			<Modal
 				animationType="fade"
 				visible={addModalVisible}
 				onRequestClose={() => {
@@ -138,9 +145,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 						<SelectDropdown
 							data={availableRecipes}
 							onSelect={handleRecipeSelection}
-							buttonTextAfterSelection={selectedRecipe =>
-								`${selectedRecipe}`
-							}
+							buttonTextAfterSelection={selectedRecipe => `${selectedRecipe}`}
 							renderDropdownIcon={() => (
 								<FontAwesomeIcon icon={faChevronDown} />
 							)}
@@ -148,13 +153,11 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 							buttonTextStyle={styles.dropDownText}
 							rowStyle={styles.rowStyle}
 						/>
-                        <Text style={styles.text}>Pick a day</Text>
+						<Text style={styles.text}>Pick a day</Text>
 						<SelectDropdown
 							data={daysAvailable}
 							onSelect={handleDaySelection}
-							buttonTextAfterSelection={selectedDay =>
-								`${selectedDay}`
-							}
+							buttonTextAfterSelection={selectedDay => `${selectedDay}`}
 							renderDropdownIcon={() => (
 								<FontAwesomeIcon icon={faChevronDown} />
 							)}
@@ -173,33 +176,38 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 				</View>
 			</Modal>
 
-{// Base Screen
-}
-            <Text style={styles.title}>{mealPlanName}</Text>
+			{
+				// Base Screen
+			}
+			<Text style={styles.title}>{mealPlanName}</Text>
 			<View style={styles.flatListContainer}>
-            <FlatList
-			    data={mealPlan.recipes}
-				renderItem={({item}) => (
-					<View>
-                    <Text style={styles.subTitle} key={item.id}>
-                        {daysAvailable[mealPlan.recipes.indexOf(item)]}
-                    </Text>
-                            <FlatList
-                            style={styles.flatList}
-                            data={mealPlan.recipes[mealPlan.recipes.indexOf(item)][daysAvailable[mealPlan.recipes.indexOf(item)]]}
-                            renderItem={({item}) => (
-								<Text style={styles.listText} key={item.id}>
-                                   - {item}
-                                </Text>
-                            )}
-                            keyExtractor={(item, index) => index.toString()}
-                            ></FlatList>
-                </View>
-                )}
-                keyExtractor={(item, index) => index.toString()}
+				<FlatList
+					data={mealPlan.recipes}
+					renderItem={({item}) => (
+						<View>
+							<Text style={styles.subTitle} key={item.id}>
+								{daysAvailable[mealPlan.recipes.indexOf(item)]}
+							</Text>
+							<FlatList
+								style={styles.flatList}
+								data={
+									mealPlan.recipes[mealPlan.recipes.indexOf(item)][
+										daysAvailable[mealPlan.recipes.indexOf(item)]
+									]
+								}
+								renderItem={({item}) => (
+									<Text style={styles.listText} key={item.id}>
+										- {item}
+									</Text>
+								)}
+								keyExtractor={(item, index) => index.toString()}
+							></FlatList>
+						</View>
+					)}
+					keyExtractor={(item, index) => index.toString()}
 				></FlatList>
-				</View>
-            <View style={styles.buttonContainer}>
+			</View>
+			<View style={styles.buttonContainer}>
 				<Pressable
 					style={styles.roundButton}
 					onPress={async () => {
@@ -212,7 +220,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 					style={styles.roundButton}
 					disabled={mealPlan.length === 0}
 					onPress={() => {
-                        setSelectedRecipe('')
+						setSelectedRecipe('')
 						setRemoveModalVisible(true)
 					}}
 				>
@@ -230,10 +238,9 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 					<Text style={styles.text}>Add Recipe</Text>
 				</Pressable>
 			</View>
-        </SafeAreaView>
-
-    );
-};
+		</SafeAreaView>
+	)
+}
 
 const styles = StyleSheet.create({
 	background: {
@@ -253,13 +260,13 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 18,
 		fontFamily: 'Nunito',
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 	listText: {
 		color: 'white',
 		fontSize: 18,
 		fontFamily: 'Nunito',
-		textAlign: 'left',
+		textAlign: 'left'
 	},
 	button: {
 		backgroundColor: '#6D2D55',
@@ -325,12 +332,12 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito'
 	},
 	flatListContainer: {
-		width:"70%",
-		height:350,
+		width: '70%',
+		height: 350,
 		marginBottom: 20
 	},
 	flatList: {
-		backgroundColor: '#2d556d',
+		backgroundColor: '#2d556d'
 	},
 	title: {
 		color: 'white',
@@ -339,7 +346,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		marginBottom: 10
 	},
-    subTitle: {
+	subTitle: {
 		color: 'white',
 		fontSize: 22,
 		fontFamily: 'Nunito',
@@ -369,4 +376,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default AddRecipeToMealPlan;
+export default AddRecipeToMealPlan

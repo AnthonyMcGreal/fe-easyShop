@@ -13,7 +13,15 @@ function CreateMealPlan({navigation}) {
 	const [dayMealPlanStarts, setDayMealPlanStarts] = useState('')
 	const [mealPlanDays, setMealPlanDays] = useState([])
 	const mealPlanDaysOptions = [1, 2, 3, 4, 5, 6, 7]
-	const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+	const days = [
+		'Monday',
+		'Tuesday',
+		'Wednesday',
+		'Thursday',
+		'Friday',
+		'Saturday',
+		'Sunday'
+	]
 
 	useEffect(() => {
 		if (mealPlanName && mealPlanLength) setDisableButton(false)
@@ -35,15 +43,15 @@ function CreateMealPlan({navigation}) {
 	useEffect(() => {
 		const startingIndex = days.indexOf(dayMealPlanStarts)
 		const daysList = []
-		for (let i = startingIndex; i<startingIndex+mealPlanLength; i++){
-			if(i > 6){
-				daysList.push(days[(i-7)])
+		for (let i = startingIndex; i < startingIndex + mealPlanLength; i++) {
+			if (i > 6) {
+				daysList.push(days[i - 7])
 			} else {
-				daysList.push(days[(i)])
+				daysList.push(days[i])
 			}
 		}
 		setMealPlanDays(daysList)
-	},[mealPlanLength,dayMealPlanStarts])
+	}, [mealPlanLength, dayMealPlanStarts])
 
 	return (
 		<SafeAreaView style={styles.background}>
@@ -76,7 +84,7 @@ function CreateMealPlan({navigation}) {
 			<Pressable
 				style={styles.button}
 				disabled={disableButton}
-				onPress={() => 
+				onPress={() =>
 					navigation.navigate('AddRecipeToMealPlan', {
 						mealPlanName: mealPlanName,
 						mealPlanLength: mealPlanLength,
