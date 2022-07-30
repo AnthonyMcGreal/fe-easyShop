@@ -19,6 +19,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	const mealPlanLength = route.params.mealPlanLength
 	const mealPlanDays = route.params.mealPlanDays
 
+	const [rawRecipes, setRawRecipes] = useState([])
 	const [availableRecipes, setAvailableRecipes] = useState([])
 	const [mealPlan, setMealPlan] = useState({})
 	const [daysAvailable, setDaysAvailable] = useState([])
@@ -36,6 +37,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		const recipeNames = usersRecipes.data.recipes.map(recipe => {
 			return recipe.recipe_name
 		})
+		setRawRecipes(usersRecipes.data.recipes)
 		setAvailableRecipes(recipeNames)
 		const daysAvailable = []
 		const mealPlan = {
@@ -44,7 +46,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 			recipes: []
 		}
 		for (let i = 0; i < mealPlanLength; i++) {
-			mealPlan.recipes.push({[mealPlanDays[i]]: ['Test Recipe']})
+			mealPlan.recipes.push({[mealPlanDays[i]]: []})
 			daysAvailable.push(mealPlanDays[i])
 		}
 		setMealPlan(mealPlan)
@@ -58,19 +60,25 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 
 	const handleDaySelection = selectedDay => {
 		dayIndex = mealPlanDays.indexOf(selectedDay)
+		const availableRecipesForThisDay = mealPlan.recipes[dayIndex][
+			selectedDay
+		].map(recipe => recipe.recipe_name)
 		setSelectedDay(selectedDay)
-		setDailyRecipeList(mealPlan.recipes[dayIndex][selectedDay])
+		setDailyRecipeList(availableRecipesForThisDay)
 	}
 
 	const handleAddRecipeToMealPlan = () => {
-		mealPlan.recipes[dayIndex][selectedDay].push(selectedRecipe)
+		const recipe = rawRecipes.find(
+			recipe => recipe.recipe_name === selectedRecipe
+		)
+		mealPlan.recipes[dayIndex][selectedDay].push(recipe)
 		setAddModalVisible(false)
 	}
 
 	const handleRemoveRecipeFromMealPlan = () => {
 		const mealPlanCopy = [...mealPlan.recipes[dayIndex][selectedDay]]
 		const updatedDailyPlan = mealPlanCopy.filter(
-			recipe => recipe !== selectedRecipe
+			recipe => recipe.recipe_name !== selectedRecipe
 		)
 		mealPlan.recipes[dayIndex][selectedDay] = updatedDailyPlan
 		setRemoveModalVisible(false)
@@ -118,13 +126,21 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 							buttonTextStyle={styles.dropDownText}
 							rowStyle={styles.rowStyle}
 						/>
-						<Pressable
-							style={styles.button}
-							disabled={!selectedRecipe}
-							onPress={handleRemoveRecipeFromMealPlan}
-						>
-							<Text style={styles.text}>Remove meal</Text>
-						</Pressable>
+						<View>
+							<Pressable
+								style={styles.button}
+								disabled={!selectedRecipe}
+								onPress={handleRemoveRecipeFromMealPlan}
+							>
+								<Text style={styles.text}>Remove meal</Text>
+							</Pressable>
+							<Pressable
+								style={styles.button}
+								onPress={() => setRemoveModalVisible(false)}
+							>
+								<Text style={styles.text}>Back</Text>
+							</Pressable>
+						</View>
 					</View>
 				</View>
 			</Modal>
@@ -165,13 +181,21 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 							buttonTextStyle={styles.dropDownText}
 							rowStyle={styles.rowStyle}
 						/>
-						<Pressable
-							style={styles.button}
-							disabled={!selectedRecipe}
-							onPress={handleAddRecipeToMealPlan}
-						>
-							<Text style={styles.text}>Add to meal plan</Text>
-						</Pressable>
+						<View>
+							<Pressable
+								style={styles.button}
+								disabled={!selectedRecipe}
+								onPress={handleAddRecipeToMealPlan}
+							>
+								<Text style={styles.text}>Add to meal plan</Text>
+							</Pressable>
+							<Pressable
+								style={styles.button}
+								onPress={() => setAddModalVisible(false)}
+							>
+								<Text style={styles.text}>Back</Text>
+							</Pressable>
+						</View>
 					</View>
 				</View>
 			</Modal>
@@ -197,7 +221,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 								}
 								renderItem={({item}) => (
 									<Text style={styles.listText} key={item.id}>
-										- {item}
+										• {item.recipe_name} - {item.portions} portions
 									</Text>
 								)}
 								keyExtractor={(item, index) => index.toString()}
