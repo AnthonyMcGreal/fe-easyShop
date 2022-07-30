@@ -84,11 +84,66 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		setRemoveModalVisible(false)
 	}
 
+	const submitMealPlan = () => {
+		console.log(mealPlan)
+	}
+
+	const saveAndContinue = () => {}
+
 	return (
 		<SafeAreaView style={styles.background}>
-			{
-				// Remove recipe modal
-			}
+			<Modal
+				animationType="fade"
+				visible={confirmModalVisible}
+				onRequestClose={() => {
+					setAddModalVisible(false)
+				}}
+			>
+				<View style={styles.background}>
+					<Text style={styles.title}>{mealPlanName}</Text>
+					<View style={styles.flatListContainer}>
+						<FlatList
+							data={mealPlan.recipes}
+							renderItem={({item}) => (
+								<View>
+									<Text style={styles.subTitle} key={item.id}>
+										{daysAvailable[mealPlan.recipes.indexOf(item)]}
+									</Text>
+									<FlatList
+										style={styles.flatList}
+										data={
+											mealPlan.recipes[mealPlan.recipes.indexOf(item)][
+												daysAvailable[mealPlan.recipes.indexOf(item)]
+											]
+										}
+										renderItem={({item}) => (
+											<Text style={styles.listText} key={item.id}>
+												• {item.recipe_name} - {item.portions} portions
+											</Text>
+										)}
+										keyExtractor={(item, index) => index.toString()}
+									></FlatList>
+								</View>
+							)}
+							keyExtractor={(item, index) => index.toString()}
+						></FlatList>
+					</View>
+					<Pressable style={styles.button} onPress={submitMealPlan}>
+						<Text style={styles.text}>Save meal plan</Text>
+					</Pressable>
+					<Pressable style={styles.button} onPress={saveAndContinue}>
+						<Text style={styles.text}>Create a shopping list</Text>
+					</Pressable>
+					<Pressable
+						style={styles.button}
+						onPress={() => {
+							setConfirmModalVisible(false)
+						}}
+					>
+						<Text style={styles.text}>Back</Text>
+					</Pressable>
+				</View>
+			</Modal>
 			<Modal
 				animationType="fade"
 				visible={removeModalVisible}
@@ -254,12 +309,11 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 			<View>
 				<Pressable
 					style={styles.button}
-					disabled={mealPlan.length === 0}
-					onPress={async () => {
+					onPress={() => {
 						setConfirmModalVisible(true)
 					}}
 				>
-					<Text style={styles.text}>Add Recipe</Text>
+					<Text style={styles.text}>Confirm meal plan </Text>
 				</Pressable>
 			</View>
 		</SafeAreaView>
@@ -357,7 +411,7 @@ const styles = StyleSheet.create({
 	},
 	flatListContainer: {
 		width: '70%',
-		height: 350,
+		height: 280,
 		marginBottom: 20
 	},
 	flatList: {
