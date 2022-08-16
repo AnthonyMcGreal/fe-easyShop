@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {getRecipes} from '../../../api'
+import {getRecipes, addMealPlan} from '../../../api'
 import {
 	Text,
 	StyleSheet,
@@ -29,6 +29,8 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	const [addModalVisible, setAddModalVisible] = useState(false)
 	const [removeModalVisible, setRemoveModalVisible] = useState(false)
 	const [confirmModalVisible, setConfirmModalVisible] = useState(false)
+	const [saveModalVisible, setSaveModalVisible] = useState(false) 
+	const [apiResult, setApiResult] = useState(0)
 
 	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
 
@@ -73,6 +75,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		)
 		mealPlan.recipes[dayIndex][selectedDay].push(recipe)
 		setAddModalVisible(false)
+		setSelectedDay('')
 	}
 
 	const handleRemoveRecipeFromMealPlan = () => {
@@ -84,11 +87,26 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		setRemoveModalVisible(false)
 	}
 
-	const submitMealPlan = () => {
-		console.log(mealPlan)
+	const submitMealPlan = async () => {
+		setSaveModalVisible(true)
+		let result = await addMealPlan(mealPlan)
+		setApiResult(result)
 	}
 
 	const saveAndContinue = () => {}
+
+	const backButton = () => {
+		return (
+			<Pressable
+				style={styles.backButton}
+				onPress={() => {
+					navigation.navigate('Home')
+				}}
+			>
+				<Text style={styles.text}>Back to home page</Text>
+			</Pressable>
+		)
+	}
 
 	return (
 		<SafeAreaView style={styles.background}>
@@ -99,6 +117,39 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 					setAddModalVisible(false)
 				}}
 			>
+				<Modal
+				animationType="fade"
+				visible={saveModalVisible}
+				onRequestClose={() => {
+					setSaveModalVisible(modalVisible)
+				}}
+			>
+				<View style={styles.background}>
+					<View style={styles.saveMealPlanModal}>
+						{apiResult === 201 ? (
+							<View>
+								<Text style={styles.afterActionText}>Meal plan saved</Text>
+								{backButton()}
+							</View>
+						) : null}
+						{apiResult > 0 && apiResult !== 201 ? (
+							<View>
+								<Text style={styles.afterActionText}>
+									Ooops! Something went wrong, try again
+								</Text>
+								{backButton()}
+							</View>
+						) : null}
+						{apiResult === 0 ? (
+							<ActivityIndicator
+								size="large"
+								color="#6D2D55"
+								animating={true}
+							/>
+						) : null}
+					</View>
+				</View>
+			</Modal>
 				<View style={styles.background}>
 					<Text style={styles.title}>{mealPlanName}</Text>
 					<View style={styles.flatListContainer}>
@@ -239,7 +290,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 						<View>
 							<Pressable
 								style={styles.button}
-								disabled={!selectedRecipe}
+								disabled={!selectedRecipe || !selectedDay}
 								onPress={handleAddRecipeToMealPlan}
 							>
 								<Text style={styles.text}>Add to meal plan</Text>
@@ -451,6 +502,14 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'space-around',
 		alignItems: 'center'
+	},
+	backButton: {
+		backgroundColor: '#6D2D55',
+		height: 50,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 10,
+		marginTop: 30
 	}
 })
 

@@ -68,3 +68,12 @@ exports.deleteRecipeByName = async name => {
 exports.getRecipeByName = async name => {
 	return axios.get(`${baseURL}/recipe/${name}`)
 }
+
+exports.addMealPlan = async mealPlan => {
+	const mealPlanWithUser = [{name: mealPlan.mealPlanName, username:'Anthony', recipes: mealPlan.recipes}]
+	console.log(mealPlanWithUser)
+	return axios.post(`${baseURL}/mealPlans`, mealPlanWithUser).then(result => {
+		return result.status
+	})
+	.catch(err => console.log(err))
+}
