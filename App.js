@@ -18,6 +18,8 @@ import DeleteIngredient from './app/screens/home/recipes/DeleteIngredient'
 import AddIngredientToRecipe from './app/screens/home/recipes/AddIngredientToRecipe'
 import UpdateRecipeIngredients from './app/screens/home/recipes/UpdateRecipeIngredients'
 import AddRecipeToMealPlan from './app/screens/home/mealPlans/AddRecipeToMealPlan'
+import MealPlansHome from './app/screens/home/mealPlans/MealPlansHome'
+import DeleteMealPlans from './app/screens/home/mealPlans/DeleteMealPlan'
 
 export default function App() {
 	const Stack = createStackNavigator()
@@ -46,6 +48,11 @@ export default function App() {
 					options={{headerShown: false}}
 				/>
 				<Stack.Screen
+					name="MealPlansHome"
+					component={MealPlansHome}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
 					name="RecipesHome"
 					component={RecipesHome}
 					options={{headerShown: false}}
@@ -53,6 +60,11 @@ export default function App() {
 				<Stack.Screen
 					name="ViewMealPlans"
 					component={ViewMealPlans}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="DeleteMealPlans"
+					component={DeleteMealPlans}
 					options={{headerShown: false}}
 				/>
 				<Stack.Screen

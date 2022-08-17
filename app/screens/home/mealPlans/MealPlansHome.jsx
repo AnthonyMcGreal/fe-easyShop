@@ -2,43 +2,42 @@ import React from 'react'
 import {View, Text, StyleSheet, Button, Pressable} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 
-function Home({navigation}) {
+function MealPlansHome({navigation}) {
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
 				<View>
 					<Text style={styles.name}>EasyShop</Text>
 				</View>
-				<View style={styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
 					<Pressable
 						style={styles.button}
 						onPress={() => {
-							navigation.navigate('MealPlansHome')
+							navigation.navigate('CreateMealPlan')
 						}}
 					>
-						<Text style={styles.text}>Meal plans</Text>
+						<Text style={styles.text}>Create a meal plan</Text>
 					</Pressable>
 					<Pressable
 						style={styles.button}
 						onPress={() => {
-							navigation.navigate('RecipesHome')
+							navigation.navigate('ViewMealPlans')
 						}}
 					>
-						<Text style={styles.text}>Recipes</Text>
+						<Text style={styles.text}>View/Update a meal plan</Text>
 					</Pressable>
-
-					<Pressable
+          <Pressable
 						style={styles.button}
 						onPress={() => {
-							navigation.navigate('MiscItems')
+							navigation.navigate('DeleteMealPlans')
 						}}
 					>
-						<Text style={styles.text}>Misc. item</Text>
+						<Text style={styles.text}>Delete a meal plan</Text>
 					</Pressable>
-				</View>
-			</View>
-		</SafeAreaView>
-	)
+        </View>
+      </View>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 230,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -83,4 +82,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default Home
+export default MealPlansHome
