@@ -29,7 +29,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	const [addModalVisible, setAddModalVisible] = useState(false)
 	const [removeModalVisible, setRemoveModalVisible] = useState(false)
 	const [confirmModalVisible, setConfirmModalVisible] = useState(false)
-	const [saveModalVisible, setSaveModalVisible] = useState(false) 
+	const [saveModalVisible, setSaveModalVisible] = useState(false)
 	const [apiResult, setApiResult] = useState(0)
 
 	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
@@ -118,38 +118,38 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 				}}
 			>
 				<Modal
-				animationType="fade"
-				visible={saveModalVisible}
-				onRequestClose={() => {
-					setSaveModalVisible(modalVisible)
-				}}
-			>
-				<View style={styles.background}>
-					<View style={styles.saveMealPlanModal}>
-						{apiResult === 201 ? (
-							<View>
-								<Text style={styles.afterActionText}>Meal plan saved</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult > 0 && apiResult !== 201 ? (
-							<View>
-								<Text style={styles.afterActionText}>
-									Ooops! Something went wrong, try again
-								</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult === 0 ? (
-							<ActivityIndicator
-								size="large"
-								color="#6D2D55"
-								animating={true}
-							/>
-						) : null}
+					animationType="fade"
+					visible={saveModalVisible}
+					onRequestClose={() => {
+						setSaveModalVisible(modalVisible)
+					}}
+				>
+					<View style={styles.background}>
+						<View style={styles.saveMealPlanModal}>
+							{apiResult === 201 ? (
+								<View>
+									<Text style={styles.afterActionText}>Meal plan saved</Text>
+									{backButton()}
+								</View>
+							) : null}
+							{apiResult > 0 && apiResult !== 201 ? (
+								<View>
+									<Text style={styles.afterActionText}>
+										Ooops! Something went wrong, try again
+									</Text>
+									{backButton()}
+								</View>
+							) : null}
+							{apiResult === 0 ? (
+								<ActivityIndicator
+									size="large"
+									color="#6D2D55"
+									animating={true}
+								/>
+							) : null}
+						</View>
 					</View>
-				</View>
-			</Modal>
+				</Modal>
 				<View style={styles.background}>
 					<Text style={styles.title}>{mealPlanName}</Text>
 					<View style={styles.flatListContainer}>

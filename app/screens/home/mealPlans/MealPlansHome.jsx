@@ -9,7 +9,7 @@ function MealPlansHome({navigation}) {
 				<View>
 					<Text style={styles.name}>EasyShop</Text>
 				</View>
-        <View style={styles.buttonContainer}>
+				<View style={styles.buttonContainer}>
 					<Pressable
 						style={styles.button}
 						onPress={() => {
@@ -26,7 +26,7 @@ function MealPlansHome({navigation}) {
 					>
 						<Text style={styles.text}>View/Update a meal plan</Text>
 					</Pressable>
-          <Pressable
+					<Pressable
 						style={styles.button}
 						onPress={() => {
 							navigation.navigate('DeleteMealPlans')
@@ -34,10 +34,10 @@ function MealPlansHome({navigation}) {
 					>
 						<Text style={styles.text}>Delete a meal plan</Text>
 					</Pressable>
-        </View>
-      </View>
-    </SafeAreaView>
-  )
+				</View>
+			</View>
+		</SafeAreaView>
+	)
 }
 
 const styles = StyleSheet.create({

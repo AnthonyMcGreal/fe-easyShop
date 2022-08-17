@@ -70,10 +70,26 @@ exports.getRecipeByName = async name => {
 }
 
 exports.addMealPlan = async mealPlan => {
-	const mealPlanWithUser = [{name: mealPlan.mealPlanName, username:'Anthony', recipes: mealPlan.recipes}]
+	const mealPlanWithUser = [
+		{
+			name: mealPlan.mealPlanName,
+			username: 'Anthony',
+			recipes: mealPlan.recipes
+		}
+	]
 	console.log(mealPlanWithUser)
-	return axios.post(`${baseURL}/mealPlans`, mealPlanWithUser).then(result => {
-		return result.status
-	})
-	.catch(err => console.log(err))
+	return axios
+		.post(`${baseURL}/mealPlans`, mealPlanWithUser)
+		.then(result => {
+			return result.status
+		})
+		.catch(err => console.log(err))
+}
+
+exports.getMealPlans = async () => {
+	return axios.get(`${baseURL}/mealPlans`)
+}
+
+exports.deleteMealPlanByName = async mealPlanName => {
+	return axios.delete(`${baseURL}/mealPlans/${mealPlanName}`)
 }
