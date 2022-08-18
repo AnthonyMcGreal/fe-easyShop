@@ -77,7 +77,6 @@ exports.addMealPlan = async mealPlan => {
 			recipes: mealPlan.recipes
 		}
 	]
-	console.log(mealPlanWithUser)
 	return axios
 		.post(`${baseURL}/mealPlans`, mealPlanWithUser)
 		.then(result => {
@@ -92,4 +91,8 @@ exports.getMealPlans = async () => {
 
 exports.deleteMealPlanByName = async mealPlanName => {
 	return axios.delete(`${baseURL}/mealPlans/${mealPlanName}`)
+}
+
+exports.getMealPlanByName = async mealPlanName => {
+	return axios.get(`${baseURL}/mealPlans/${mealPlanName}`)
 }

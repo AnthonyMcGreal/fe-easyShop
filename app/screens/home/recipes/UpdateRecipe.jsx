@@ -1,12 +1,5 @@
 import {useEffect, useState} from 'react'
-import {
-	View,
-	Text,
-	StyleSheet,
-	Pressable,
-	Modal,
-	ActivityIndicator
-} from 'react-native'
+import {View, Text, StyleSheet, Pressable} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'

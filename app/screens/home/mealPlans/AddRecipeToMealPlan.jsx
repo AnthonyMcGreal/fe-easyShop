@@ -18,6 +18,8 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	const mealPlanName = route.params.mealPlanName
 	const mealPlanLength = route.params.mealPlanLength
 	const mealPlanDays = route.params.mealPlanDays
+	const mealPlanToUpdate = route.params.mealPlan
+	const previousPage = route.params.route
 
 	const [rawRecipes, setRawRecipes] = useState([])
 	const [availableRecipes, setAvailableRecipes] = useState([])
@@ -41,18 +43,24 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		})
 		setRawRecipes(usersRecipes.data.recipes)
 		setAvailableRecipes(recipeNames)
-		const daysAvailable = []
-		const mealPlan = {
-			mealPlanName: mealPlanName,
-			mealPlanLength: mealPlanLength,
-			recipes: []
+		if (previousPage === 'CreateMealPlan') {
+			const daysAvailable = []
+			const mealPlan = {
+				mealPlanName: mealPlanName,
+				mealPlanLength: mealPlanLength,
+				recipes: []
+			}
+
+			for (let i = 0; i < mealPlanLength; i++) {
+				mealPlan.recipes.push({[mealPlanDays[i]]: []})
+				daysAvailable.push(mealPlanDays[i])
+			}
+			setMealPlan(mealPlan)
+			setDaysAvailable(daysAvailable)
+		} else {
+			setMealPlan(mealPlanToUpdate)
+			setDaysAvailable(mealPlanDays)
 		}
-		for (let i = 0; i < mealPlanLength; i++) {
-			mealPlan.recipes.push({[mealPlanDays[i]]: []})
-			daysAvailable.push(mealPlanDays[i])
-		}
-		setMealPlan(mealPlan)
-		setDaysAvailable(daysAvailable)
 	}, [])
 
 	const handleRecipeSelection = selectedRecipe => {
@@ -206,10 +214,9 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 					<View style={styles.modelContainer}>
 						<Text style={styles.text}>Pick a day</Text>
 						<SelectDropdown
-							data={daysAvailable.filter(
-								(day, index) =>
-									Object.keys(mealPlan.recipes[index][day]).length !== 0
-							)}
+							data={daysAvailable.filter((day, index) => {
+								return Object.keys(mealPlan.recipes[index][day]).length !== 0
+							})}
 							onSelect={handleDaySelection}
 							buttonTextAfterSelection={selectedDay => `${selectedDay}`}
 							renderDropdownIcon={() => (

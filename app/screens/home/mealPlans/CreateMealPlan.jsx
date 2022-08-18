@@ -88,7 +88,9 @@ function CreateMealPlan({navigation}) {
 					navigation.navigate('AddRecipeToMealPlan', {
 						mealPlanName: mealPlanName,
 						mealPlanLength: mealPlanLength,
-						mealPlanDays: mealPlanDays
+						mealPlanDays: mealPlanDays,
+						mealPlan: {},
+						route: 'CreateMealPlan'
 					})
 				}
 			>
