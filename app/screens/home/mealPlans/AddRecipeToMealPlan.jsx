@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {getRecipes, addMealPlan} from '../../../api'
+import {getRecipes, addMealPlan, updateMealPlan} from '../../../api'
 import {
 	Text,
 	StyleSheet,
@@ -101,6 +101,29 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		setApiResult(result)
 	}
 
+	const patchMealPlan = async () => {
+		setSaveModalVisible(true)
+		let result = await updateMealPlan(mealPlan)
+		setApiResult(result)
+	}
+
+	function SaveUpdateButton () {
+		if (previousPage === 'CreateMealPlan') {
+			return <>
+				<Pressable style={styles.button} onPress={submitMealPlan}>
+				<Text style={styles.text}>Save meal plan</Text>
+				</Pressable>
+			</>
+		} else {
+			return <>
+				<Pressable style={styles.button} onPress={patchMealPlan}>
+				<Text style={styles.text}>Update meal plan</Text>
+				</Pressable>
+		</>
+		}
+
+	}
+
 	const saveAndContinue = () => {}
 
 	const backButton = () => {
@@ -187,9 +210,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 							keyExtractor={(item, index) => index.toString()}
 						></FlatList>
 					</View>
-					<Pressable style={styles.button} onPress={submitMealPlan}>
-						<Text style={styles.text}>Save meal plan</Text>
-					</Pressable>
+					{SaveUpdateButton()}
 					<Pressable style={styles.button} onPress={saveAndContinue}>
 						<Text style={styles.text}>Create a shopping list</Text>
 					</Pressable>

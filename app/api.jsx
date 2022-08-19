@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { KeyboardAvoidingViewBase } from 'react-native'
 
 const baseURL = 'https://easy-shop-be.herokuapp.com/api'
 
@@ -95,4 +96,13 @@ exports.deleteMealPlanByName = async mealPlanName => {
 
 exports.getMealPlanByName = async mealPlanName => {
 	return axios.get(`${baseURL}/mealPlans/${mealPlanName}`)
+}
+
+exports.updateMealPlan = async mealPlan => {
+	const mealPlanName = mealPlan.name
+	const mealPlanWithUser = {...mealPlan, username: "Anthony"}
+	return axios.patch(`${baseURL}/mealPlans/${mealPlanName}`, mealPlanWithUser).then(result => {
+		return result.status
+	})
+	.catch(err => console.log(err))
 }

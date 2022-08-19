@@ -20,6 +20,10 @@ import UpdateRecipeIngredients from './app/screens/home/recipes/UpdateRecipeIngr
 import AddRecipeToMealPlan from './app/screens/home/mealPlans/AddRecipeToMealPlan'
 import MealPlansHome from './app/screens/home/mealPlans/MealPlansHome'
 import DeleteMealPlans from './app/screens/home/mealPlans/DeleteMealPlan'
+import ShoppingList from './app/screens/home/mealPlans/ShoppingList'
+import CheckBulkItems from './app/screens/home/mealPlans/CheckBulkItems.jsx'
+import AddMiscItemsToShoppingList from './app/screens/home/mealPlans/AddMiscItemsToShoppingList'
+import BatchedCookRecipes from './app/screens/home/mealPlans/BatchedCookRecipes'
 
 export default function App() {
 	const Stack = createStackNavigator()
@@ -120,6 +124,26 @@ export default function App() {
 				<Stack.Screen
 					name="AddRecipeToMealPlan"
 					component={AddRecipeToMealPlan}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="ShoppingList"
+					component={ShoppingList}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="CheckBulkItems"
+					component={CheckBulkItems}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="AddMiscItemsToShoppingList"
+					component={AddMiscItemsToShoppingList}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name="BatchedCookRecipes"
+					component={BatchedCookRecipes}
 					options={{headerShown: false}}
 				/>
 			</Stack.Navigator>
