@@ -163,7 +163,13 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 									{backButton()}
 								</View>
 							) : null}
-							{apiResult > 0 && apiResult !== 201 ? (
+							{apiResult === 200 ? (
+								<View>
+									<Text style={styles.afterActionText}>Meal plan updated</Text>
+									{backButton()}
+								</View>
+							) : null}
+							{apiResult > 0 && apiResult !== 201 && apiResult !== 200? (
 								<View>
 									<Text style={styles.afterActionText}>
 										Ooops! Something went wrong, try again
