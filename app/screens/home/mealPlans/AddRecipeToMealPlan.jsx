@@ -111,23 +111,27 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 
 	const SaveUpdateButton = () => {
 		if (previousPage === 'CreateMealPlan') {
-			return <>
-				<Pressable style={styles.button} onPress={submitMealPlan}>
-				<Text style={styles.text}>Save meal plan</Text>
-				</Pressable>
-			</>
+			return (
+				<>
+					<Pressable style={styles.button} onPress={submitMealPlan}>
+						<Text style={styles.text}>Save meal plan</Text>
+					</Pressable>
+				</>
+			)
 		} else {
-			return <>
-				<Pressable style={styles.button} onPress={patchMealPlan}>
-				<Text style={styles.text}>Save meal plan</Text>
-				</Pressable>
-		</>
+			return (
+				<>
+					<Pressable style={styles.button} onPress={patchMealPlan}>
+						<Text style={styles.text}>Save meal plan</Text>
+					</Pressable>
+				</>
+			)
 		}
 	}
 
 	const createMealPlanButton = () => {
 		checkDuplicateMealsAndCountRecipes()
-		if (recipeHasMultipleMeals){
+		if (recipeHasMultipleMeals) {
 			navigation.navigate('BatchedCookRecipes', {
 				recipes: recipeTotals
 			})
@@ -141,18 +145,18 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	const checkDuplicateMealsAndCountRecipes = () => {
 		let countMeals = {}
 		mealPlan.recipes.forEach(day => {
-			for(const key in day){
+			for (const key in day) {
 				day[key].forEach(recipe => {
-					if(countMeals.hasOwnProperty(recipe.recipe_name)) {
-						countMeals[recipe.recipe_name] ++
+					if (countMeals.hasOwnProperty(recipe.recipe_name)) {
+						countMeals[recipe.recipe_name]++
 					} else {
 						countMeals[recipe.recipe_name] = 1
 					}
 				})
 			}
 		})
-		for(const key in countMeals){
-			if(countMeals[key]>1){
+		for (const key in countMeals) {
+			if (countMeals[key] > 1) {
 				setRecipeHasMultipleMeals(true)
 			}
 		}
@@ -200,15 +204,15 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 								<View>
 									<Text style={styles.afterActionText}>Meal plan updated</Text>
 									<Pressable
-				style={styles.backButton}
-				onPress={createMealPlanButton}
-			>
-				<Text style={styles.text}>Create a shopping list</Text>
-			</Pressable>
+										style={styles.backButton}
+										onPress={createMealPlanButton}
+									>
+										<Text style={styles.text}>Create a shopping list</Text>
+									</Pressable>
 									{backButton()}
 								</View>
 							) : null}
-							{apiResult > 0 && apiResult !== 201 && apiResult !== 200? (
+							{apiResult > 0 && apiResult !== 201 && apiResult !== 200 ? (
 								<View>
 									<Text style={styles.afterActionText}>
 										Ooops! Something went wrong, try again

@@ -8,13 +8,10 @@ import {
 	ActivityIndicator
 } from 'react-native'
 
-function ShoppingList({navigation}){
-
-  return 
+function ShoppingList({navigation}) {
+	return
 }
 
-const styles = StyleSheet.create({
-
-})
+const styles = StyleSheet.create({})
 
 export default ShoppingList

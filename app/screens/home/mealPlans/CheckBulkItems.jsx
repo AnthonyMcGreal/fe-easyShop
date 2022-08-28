@@ -14,14 +14,14 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 
-function CheckBulkItems({navigation, route}){
+function CheckBulkItems({navigation, route}) {
 	const recipes = route.params.recipes
 
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
 				<View>
-				<Text style={styles.text}>CheckBulkItems</Text>
+					<Text style={styles.text}>CheckBulkItems</Text>
 				</View>
 			</View>
 		</SafeAreaView>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontFamily: 'Nunito',
 		textAlign: 'center'
-	},
+	}
 })
 
 export default CheckBulkItems

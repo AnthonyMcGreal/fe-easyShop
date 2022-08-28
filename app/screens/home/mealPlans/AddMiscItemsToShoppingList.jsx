@@ -8,13 +8,10 @@ import {
 	ActivityIndicator
 } from 'react-native'
 
-function AddMiscItemsToShoppingList({navigation}){
-
-  return 
+function AddMiscItemsToShoppingList({navigation}) {
+	return
 }
 
-const styles = StyleSheet.create({
-
-})
+const styles = StyleSheet.create({})
 
 export default AddMiscItemsToShoppingList
