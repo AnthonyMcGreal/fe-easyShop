@@ -33,6 +33,8 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	const [confirmModalVisible, setConfirmModalVisible] = useState(false)
 	const [saveModalVisible, setSaveModalVisible] = useState(false)
 	const [apiResult, setApiResult] = useState(0)
+	const [recipeHasMultipleMeals, setRecipeHasMultipleMeals] = useState(false)
+	const [recipeTotals, setRecipeTotals] = useState({})
 
 	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
 
@@ -107,7 +109,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		setApiResult(result)
 	}
 
-	function SaveUpdateButton () {
+	const SaveUpdateButton = () => {
 		if (previousPage === 'CreateMealPlan') {
 			return <>
 				<Pressable style={styles.button} onPress={submitMealPlan}>
@@ -117,14 +119,45 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		} else {
 			return <>
 				<Pressable style={styles.button} onPress={patchMealPlan}>
-				<Text style={styles.text}>Update meal plan</Text>
+				<Text style={styles.text}>Save meal plan</Text>
 				</Pressable>
 		</>
 		}
-
 	}
 
-	const saveAndContinue = () => {}
+	const createMealPlanButton = () => {
+		checkDuplicateMealsAndCountRecipes()
+		if (recipeHasMultipleMeals){
+			navigation.navigate('BatchedCookRecipes', {
+				recipes: recipeTotals
+			})
+		} else {
+			navigation.navigate('CheckBulkItems', {
+				recipes: recipeTotals
+			})
+		}
+	}
+
+	const checkDuplicateMealsAndCountRecipes = () => {
+		let countMeals = {}
+		mealPlan.recipes.forEach(day => {
+			for(const key in day){
+				day[key].forEach(recipe => {
+					if(countMeals.hasOwnProperty(recipe.recipe_name)) {
+						countMeals[recipe.recipe_name] ++
+					} else {
+						countMeals[recipe.recipe_name] = 1
+					}
+				})
+			}
+		})
+		for(const key in countMeals){
+			if(countMeals[key]>1){
+				setRecipeHasMultipleMeals(true)
+			}
+		}
+		setRecipeTotals(countMeals)
+	}
 
 	const backButton = () => {
 		return (
@@ -166,6 +199,12 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 							{apiResult === 200 ? (
 								<View>
 									<Text style={styles.afterActionText}>Meal plan updated</Text>
+									<Pressable
+				style={styles.backButton}
+				onPress={createMealPlanButton}
+			>
+				<Text style={styles.text}>Create a shopping list</Text>
+			</Pressable>
 									{backButton()}
 								</View>
 							) : null}
@@ -217,7 +256,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 						></FlatList>
 					</View>
 					{SaveUpdateButton()}
-					<Pressable style={styles.button} onPress={saveAndContinue}>
+					<Pressable style={styles.button} onPress={createMealPlanButton}>
 						<Text style={styles.text}>Create a shopping list</Text>
 					</Pressable>
 					<Pressable
