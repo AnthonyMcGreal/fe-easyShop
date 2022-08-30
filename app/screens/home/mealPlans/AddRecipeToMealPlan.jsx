@@ -27,15 +27,15 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	const [daysAvailable, setDaysAvailable] = useState([])
 	const [selectedRecipe, setSelectedRecipe] = useState('')
 	const [selectedDay, setSelectedDay] = useState('')
+	const [selectedPortionSize, setSelectionPortionSize] = useState('')
 	const [dailyRecipeList, setDailyRecipeList] = useState('')
 	const [addModalVisible, setAddModalVisible] = useState(false)
 	const [removeModalVisible, setRemoveModalVisible] = useState(false)
 	const [confirmModalVisible, setConfirmModalVisible] = useState(false)
 	const [saveModalVisible, setSaveModalVisible] = useState(false)
 	const [apiResult, setApiResult] = useState(0)
-	const [recipeHasMultipleMeals, setRecipeHasMultipleMeals] = useState(false)
-	const [recipeTotals, setRecipeTotals] = useState({})
 
+	const portionSizesAvailable = [1,2,3,4,5,6,7,8]
 	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
 
 	useEffect(async () => {
@@ -52,7 +52,6 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 				mealPlanLength: mealPlanLength,
 				recipes: []
 			}
-
 			for (let i = 0; i < mealPlanLength; i++) {
 				mealPlan.recipes.push({[mealPlanDays[i]]: []})
 				daysAvailable.push(mealPlanDays[i])
@@ -79,13 +78,20 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		setDailyRecipeList(availableRecipesForThisDay)
 	}
 
+	const handlePortionSizeSelection = selectedSize => {
+		setSelectionPortionSize(selectedSize)
+	}
+
 	const handleAddRecipeToMealPlan = () => {
-		const recipe = rawRecipes.find(
-			recipe => recipe.recipe_name === selectedRecipe
-		)
+		const recipe = {
+			recipe_name : selectedRecipe,
+			portions : selectedPortionSize
+		}
 		mealPlan.recipes[dayIndex][selectedDay].push(recipe)
 		setAddModalVisible(false)
 		setSelectedDay('')
+		setSelectionPortionSize('')
+		setSelectedRecipe('')
 	}
 
 	const handleRemoveRecipeFromMealPlan = () => {
@@ -130,37 +136,36 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	}
 
 	const createMealPlanButton = () => {
-		checkDuplicateMealsAndCountRecipes()
-		if (recipeHasMultipleMeals) {
-			navigation.navigate('BatchedCookRecipes', {
-				recipes: recipeTotals
-			})
-		} else {
-			navigation.navigate('CheckBulkItems', {
-				recipes: recipeTotals
-			})
-		}
+		let recipeTotals = calculateRecipeQuantities()
+		navigation.navigate('CheckBulkItems', {
+			recipes: recipeTotals
+		})
 	}
 
-	const checkDuplicateMealsAndCountRecipes = () => {
-		let countMeals = {}
+	const calculateRecipeQuantities = () => {
+		let totalPortionSizePerMeals = {};
+		let totalNumberOfRecipesRequired = {};
+
 		mealPlan.recipes.forEach(day => {
 			for (const key in day) {
 				day[key].forEach(recipe => {
-					if (countMeals.hasOwnProperty(recipe.recipe_name)) {
-						countMeals[recipe.recipe_name]++
+					if (totalPortionSizePerMeals.hasOwnProperty(recipe.recipe_name)) {
+						totalPortionSizePerMeals[recipe.recipe_name] += recipe.portions
 					} else {
-						countMeals[recipe.recipe_name] = 1
+						totalPortionSizePerMeals[recipe.recipe_name] = recipe.portions
 					}
 				})
 			}
 		})
-		for (const key in countMeals) {
-			if (countMeals[key] > 1) {
-				setRecipeHasMultipleMeals(true)
-			}
+
+		for (const recipe in totalPortionSizePerMeals) {
+			let recipePortionSize = rawRecipes.find(rawRecipe => rawRecipe.recipe_name === recipe).portions
+			let portionsRequired = totalPortionSizePerMeals[recipe]
+			let recipesRequired = Math.ceil(portionsRequired/recipePortionSize)
+			totalNumberOfRecipesRequired[recipe] = recipesRequired
 		}
-		setRecipeTotals(countMeals)
+
+		return totalNumberOfRecipesRequired
 	}
 
 	const backButton = () => {
@@ -352,7 +357,19 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 							buttonTextStyle={styles.dropDownText}
 							rowStyle={styles.rowStyle}
 						/>
-						<Text style={styles.text}>Pick a day</Text>
+						<Text style={styles.text}>Choose a portion size:</Text>
+						<SelectDropdown
+							data={portionSizesAvailable}
+							onSelect={handlePortionSizeSelection}
+							buttonTextAfterSelection={selectedSize => `${selectedSize}`}
+							renderDropdownIcon={() => (
+								<FontAwesomeIcon icon={faChevronDown} />
+							)}
+							buttonStyle={styles.addIngredientDropDownStyle}
+							buttonTextStyle={styles.dropDownText}
+							rowStyle={styles.rowStyle}
+						/>
+						<Text style={styles.text}>Pick a day:</Text>
 						<SelectDropdown
 							data={daysAvailable}
 							onSelect={handleDaySelection}

@@ -17,6 +17,8 @@ import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 function CheckBulkItems({navigation, route}) {
 	const recipes = route.params.recipes
 
+	console.log(route.params.recipes)
+	console.log(recipes)
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
