@@ -35,7 +35,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	const [saveModalVisible, setSaveModalVisible] = useState(false)
 	const [apiResult, setApiResult] = useState(0)
 
-	const portionSizesAvailable = [1,2,3,4,5,6,7,8]
+	const portionSizesAvailable = [1, 2, 3, 4, 5, 6, 7, 8]
 	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
 
 	useEffect(async () => {
@@ -84,8 +84,8 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 
 	const handleAddRecipeToMealPlan = () => {
 		const recipe = {
-			recipe_name : selectedRecipe,
-			portions : selectedPortionSize
+			recipe_name: selectedRecipe,
+			portions: selectedPortionSize
 		}
 		mealPlan.recipes[dayIndex][selectedDay].push(recipe)
 		setAddModalVisible(false)
@@ -137,14 +137,14 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 
 	const createMealPlanButton = () => {
 		let recipeTotals = calculateRecipeQuantities()
-		navigation.navigate('CheckBulkItems', {
+		navigation.navigate('AddMiscItemsToShoppingList', {
 			recipes: recipeTotals
 		})
 	}
 
 	const calculateRecipeQuantities = () => {
-		let totalPortionSizePerMeals = {};
-		let totalNumberOfRecipesRequired = {};
+		let totalPortionSizePerMeals = {}
+		let totalNumberOfRecipesRequired = {}
 
 		mealPlan.recipes.forEach(day => {
 			for (const key in day) {
@@ -159,9 +159,11 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 		})
 
 		for (const recipe in totalPortionSizePerMeals) {
-			let recipePortionSize = rawRecipes.find(rawRecipe => rawRecipe.recipe_name === recipe).portions
+			let recipePortionSize = rawRecipes.find(
+				rawRecipe => rawRecipe.recipe_name === recipe
+			).portions
 			let portionsRequired = totalPortionSizePerMeals[recipe]
-			let recipesRequired = Math.ceil(portionsRequired/recipePortionSize)
+			let recipesRequired = Math.ceil(portionsRequired / recipePortionSize)
 			totalNumberOfRecipesRequired[recipe] = recipesRequired
 		}
 
@@ -493,7 +495,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 230,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -515,7 +517,7 @@ const styles = StyleSheet.create({
 		marginBottom: 10
 	},
 	addIngredientDropDownStyle: {
-		width: '80%',
+		width: 230,
 		height: 50,
 		borderWidth: 1,
 		backgroundColor: 'lightgrey'

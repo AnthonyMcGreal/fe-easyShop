@@ -15,10 +15,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 
 function CheckBulkItems({navigation, route}) {
-	const recipes = route.params.recipes
+	const finalList = route.params.finalList
 
-	console.log(route.params.recipes)
-	console.log(recipes)
+	console.log(route.params.finalList)
+	console.log(finalList)
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
