@@ -21,7 +21,6 @@ import AddRecipeToMealPlan from './app/screens/home/mealPlans/AddRecipeToMealPla
 import MealPlansHome from './app/screens/home/mealPlans/MealPlansHome'
 import DeleteMealPlans from './app/screens/home/mealPlans/DeleteMealPlan'
 import ShoppingList from './app/screens/home/mealPlans/ShoppingList'
-import CheckBulkItems from './app/screens/home/mealPlans/CheckBulkItems.jsx'
 import AddMiscItemsToShoppingList from './app/screens/home/mealPlans/AddMiscItemsToShoppingList'
 
 export default function App() {
@@ -128,11 +127,6 @@ export default function App() {
 				<Stack.Screen
 					name="ShoppingList"
 					component={ShoppingList}
-					options={{headerShown: false}}
-				/>
-				<Stack.Screen
-					name="CheckBulkItems"
-					component={CheckBulkItems}
 					options={{headerShown: false}}
 				/>
 				<Stack.Screen

@@ -108,3 +108,12 @@ exports.updateMealPlan = async mealPlan => {
 		})
 		.catch(err => console.log(err))
 }
+
+exports.getShoppingList = async recipes => {
+	return axios
+		.post(`${baseURL}/shoppingList`, recipes)
+		.then(result => {
+			return result.data.shoppingList
+		})
+		.catch(err => console.log(err))
+}

@@ -50,7 +50,7 @@ function AddMiscItemsToShoppingList({navigation, route}) {
 	const createShoppingList = () => {
 		let miscItems = formatMiscItems()
 		let finalList = {recipes: recipes, miscItems: miscItems}
-		navigation.navigate('CheckBulkItems', {
+		navigation.navigate('ShoppingList', {
 			finalList: finalList
 		})
 	}
