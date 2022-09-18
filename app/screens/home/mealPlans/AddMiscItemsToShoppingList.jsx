@@ -63,7 +63,7 @@ function AddMiscItemsToShoppingList({navigation, route}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
-			<Text style={styles.title}>Add Misc Items to shopping list</Text>
+			<Text style={styles.title}>Add Misc Items</Text>
 
 			{/* add misc item modal */}
 
@@ -110,7 +110,7 @@ function AddMiscItemsToShoppingList({navigation, route}) {
 								disabled={!selectedMiscItem || !selectedQuantity}
 								onPress={handleAddMiscItemToShoppingList}
 							>
-								<Text style={styles.text}>Add to meal plan</Text>
+								<Text style={styles.text}>Add to shopping list</Text>
 							</Pressable>
 							<Pressable
 								style={styles.button}
