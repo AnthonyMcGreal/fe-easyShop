@@ -39,12 +39,6 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
 
 	useEffect(async () => {
-		const usersRecipes = await getRecipes()
-		const recipeNames = usersRecipes.data.recipes.map(recipe => {
-			return recipe.recipe_name
-		})
-		setRawRecipes(usersRecipes.data.recipes)
-		setAvailableRecipes(recipeNames)
 		if (previousPage === 'CreateMealPlan') {
 			const daysAvailable = []
 			const mealPlan = {
@@ -62,6 +56,12 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 			setMealPlan(mealPlanToUpdate)
 			setDaysAvailable(mealPlanDays)
 		}
+		const usersRecipes = await getRecipes()
+		const recipeNames = usersRecipes.data.recipes.map(recipe => {
+			return recipe.recipe_name
+		})
+		setRawRecipes(usersRecipes.data.recipes)
+		setAvailableRecipes(recipeNames)
 	}, [])
 
 	const handleRecipeSelection = selectedRecipe => {

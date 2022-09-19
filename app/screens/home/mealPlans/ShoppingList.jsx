@@ -89,7 +89,9 @@ const styles = StyleSheet.create({
 		fontSize: 22,
 		fontFamily: 'Nunito',
 		textAlign: 'left',
-		textDecorationLine: 'underline'
+		textDecorationLine: 'underline',
+		marginBottom: 5,
+		marginTop: 5
 	}
 })
 
