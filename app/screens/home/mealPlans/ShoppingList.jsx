@@ -10,6 +10,7 @@ import {
 import {FlatList} from 'react-native-gesture-handler'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import {getShoppingList} from '../../../api'
+import { ShoppingListItem } from '../../../components/shoppingListItem'
 
 const ShoppingList = ({navigation, route}) => {
 	const recipes = route.params.finalList
@@ -48,11 +49,7 @@ const ShoppingList = ({navigation, route}) => {
 								style={styles.flatList}
 								data={shoppingList[item]}
 								renderItem={({item}) => (
-									<View>
-										<Text style={styles.listText} key={item}>
-											• {item.name} - {item.quantity} {item.unit_of_measurement}
-										</Text>
-									</View>
+										<ShoppingListItem shoppingListItem = {item} />
 								)}
 								keyExtractor={(item, index) => index.toString()}
 							></FlatList>
@@ -93,12 +90,6 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito',
 		textAlign: 'left',
 		textDecorationLine: 'underline'
-	},
-	listText: {
-		color: 'white',
-		fontSize: 18,
-		fontFamily: 'Nunito',
-		textAlign: 'left'
 	}
 })
 
