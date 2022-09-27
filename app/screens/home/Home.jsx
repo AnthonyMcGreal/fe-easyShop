@@ -1,8 +1,9 @@
 import React from 'react'
-import {View, Text, StyleSheet, Button, Pressable} from 'react-native'
+import {View, Text, StyleSheet, Pressable} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 
 function Home({navigation}) {
+
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
@@ -26,14 +27,13 @@ function Home({navigation}) {
 					>
 						<Text style={styles.text}>Recipes</Text>
 					</Pressable>
-
 					<Pressable
 						style={styles.button}
 						onPress={() => {
 							navigation.navigate('MiscItems')
 						}}
 					>
-						<Text style={styles.text}>Misc. item</Text>
+						<Text style={styles.text}>Misc. items</Text>
 					</Pressable>
 				</View>
 			</View>
