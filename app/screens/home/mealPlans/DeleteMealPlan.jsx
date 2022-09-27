@@ -12,8 +12,13 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {getMealPlans, deleteMealPlanByName} from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 function DeleteMealPlans({navigation}) {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [mealPlans, setMealPlans] = useState([])
 	const [planNames, setPlanNames] = useState([])
 	const [mealPlanToDelete, setMealPlanToDelete] = useState('')
@@ -22,7 +27,7 @@ function DeleteMealPlans({navigation}) {
 	const [apiResult, setApiResult] = useState(0)
 
 	useEffect(async () => {
-		const mealPlanList = await getMealPlans()
+		const mealPlanList = await getMealPlans(user.user_id, token)
 		setMealPlans(mealPlanList.data.mealPlans)
 		setApiResult(mealPlanList.status)
 		setMealPlansHasBeenCalled(true)
@@ -32,7 +37,11 @@ function DeleteMealPlans({navigation}) {
 
 	const handleDeleteMealPlanButton = async () => {
 		setModalVisible(true)
-		let result = await deleteMealPlanByName(mealPlanToDelete)
+		let result = await deleteMealPlanByName(
+			mealPlanToDelete,
+			user.user_id,
+			token
+		)
 		setApiResult(result.status)
 	}
 

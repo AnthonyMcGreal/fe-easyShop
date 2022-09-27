@@ -10,17 +10,23 @@ import {
 import {FlatList} from 'react-native-gesture-handler'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import {getShoppingList} from '../../../api'
-import { ShoppingListItem } from '../../../components/shoppingListItem'
+import {useAuthContext} from '../../../components/AuthContext'
+import {ShoppingListItem} from '../../../components/shoppingListItem'
+import {useUserContext} from '../../../components/UserContext'
 
 const ShoppingList = ({navigation, route}) => {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const recipes = route.params.finalList
 
 	const [shoppingList, setShoppingList] = useState({})
 	const [categories, setCategories] = useState([])
 
 	useEffect(async () => {
-		const shoppingList = await getShoppingList(recipes)
+		const shoppingList = await getShoppingList(recipes, user.user_id, token)
 		setShoppingList(shoppingList)
+		console.log(shoppingList)
 		setCategories(Object.entries(shoppingList).map(category => category[0]))
 	}, [])
 
@@ -49,7 +55,7 @@ const ShoppingList = ({navigation, route}) => {
 								style={styles.flatList}
 								data={shoppingList[item]}
 								renderItem={({item}) => (
-										<ShoppingListItem shoppingListItem = {item} />
+									<ShoppingListItem shoppingListItem={item} />
 								)}
 								keyExtractor={(item, index) => index.toString()}
 							></FlatList>
@@ -74,12 +80,12 @@ const styles = StyleSheet.create({
 		fontSize: 30,
 		fontFamily: 'Nunito',
 		textAlign: 'center',
-		marginTop:20,
-		marginBottom:20
+		marginTop: 20,
+		marginBottom: 20
 	},
 	flatListContainer: {
 		width: '85%',
-		height: 460,
+		height: 460
 	},
 	flatList: {
 		backgroundColor: '#2d556d'

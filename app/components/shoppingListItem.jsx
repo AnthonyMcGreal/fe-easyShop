@@ -1,29 +1,28 @@
 import {useState} from 'react'
-import {
-	View,
-	Text,
-	StyleSheet,
-} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 
-function ShoppingListItem ({shoppingListItem}) {
+function ShoppingListItem({shoppingListItem}) {
+	const [pressed, setPressed] = useState(false)
 
-  const [pressed, setPressed] = useState(false)
+	const handlePress = () => {
+		setPressed(!pressed)
+	}
 
-  const handlePress = () => {
-    setPressed(!pressed)
-  }
-
-  return (
-    <View>
-      <Text onPress={handlePress} style={pressed? styles.pressedListText : styles.listText} >
-      • {shoppingListItem.name} - {shoppingListItem.quantity} {shoppingListItem.unit_of_measurement}
-      </Text>
-    </View>
-  );
-};
+	return (
+		<View>
+			<Text
+				onPress={handlePress}
+				style={pressed ? styles.pressedListText : styles.listText}
+			>
+				• {shoppingListItem.name} - {shoppingListItem.quantity}{' '}
+				{shoppingListItem.unit_of_measurement}
+			</Text>
+		</View>
+	)
+}
 
 const styles = StyleSheet.create({
-  listText: {
+	listText: {
 		color: 'white',
 		fontSize: 18,
 		fontFamily: 'Nunito',
@@ -34,8 +33,8 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontFamily: 'Nunito',
 		textAlign: 'left',
-		textDecorationLine:'line-through'
+		textDecorationLine: 'line-through'
 	}
 })
 
-export {ShoppingListItem};
+export {ShoppingListItem}

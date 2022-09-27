@@ -5,22 +5,31 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {getMealPlans, getMealPlanByName} from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 function ViewMealPlans({navigation}) {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [mealPlanNames, setMealPlanNames] = useState([])
 	const [selectedMealPlan, setSelectedMealPlan] = useState('')
 	const [getMealPlansHasBeenCalled, setGetMealPlansHasBeenCalled] =
 		useState(false)
 
 	useEffect(async () => {
-		const plans = await getMealPlans()
+		const plans = await getMealPlans(user.user_id, token)
 		const names = plans.data.mealPlans.map(plan => plan.name)
 		setMealPlanNames(names)
 		setGetMealPlansHasBeenCalled(false)
 	}, [getMealPlansHasBeenCalled])
 
 	async function handleUpdateMealPlan() {
-		const getMealPlan = await getMealPlanByName(selectedMealPlan)
+		const getMealPlan = await getMealPlanByName(
+			selectedMealPlan,
+			user.user_id,
+			token
+		)
 		const mealPlanToUpdate = getMealPlan.data.meals[0]
 		const name = selectedMealPlan
 		const mealPlanLength = mealPlanToUpdate.recipes.length
@@ -61,7 +70,7 @@ function ViewMealPlans({navigation}) {
 				disabled={!selectedMealPlan}
 				onPress={handleUpdateMealPlan}
 			>
-				<Text style={styles.text}>Update meal plan</Text>
+				<Text style={styles.text}>View/Update meal plan</Text>
 			</Pressable>
 		</SafeAreaView>
 	)
@@ -86,7 +95,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito'
 	},
 	dropDownStyle: {
-		width: 200,
+		width: 240,
 		height: 50,
 		margin: 12,
 		borderWidth: 1,
@@ -125,7 +134,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 240,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',

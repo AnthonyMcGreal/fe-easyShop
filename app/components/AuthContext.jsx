@@ -4,21 +4,21 @@ const AuthContext = React.createContext()
 const UpdateUserContext = React.createContext()
 
 export function useAuthContext() {
-  return useContext(AuthContext)
+	return useContext(AuthContext)
 }
 
 export function updateAuthContext() {
-  return useContext(UpdateUserContext)
+	return useContext(UpdateUserContext)
 }
 
 export function AuthProvider({children}) {
-  const [jwt, setJwt] = useState('')
+	const [jwt, setJwt] = useState('')
 
-  return (
-    <AuthContext.Provider value={jwt}>
-      <UpdateUserContext.Provider value={setJwt}>
-        {children}
-      </UpdateUserContext.Provider>
-    </AuthContext.Provider>
-  )
+	return (
+		<AuthContext.Provider value={jwt}>
+			<UpdateUserContext.Provider value={setJwt}>
+				{children}
+			</UpdateUserContext.Provider>
+		</AuthContext.Provider>
+	)
 }

@@ -3,125 +3,204 @@ import axios from 'axios'
 const baseURL = 'https://easy-shop-be.herokuapp.com/api'
 
 exports.logIn = async (email, password) => {
-	return axios.post(`${baseURL}/login`,{
-		email:email,
-		password:password
-	}).then ((result) => {
-		return {user:result.data, jwt:result.headers["set-cookie"][0].slice(4,-8)}
-	}).catch((err) => {
-		return false
-	})
+	return axios
+		.post(`${baseURL}/login`, {
+			email: email,
+			password: password
+		})
+		.then(result => {
+			return {
+				user: result.data,
+				jwt: result.headers['set-cookie'][0].slice(4, -8)
+			}
+		})
+		.catch(err => {
+			return false
+		})
 }
 
-exports.addMiscItem = async (itemName, itemCategory) => {
-	const promise = axios.post(`${baseURL}/miscItem`, {
+exports.addMiscItem = async (itemName, itemCategory, user_id, token) => {
+	const params = {
 		name: itemName,
-		username: 'Anthony',
+		user_id: user_id,
 		category: itemCategory
-	})
+	}
+
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	const promise = axios.post(`${baseURL}/miscItem`, params, config)
 	const result = await promise
 	return result.status
 }
 
-exports.getMiscItems = async () => {
-	return axios.get(`${baseURL}/miscItem`)
+exports.getMiscItems = async (user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.get(`${baseURL}/miscItem/${user_id}`, config)
 }
 
-exports.deleteMiscItemById = async itemId => {
-	return axios.delete(`${baseURL}/miscItem/${itemId}`)
+exports.deleteMiscItemById = async (itemId, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.delete(`${baseURL}/miscItem/${itemId}`, config)
 }
 
 exports.addIngredient = async (
 	ingredientName,
 	ingredientUOM,
-	ingredientStorageType
+	ingredientStorageType,
+	user_id,
+	token
 ) => {
-	return axios
-		.post(`${baseURL}/ingredients`, {
-			name: ingredientName,
-			unit_of_measurement: ingredientUOM,
-			storage_type: ingredientStorageType,
-			username: 'Anthony'
-		})
-		.then(result => {
-			return result.status
-		})
-}
+	const params = {
+		name: ingredientName,
+		unit_of_measurement: ingredientUOM,
+		storage_type: ingredientStorageType,
+		user_id: user_id
+	}
 
-exports.getIngredients = async () => {
-	return axios.get(`${baseURL}/ingredients`)
-}
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
 
-exports.deleteIngredientById = async ingredientId => {
-	return axios.delete(`${baseURL}/ingredients/${ingredientId}`)
-}
-
-exports.addRecipe = async recipe => {
-	const recipeWithUser = recipe.map(ingredient => {
-		return {...ingredient, username: 'Anthony'}
+	return axios.post(`${baseURL}/ingredients`, params, config).then(result => {
+		return result.status
 	})
+}
+
+exports.getIngredients = async (user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.get(`${baseURL}/ingredients/${user_id}`, config)
+}
+
+exports.deleteIngredientById = async (ingredientId, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.delete(`${baseURL}/ingredients/${ingredientId}`, config)
+}
+
+exports.addRecipe = async (recipe, user_id, token) => {
+	const recipeWithUser = recipe.map(ingredient => {
+		return {...ingredient, user_id: user_id}
+	})
+
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
 	return axios
-		.post(`${baseURL}/recipe`, recipeWithUser)
+		.post(`${baseURL}/recipe`, recipeWithUser, config)
 		.then(result => {
 			return result.status
 		})
 		.catch(err => console.log(err))
 }
 
-exports.getRecipes = async () => {
-	return axios.get(`${baseURL}/recipe`)
+exports.getRecipes = async (user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.get(`${baseURL}/recipe/${user_id}`, config)
 }
 
-exports.deleteRecipeByName = async name => {
-	return axios.delete(`${baseURL}/recipe/${name}`)
+exports.deleteRecipeByName = async (name, user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.delete(`${baseURL}/recipe/${user_id}/${name}`, config)
 }
 
-exports.getRecipeByName = async name => {
-	return axios.get(`${baseURL}/recipe/${name}`)
+exports.getRecipeByName = async (name, user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.get(`${baseURL}/recipe/${user_id}/${name}`, config)
 }
 
-exports.addMealPlan = async mealPlan => {
+exports.addMealPlan = async (mealPlan, user_id, token) => {
 	const mealPlanWithUser = [
 		{
 			name: mealPlan.mealPlanName,
-			username: 'Anthony',
+			user_id: user_id,
 			recipes: mealPlan.recipes
 		}
 	]
+
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
 	return axios
-		.post(`${baseURL}/mealPlans`, mealPlanWithUser)
+		.post(`${baseURL}/mealPlans`, mealPlanWithUser, config)
 		.then(result => {
 			return result.status
 		})
 		.catch(err => console.log(err))
 }
 
-exports.getMealPlans = async () => {
-	return axios.get(`${baseURL}/mealPlans`)
+exports.getMealPlans = async (user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.get(`${baseURL}/mealPlans/${user_id}`, config)
 }
 
-exports.deleteMealPlanByName = async mealPlanName => {
-	return axios.delete(`${baseURL}/mealPlans/${mealPlanName}`)
+exports.deleteMealPlanByName = async (mealPlanName, user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.delete(`${baseURL}/mealPlans/${user_id}/${mealPlanName}`, config)
 }
 
-exports.getMealPlanByName = async mealPlanName => {
-	return axios.get(`${baseURL}/mealPlans/${mealPlanName}`)
+exports.getMealPlanByName = async (mealPlanName, user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
+	return axios.get(`${baseURL}/mealPlans/${user_id}/${mealPlanName}`, config)
 }
 
-exports.updateMealPlan = async mealPlan => {
+exports.updateMealPlan = async (mealPlan, user_id, token) => {
 	const mealPlanName = mealPlan.name
-	const mealPlanWithUser = {...mealPlan, username: 'Anthony'}
+	const mealPlanWithUser = {...mealPlan, user_id: user_id}
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
 	return axios
-		.patch(`${baseURL}/mealPlans/${mealPlanName}`, mealPlanWithUser)
+		.patch(
+			`${baseURL}/mealPlans/${user_id}/${mealPlanName}`,
+			mealPlanWithUser,
+			config
+		)
 		.then(result => {
 			return result.status
 		})
 		.catch(err => console.log(err))
 }
 
-exports.getShoppingList = async recipes => {
+exports.getShoppingList = async (recipes, user_id, token) => {
+	const config = {
+		headers: {Authorization: `Bearer ${token}`}
+	}
+
 	return axios
-		.post(`${baseURL}/shoppingList`, recipes)
+		.post(`${baseURL}/shoppingList/${user_id}`, recipes, config)
 		.then(result => {
 			return result.data.shoppingList
 		})

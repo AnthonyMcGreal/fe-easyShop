@@ -12,8 +12,13 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {getMiscItems, deleteMiscItemById} from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 const DeleteMiscItem = ({navigation}) => {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [miscItems, setChangeMiscItems] = useState([])
 	const [itemNames, setItemNames] = useState([])
 	const [itemToDelete, setChangeItemToDelete] = useState('')
@@ -23,7 +28,7 @@ const DeleteMiscItem = ({navigation}) => {
 	const [getMiscItemsBeenCalled, setGetMiscItemsBeenCalled] = useState(false)
 
 	useEffect(async () => {
-		const items = await getMiscItems()
+		const items = await getMiscItems(user.user_id, token)
 		setChangeMiscItems(items.data.miscItems)
 		setApiResult(items.status)
 		setGetMiscItemsBeenCalled(true)
@@ -42,7 +47,7 @@ const DeleteMiscItem = ({navigation}) => {
 
 	const handleDeleteItemButton = async () => {
 		setModalVisible(true)
-		let result = await deleteMiscItemById(itemIdToDeleted)
+		let result = await deleteMiscItemById(itemIdToDeleted, token)
 		setApiResult(result.status)
 	}
 

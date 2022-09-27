@@ -13,8 +13,13 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {addMiscItem} from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 const AddMiscItems = ({navigation}) => {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [itemName, onChangeItemName] = useState('')
 	const [itemCategory, onChangeItemCategory] = useState('')
 	const categories = ['Cleaning', 'Hygiene', 'Household Items', 'Other']
@@ -108,7 +113,12 @@ const AddMiscItems = ({navigation}) => {
 				disabled={itemName && itemCategory ? false : true}
 				onPress={async () => {
 					setModalVisible(!modalVisible)
-					const result = await addMiscItem(itemName, itemCategory)
+					const result = await addMiscItem(
+						itemName,
+						itemCategory,
+						user.user_id,
+						token
+					)
 					setApiResult(result)
 				}}
 			>

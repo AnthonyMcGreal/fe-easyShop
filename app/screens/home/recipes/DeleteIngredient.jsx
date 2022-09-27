@@ -12,8 +12,13 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {getIngredients, deleteIngredientById} from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 const DeleteMiscItem = ({navigation}) => {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [ingredients, setIngredients] = useState([])
 	const [ingredientNames, setIngredientNames] = useState([])
 	const [ingredientToDelete, setIngredientToDelete] = useState('')
@@ -24,7 +29,7 @@ const DeleteMiscItem = ({navigation}) => {
 		useState(false)
 
 	useEffect(async () => {
-		const items = await getIngredients()
+		const items = await getIngredients(user.user_id, token)
 		setIngredients(items.data.ingredients)
 		setApiResult(items.status)
 		setGetIngredientsBeenCalled(true)
@@ -43,7 +48,7 @@ const DeleteMiscItem = ({navigation}) => {
 
 	const handleDeleteIngredientButton = async () => {
 		setModalVisible(true)
-		let result = await deleteIngredientById(ingredientIdToDeleted)
+		let result = await deleteIngredientById(ingredientIdToDeleted, token)
 		setApiResult(result.status)
 	}
 

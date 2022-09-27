@@ -5,8 +5,13 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 function AddMiscItemsToShoppingList({navigation, route}) {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const recipes = route.params.recipes
 
 	const [miscItems, setMiscItems] = useState([])
@@ -20,7 +25,7 @@ function AddMiscItemsToShoppingList({navigation, route}) {
 	const quantityAvailable = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 	useEffect(async () => {
-		const miscItems = await getMiscItems()
+		const miscItems = await getMiscItems(user.user_id, token)
 		const miscItemNames = miscItems.data.miscItems.map(item => item.name)
 		setMiscItems(miscItems.data.miscItems)
 		setMiscItemNames(miscItemNames)

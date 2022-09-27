@@ -13,8 +13,13 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {addIngredient} from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 function AddIngredient({navigation}) {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [ingredientName, setIngredientName] = useState('')
 	const [unitOfMeasurement, setUnitOfMeasurement] = useState('')
 	const [storageType, setStorageType] = useState('')
@@ -145,7 +150,9 @@ function AddIngredient({navigation}) {
 					const result = await addIngredient(
 						ingredientName,
 						unitOfMeasurement,
-						storageType
+						storageType,
+						user.user_id,
+						token
 					)
 					setApiResult(result)
 				}}

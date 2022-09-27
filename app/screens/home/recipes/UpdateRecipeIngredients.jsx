@@ -19,8 +19,13 @@ import {
 	deleteRecipeByName,
 	addRecipe
 } from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 const UpdateRecipeIngredients = ({navigation, route}) => {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [ingredientsInRecipe, setIngredientsInRecipe] = useState([])
 
 	const [addModalVisible, setAddModalVisible] = useState('false')
@@ -45,8 +50,8 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 	let portions
 
 	useEffect(async () => {
-		const items = await getIngredients()
-		const recipe = await getRecipeByName(recipe_name)
+		const items = await getIngredients(user.user_id, token)
+		const recipe = await getRecipeByName(recipe_name, user.user_id, token)
 		setUsersIngredients(items.data.ingredients)
 		setIngredientsInRecipe(recipe.data)
 		link = recipe.data[0].link
@@ -127,8 +132,8 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 				portions: ingredientsInRecipe[0].portions
 			}
 		})
-		await deleteRecipeByName(recipe_name)
-		const result = await addRecipe(recipeToSubmit, recipe_name)
+		await deleteRecipeByName(recipe_name, user.user_id, token)
+		const result = await addRecipe(recipeToSubmit, user.user_id, token)
 		setApiResult(result)
 	}
 

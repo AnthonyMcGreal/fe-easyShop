@@ -5,15 +5,20 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {getRecipes} from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 function UpdateRecipe({navigation}) {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [recipes, setRecipes] = useState([])
 	const [recipeNames, setRecipeNames] = useState([])
 	const [recipeToUpdate, setRecipeToUpdate] = useState(0)
 	const [getRecipesHasBeenCalled, setGetRecipesHasBeenCalled] = useState(false)
 
 	useEffect(async () => {
-		const items = await getRecipes()
+		const items = await getRecipes(user.user_id, token)
 		setRecipes(items.data.recipes)
 		setGetRecipesHasBeenCalled(true)
 		setRecipeNames(recipes.map(recipe => recipe.recipe_name))

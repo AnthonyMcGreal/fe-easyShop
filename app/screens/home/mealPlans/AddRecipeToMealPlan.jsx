@@ -13,8 +13,13 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 const AddRecipeToMealPlan = ({navigation, route}) => {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const mealPlanName = route.params.mealPlanName
 	const mealPlanLength = route.params.mealPlanLength
 	const mealPlanDays = route.params.mealPlanDays
@@ -56,7 +61,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 			setMealPlan(mealPlanToUpdate)
 			setDaysAvailable(mealPlanDays)
 		}
-		const usersRecipes = await getRecipes()
+		const usersRecipes = await getRecipes(user.user_id, token)
 		const recipeNames = usersRecipes.data.recipes.map(recipe => {
 			return recipe.recipe_name
 		})
@@ -105,13 +110,13 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 
 	const submitMealPlan = async () => {
 		setSaveModalVisible(true)
-		let result = await addMealPlan(mealPlan)
+		let result = await addMealPlan(mealPlan, user.user_id, token)
 		setApiResult(result)
 	}
 
 	const patchMealPlan = async () => {
 		setSaveModalVisible(true)
-		let result = await updateMealPlan(mealPlan)
+		let result = await updateMealPlan(mealPlan, user.user_id, token)
 		setApiResult(result)
 	}
 

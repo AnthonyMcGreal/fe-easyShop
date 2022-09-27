@@ -1,9 +1,10 @@
 import React from 'react'
-import {View, Text, StyleSheet, Pressable} from 'react-native'
+import {View, Text, StyleSheet, Button, Pressable} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
+import {useAuthContext} from '../../components/AuthContext'
+import {useUserContext} from '../../components/UserContext'
 
 function Home({navigation}) {
-
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>

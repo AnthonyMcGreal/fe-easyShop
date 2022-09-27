@@ -14,8 +14,13 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 import {getIngredients, addRecipe} from '../../../api'
+import {useUserContext} from '../../../components/UserContext'
+import {useAuthContext} from '../../../components/AuthContext'
 
 const AddIngredientToRecipe = ({navigation, route}) => {
+	const user = useUserContext()
+	const token = useAuthContext()
+
 	const [ingredientsInRecipe, setIngredientsInRecipe] = useState([])
 	const [addModalVisible, setAddModalVisible] = useState('false')
 	const [removeModalVisible, setRemoveModalVisible] = useState('false')
@@ -36,7 +41,7 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 	const portions = route.params.portions
 
 	useEffect(async () => {
-		const items = await getIngredients()
+		const items = await getIngredients(user.user_id, token)
 		setUsersIngredients(items.data.ingredients)
 	}, [])
 
@@ -106,7 +111,7 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 				portions: ingredient.portions
 			}
 		})
-		const result = await addRecipe(recipeToSubmit)
+		const result = await addRecipe(recipeToSubmit, user.user_id, token)
 		setApiResult(result)
 	}
 
