@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native'
 
 import WelcomeScreen from './app/screens/WelcomeScreen'
 import LogIn from './app/screens/LogIn'
+import Register from './app/screens/Register'
 import Home from './app/screens/home/Home'
 import CreateMealPlan from './app/screens/home/mealPlans/CreateMealPlan'
 import RecipesHome from './app/screens/home/recipes/RecipesHome'
@@ -42,6 +43,11 @@ export default function App() {
 						<Stack.Screen
 							name="LogIn"
 							component={LogIn}
+							options={{headerShown: false}}
+						/>
+						<Stack.Screen
+							name="Register"
+							component={Register}
 							options={{headerShown: false}}
 						/>
 						<Stack.Screen

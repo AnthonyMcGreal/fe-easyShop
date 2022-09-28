@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react'
+import {useState} from 'react'
 import {Text, View, StyleSheet, Button, Pressable} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import {useFonts} from 'expo-font'
@@ -39,6 +39,10 @@ function LogIn({navigation}) {
 		}
 	}
 
+	const navigateToRegister = () => {
+		navigation.navigate('Register')
+	}
+
 	if (!fontsLoaded) {
 		return <AppLoading />
 	} else {
@@ -76,6 +80,11 @@ function LogIn({navigation}) {
 						}}
 					>
 						<Text style={styles.text}>Log in</Text>
+					</Pressable>
+					<Pressable
+						style={styles.registerButton}
+						onPress={navigateToRegister}>
+						<Text style={styles.registerText}> Not registered? Register here</Text>
 					</Pressable>
 				</View>
 			</SafeAreaView>
@@ -116,6 +125,13 @@ const styles = StyleSheet.create({
 	text: {
 		color: 'white',
 		fontSize: 18
+	},
+	registerText:{
+		color: 'white',
+		fontSize: 14
+	},
+	registerButton:{
+		marginTop:20
 	},
 	hiddenText: {
 		color: '#2d556d',
