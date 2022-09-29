@@ -2,9 +2,11 @@ import React from 'react'
 import {ImageBackground, StyleSheet, Text} from 'react-native'
 import AppLoading from 'expo-app-loading'
 import {useFonts} from 'expo-font'
+import {wakeBackend} from '../api'
 
 function WelcomeScreen({navigation}) {
 	function timeOut() {
+		wakeBackend()
 		setTimeout(() => {
 			navigation.navigate('LogIn')
 		}, 3000)
