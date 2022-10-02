@@ -190,7 +190,7 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 							<Text style={styles.text}>Add to recipe</Text>
 						</Pressable>
 					</View>
-					</View>
+				</View>
 			</Modal>
 			{/* Remove an ingredient modal */}
 			<Modal
@@ -223,7 +223,7 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 							<Text style={styles.text}>Remove from recipe</Text>
 						</Pressable>
 					</View>
-					</View>
+				</View>
 			</Modal>
 			{/* confirm recipe modal */}
 

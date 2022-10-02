@@ -130,7 +130,6 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 
 	return (
 		<SafeAreaView style={styles.background}>
-
 			{/* add an ingredient modal */}
 
 			<Modal
@@ -163,13 +162,13 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 							onChangeText={handleQuantityChange}
 						/>
 					</View>
-						<Pressable
-							style={styles.button}
-							disabled={!quantity > 0 && !selectedIngredientToAdd}
-							onPress={handleAddIngredientToRecipe}
-						>
-							<Text style={styles.text}>Add to recipe</Text>
-						</Pressable>
+					<Pressable
+						style={styles.button}
+						disabled={!quantity > 0 && !selectedIngredientToAdd}
+						onPress={handleAddIngredientToRecipe}
+					>
+						<Text style={styles.text}>Add to recipe</Text>
+					</Pressable>
 				</View>
 			</Modal>
 
@@ -199,12 +198,12 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 							rowStyle={styles.rowStyle}
 						/>
 					</View>
-						<Pressable
-							style={styles.button}
-							onPress={handleRemoveIngredientFromRecipe}
-						>
-							<Text style={styles.text}>Remove from recipe</Text>
-						</Pressable>
+					<Pressable
+						style={styles.button}
+						onPress={handleRemoveIngredientFromRecipe}
+					>
+						<Text style={styles.text}>Remove from recipe</Text>
+					</Pressable>
 				</View>
 			</Modal>
 

@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
 	modelContainer: {
 		backgroundColor: '#2d556d',
 		width: '80%',
-		height: '80%',
+		height: '80%'
 	},
 	button: {
 		backgroundColor: '#6D2D55',

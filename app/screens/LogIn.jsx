@@ -1,5 +1,11 @@
 import {useState} from 'react'
-import {Text, View, StyleSheet, Button, Pressable} from 'react-native'
+import {
+	Text,
+	View,
+	StyleSheet,
+	Pressable,
+	ActivityIndicator
+} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import {useFonts} from 'expo-font'
 import AppLoading from 'expo-app-loading'
@@ -15,6 +21,7 @@ function LogIn({navigation}) {
 	const [emailAddress, setEmailAddress] = useState('')
 	const [password, setPassword] = useState('')
 	const [loginFailed, setLoginFailed] = useState(false)
+	const [loggingIn, setLoggingIn] = useState(false)
 
 	let disableLogIn = true
 
@@ -27,16 +34,23 @@ function LogIn({navigation}) {
 	})
 
 	const login = async () => {
+		setLoggingIn(true)
 		setLoginFailed(false)
 		const userDetails = await logIn(emailAddress, password)
-		if (userDetails) {
-			setUser(userDetails.user)
-			setAuth(userDetails.jwt)
-			setPassword('')
-			navigation.navigate('Home')
-		} else {
-			setLoginFailed(true)
-		}
+		const fakeTimer = new Promise(resolve => {
+			setTimeout(resolve, 1000)
+		})
+		Promise.all([userDetails, fakeTimer]).then(() => {
+			if (userDetails) {
+				setUser(userDetails.user)
+				setAuth(userDetails.jwt)
+				setPassword('')
+				navigation.navigate('Home')
+			} else {
+				setLoginFailed(true)
+			}
+			setLoggingIn(false)
+		})
 	}
 
 	const navigateToRegister = () => {
@@ -70,21 +84,26 @@ function LogIn({navigation}) {
 							log in attempt failed :(
 						</Text>
 					</View>
-					<Pressable
-						disabled={disableLogIn}
-						style={
-							disableLogIn ? styles.disableLoginButton : styles.loginButton
-						}
-						onPress={() => {
-							login()
-						}}
-					>
-						<Text style={styles.text}>Log in</Text>
-					</Pressable>
-					<Pressable
-						style={styles.registerButton}
-						onPress={navigateToRegister}>
-						<Text style={styles.registerText}> Not registered? Register here</Text>
+					{loggingIn ? (
+						<ActivityIndicator size="large" color="#6D2D55" animating={true} />
+					) : (
+						<Pressable
+							disabled={disableLogIn}
+							style={
+								disableLogIn ? styles.disableLoginButton : styles.loginButton
+							}
+							onPress={() => {
+								login()
+							}}
+						>
+							<Text style={styles.text}>Log in</Text>
+						</Pressable>
+					)}
+					<Pressable style={styles.registerButton} onPress={navigateToRegister}>
+						<Text style={styles.registerText}>
+							{' '}
+							Not registered? Register here
+						</Text>
 					</Pressable>
 				</View>
 			</SafeAreaView>
@@ -126,12 +145,12 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 18
 	},
-	registerText:{
+	registerText: {
 		color: 'white',
 		fontSize: 14
 	},
-	registerButton:{
-		marginTop:20
+	registerButton: {
+		marginTop: 20
 	},
 	hiddenText: {
 		color: '#2d556d',

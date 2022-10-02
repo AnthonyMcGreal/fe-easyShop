@@ -20,19 +20,20 @@ exports.logIn = async (email, password) => {
 }
 
 exports.register = async (email, password) => {
-
 	const params = {
-		email:email,
+		email: email,
 		password: password
 	}
 
-	return axios.post(`${baseURL}/user`, params).then((res) => {
-		return res.status
-	})
-	.catch(err => {
-		console.log(err)
-		return err
-	})
+	return axios
+		.post(`${baseURL}/user`, params)
+		.then(res => {
+			return res.status
+		})
+		.catch(err => {
+			console.log(err)
+			return err
+		})
 }
 
 exports.addMiscItem = async (itemName, itemCategory, user_id, token) => {
@@ -223,6 +224,6 @@ exports.getShoppingList = async (recipes, user_id, token) => {
 		.catch(err => console.log(err))
 }
 
-exports.wakeBackend = async() => {
+exports.wakeBackend = async () => {
 	axios.get(`${baseURL}/wake`)
 }

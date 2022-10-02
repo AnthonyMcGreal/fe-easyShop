@@ -2,10 +2,9 @@ import {useState, useContext} from 'react'
 import {Text, View, StyleSheet, Button, Pressable} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import {TextInput} from 'react-native-gesture-handler'
-import { register } from '../api'
+import {register} from '../api'
 
 function Register({navigation}) {
-
 	const [emailAddress, setEmailAddress] = useState('')
 	const [password, setPassword] = useState('')
 	const [registerFailed, setRegisterFailed] = useState(false)
@@ -18,8 +17,8 @@ function Register({navigation}) {
 
 	const handleRegister = async () => {
 		setRegisterFailed(false)
-		const response = await register(emailAddress,password)
-		if(response === 201){
+		const response = await register(emailAddress, password)
+		if (response === 201) {
 			navigation.navigate('LogIn')
 		} else {
 			setRegisterFailed(true)
@@ -29,9 +28,9 @@ function Register({navigation}) {
 	const navigateToLogin = () => {
 		navigation.navigate('LogIn')
 	}
-  return (
-    <SafeAreaView style={styles.background}>
-      <View>
+	return (
+		<SafeAreaView style={styles.background}>
+			<View>
 				<Text style={styles.name}>EasyShop</Text>
 			</View>
 			<View style={styles.inputView}>
@@ -49,31 +48,29 @@ function Register({navigation}) {
 					secureTextEntry={true}
 				/>
 				<View>
-						<Text style={registerFailed ? styles.text : styles.hiddenText}>
-							Registration failed :(
-						</Text>
-					</View>
-			<Pressable
-						disabled={disableRegister}
-						style={
-							disableRegister ? styles.disableRegisterButton : styles.loginButton
-						}
-						onPress={handleRegister}
-					>
-						<Text style={styles.text}>Register</Text>
-					</Pressable>
-					<Pressable
-						style={styles.registerButton}
-						onPress={navigateToLogin}>
-						<Text style={styles.registerText}> Back to login</Text>
-					</Pressable>
+					<Text style={registerFailed ? styles.text : styles.hiddenText}>
+						Registration failed :(
+					</Text>
+				</View>
+				<Pressable
+					disabled={disableRegister}
+					style={
+						disableRegister ? styles.disableRegisterButton : styles.loginButton
+					}
+					onPress={handleRegister}
+				>
+					<Text style={styles.text}>Register</Text>
+				</Pressable>
+				<Pressable style={styles.registerButton} onPress={navigateToLogin}>
+					<Text style={styles.registerText}> Back to login</Text>
+				</Pressable>
 			</View>
-    </SafeAreaView>
-  )
+		</SafeAreaView>
+	)
 }
 
 const styles = StyleSheet.create({
-  background: {
+	background: {
 		flex: 1,
 		backgroundColor: '#2d556d',
 		width: '100%',
@@ -106,12 +103,12 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 18
 	},
-	registerText:{
+	registerText: {
 		color: 'white',
 		fontSize: 14
 	},
-	registerButton:{
-		marginTop:20
+	registerButton: {
+		marginTop: 20
 	},
 	hiddenText: {
 		color: '#2d556d',
