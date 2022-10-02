@@ -94,18 +94,6 @@ const styles = StyleSheet.create({
 	rowStyle: {
 		backgroundColor: 'lightgrey'
 	},
-	modelContainer: {
-		backgroundColor: '#2d556d',
-		width: '80%',
-		height: 500,
-		borderColor: '#6D2D55',
-		borderWidth: 5,
-		borderRadius: 25,
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'space-around',
-		alignItems: 'center'
-	},
 	afterActionText: {
 		color: '#6D2D55',
 		fontSize: 30,

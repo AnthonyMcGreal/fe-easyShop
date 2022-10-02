@@ -130,7 +130,9 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 
 	return (
 		<SafeAreaView style={styles.background}>
+
 			{/* add an ingredient modal */}
+
 			<Modal
 				animationType="fade"
 				visible={addModalVisible}
@@ -160,6 +162,7 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 							value={`${quantity}`}
 							onChangeText={handleQuantityChange}
 						/>
+					</View>
 						<Pressable
 							style={styles.button}
 							disabled={!quantity > 0 && !selectedIngredientToAdd}
@@ -167,10 +170,11 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 						>
 							<Text style={styles.text}>Add to recipe</Text>
 						</Pressable>
-					</View>
 				</View>
 			</Modal>
+
 			{/* Remove an ingredient modal */}
+
 			<Modal
 				animationType="fade"
 				visible={removeModalVisible}
@@ -194,16 +198,18 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 							buttonTextStyle={styles.dropDownText}
 							rowStyle={styles.rowStyle}
 						/>
+					</View>
 						<Pressable
 							style={styles.button}
 							onPress={handleRemoveIngredientFromRecipe}
 						>
 							<Text style={styles.text}>Remove from recipe</Text>
 						</Pressable>
-					</View>
 				</View>
 			</Modal>
+
 			{/* confirm recipe modal */}
+
 			<Modal
 				animationType="fade"
 				visible={confirmModalVisible}
@@ -350,7 +356,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -372,7 +378,7 @@ const styles = StyleSheet.create({
 		marginBottom: 10
 	},
 	addIngredientDropDownStyle: {
-		width: '80%',
+		width: 250,
 		height: 50,
 		borderWidth: 1,
 		backgroundColor: 'lightgrey'
@@ -389,22 +395,21 @@ const styles = StyleSheet.create({
 	modelContainer: {
 		backgroundColor: '#2d556d',
 		width: '80%',
-		height: 500,
+		height: 200,
 		alignItems: 'center',
-		display: 'flex',
 		justifyContent: 'space-between'
 	},
 	removeModelContainer: {
 		backgroundColor: '#2d556d',
-		width: '80%',
-		height: 300,
+		width: 250,
+		height: 100,
 		alignItems: 'center',
 		display: 'flex',
 		justifyContent: 'space-between'
 	},
 	input: {
 		height: 50,
-		width: '80%',
+		width: 250,
 		borderWidth: 1,
 		backgroundColor: 'lightgrey',
 		fontSize: 16,
@@ -443,9 +448,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#2d556d',
 		width: '80%',
 		height: '80%',
-		borderColor: '#6D2D55',
-		borderWidth: 5,
-		borderRadius: 25,
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'space-around',

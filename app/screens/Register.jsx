@@ -19,7 +19,6 @@ function Register({navigation}) {
 	const handleRegister = async () => {
 		setRegisterFailed(false)
 		const response = await register(emailAddress,password)
-		console.log(response)
 		if(response === 201){
 			navigation.navigate('LogIn')
 		} else {

@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',

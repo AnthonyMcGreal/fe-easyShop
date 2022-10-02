@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 230,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between'
 	},
 	addIngredientDropDownStyle: {
-		width: 230,
+		width: 250,
 		height: 50,
 		borderWidth: 1,
 		backgroundColor: 'lightgrey'

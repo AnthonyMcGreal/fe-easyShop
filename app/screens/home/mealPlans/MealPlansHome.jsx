@@ -63,13 +63,14 @@ const styles = StyleSheet.create({
 		margin: '10%'
 	},
 	buttonContainer: {
-		height: '65%',
+		marginTop:10,
+		height: 270,
 		justifyContent: 'space-around',
 		alignItems: 'center'
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 230,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',

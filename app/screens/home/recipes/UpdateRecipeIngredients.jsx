@@ -190,7 +190,7 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 							<Text style={styles.text}>Add to recipe</Text>
 						</Pressable>
 					</View>
-				</View>
+					</View>
 			</Modal>
 			{/* Remove an ingredient modal */}
 			<Modal
@@ -223,7 +223,7 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 							<Text style={styles.text}>Remove from recipe</Text>
 						</Pressable>
 					</View>
-				</View>
+					</View>
 			</Modal>
 			{/* confirm recipe modal */}
 
@@ -274,7 +274,6 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 						{apiResult === 201 ? (
 							<View>
 								<Text style={styles.afterActionText}>Recipe Updated</Text>
-								{backButton()}
 							</View>
 						) : null}
 						{apiResult === 500 ? (
@@ -282,7 +281,6 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 								<Text style={styles.afterActionText}>
 									Ooops! Something went wrong on our side, try again later
 								</Text>
-								{backButton()}
 							</View>
 						) : null}
 						{apiResult > 0 && apiResult !== 201 && apiResult !== 500 ? (
@@ -290,7 +288,6 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 								<Text style={styles.afterActionText}>
 									Ooops! Something went wrong, try again
 								</Text>
-								{backButton()}
 							</View>
 						) : null}
 						{apiResult === 0 ? (
@@ -301,6 +298,7 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 							/>
 						) : null}
 					</View>
+					{backButton()}
 				</View>
 			</Modal>
 			{/*Update recipe screen */}
@@ -466,14 +464,10 @@ const styles = StyleSheet.create({
 	recipeAddedContainer: {
 		backgroundColor: '#2d556d',
 		width: '80%',
-		height: '80%',
-		borderColor: '#6D2D55',
-		borderWidth: 5,
-		borderRadius: 25,
+		height: 120,
+		alignItems: 'center',
 		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'space-around',
-		alignItems: 'center'
+		justifyContent: 'space-between'
 	}
 })
 

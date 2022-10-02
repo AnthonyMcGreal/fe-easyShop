@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
 		width: '100%'
 	},
 	contentContainer: {
-		height: '30%',
+		height: 150,
 		width: '80%',
 		alignItems: 'center'
 	},
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito'
 	},
 	dropDownStyle: {
-		width: '80%',
+		width: 250,
 		height: 50,
 		margin: 12,
 		borderWidth: 1,
@@ -166,9 +166,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#2d556d',
 		width: '80%',
 		height: '80%',
-		borderColor: '#6D2D55',
-		borderWidth: 5,
-		borderRadius: 25,
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'space-around',
@@ -185,7 +182,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',

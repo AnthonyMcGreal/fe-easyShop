@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
 		margin: '10%'
 	},
 	buttonContainer: {
-		height: '45%',
+		height: 200,
 		justifyContent: 'space-around',
 		alignItems: 'center',
 		marginTop: '10%'
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',

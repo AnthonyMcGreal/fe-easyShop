@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
 		margin: '10%'
 	},
 	buttonContainer: {
-		height: '65%',
+		height: 300,
 		justifyContent: 'space-around',
 		alignItems: 'center'
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',

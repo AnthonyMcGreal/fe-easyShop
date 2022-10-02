@@ -26,7 +26,6 @@ const ShoppingList = ({navigation, route}) => {
 	useEffect(async () => {
 		const shoppingList = await getShoppingList(recipes, user.user_id, token)
 		setShoppingList(shoppingList)
-		console.log(shoppingList)
 		setCategories(Object.entries(shoppingList).map(category => category[0]))
 	}, [])
 
@@ -64,6 +63,14 @@ const ShoppingList = ({navigation, route}) => {
 					keyExtractor={(item, index) => index.toString()}
 				></FlatList>
 			</View>
+			<Pressable
+				style={styles.button}
+				onPress={() => {
+					navigation.navigate('Home')
+				}}
+			>
+				<Text style={styles.text}>Back home</Text>
+			</Pressable>
 		</SafeAreaView>
 	)
 }
@@ -98,7 +105,20 @@ const styles = StyleSheet.create({
 		textDecorationLine: 'underline',
 		marginBottom: 5,
 		marginTop: 5
-	}
+	},
+	button: {
+		backgroundColor: '#6D2D55',
+		width: 250,
+		height: 50,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 10
+	},
+	text: {
+		color: 'white',
+		fontSize: 18,
+		fontFamily: 'Nunito'
+	},
 })
 
 export default ShoppingList

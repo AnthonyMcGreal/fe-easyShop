@@ -500,7 +500,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 230,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
 		marginBottom: 10
 	},
 	addIngredientDropDownStyle: {
-		width: 230,
+		width: 250,
 		height: 50,
 		borderWidth: 1,
 		backgroundColor: 'lightgrey'
@@ -596,9 +596,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#2d556d',
 		width: '80%',
 		height: '80%',
-		borderColor: '#6D2D55',
-		borderWidth: 5,
-		borderRadius: 25,
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'space-around',
