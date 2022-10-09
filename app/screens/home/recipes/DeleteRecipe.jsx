@@ -121,7 +121,6 @@ function DeleteRecipe({navigation}) {
 const styles = StyleSheet.create({
 	background: {
 		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#2d556d',
 		width: '100%'
@@ -129,7 +128,8 @@ const styles = StyleSheet.create({
 	contentContainer: {
 		height: 120,
 		width: '80%',
-		alignItems: 'center'
+		alignItems: 'center',
+		marginTop:150
 	},
 	text: {
 		color: 'white',

@@ -1,8 +1,6 @@
 import React from 'react'
-import {View, Text, StyleSheet, Button, Pressable} from 'react-native'
+import {View, Text, StyleSheet, Pressable} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import {useAuthContext} from '../../components/AuthContext'
-import {useUserContext} from '../../components/UserContext'
 
 function Home({navigation}) {
 	return (
@@ -61,7 +59,10 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito',
 		textShadowColor: 'white',
 		textShadowRadius: 12,
-		width: '100%',
+		textAlign: 'center',
+		paddingTop: 10,
+		width: 350,
+		height:85,
 		margin: '10%'
 	},
 	buttonContainer: {

@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
 		width: '100%'
 	},
 	contentContainer: {
-		height: '40%',
+		height: 200,
 		width: '80%',
 		alignItems: 'center'
 	},
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito'
 	},
 	dropDownStyle: {
-		width: '60%',
+		width: 250,
 		height: 50,
 		margin: 12,
 		borderWidth: 1,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',

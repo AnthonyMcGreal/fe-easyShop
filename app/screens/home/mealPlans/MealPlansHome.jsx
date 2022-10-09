@@ -59,7 +59,10 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito',
 		textShadowColor: 'white',
 		textShadowRadius: 12,
-		width: '100%',
+		textAlign: 'center',
+		paddingTop: 10,
+		width: 350,
+		height:85,
 		margin: '10%'
 	},
 	buttonContainer: {

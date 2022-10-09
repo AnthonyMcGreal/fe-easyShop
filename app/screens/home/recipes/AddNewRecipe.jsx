@@ -32,12 +32,13 @@ function AddNewRecipe({navigation}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
+			<View style={styles.contentContainer}>
 			<Text style={styles.text}>Recipe name</Text>
 			<TextInput
 				style={styles.input}
 				value={recipeName}
 				onChangeText={handleNameChange}
-			/>
+				/>
 			<Text style={styles.text}>Link to recipe</Text>
 			<TextInput
 				style={styles.input}
@@ -53,7 +54,7 @@ function AddNewRecipe({navigation}) {
 				buttonStyle={styles.dropDownStyle}
 				buttonTextStyle={styles.dropDownText}
 				rowStyle={styles.rowStyle}
-			/>
+				/>
 			<Pressable
 				style={styles.button}
 				disabled={disableButton}
@@ -67,6 +68,7 @@ function AddNewRecipe({navigation}) {
 			>
 				<Text style={styles.text}>Add Ingredients to Recipe</Text>
 			</Pressable>
+</View>
 		</SafeAreaView>
 	)
 }
@@ -74,10 +76,14 @@ function AddNewRecipe({navigation}) {
 const styles = StyleSheet.create({
 	background: {
 		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#2d556d',
 		width: '100%'
+	},
+	contentContainer: {
+		marginTop:80,
+		width: '80%',
+		alignItems: 'center'
 	},
 	text: {
 		color: 'white',

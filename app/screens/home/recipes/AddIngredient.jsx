@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		height: 50,
-		width: '60%',
+		width: 250,
 		margin: 12,
 		borderWidth: 1,
 		backgroundColor: 'lightgrey',
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 		marginTop: 60
 	},
 	dropDownStyle: {
-		width: '60%',
+		width: 250,
 		height: 50,
 		margin: 12,
 		borderWidth: 1,
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
 	},
 	afterActionButton: {
 		backgroundColor: '#6D2D55',
-		width: '60%',
+		width: 250,
 		height: 50,
 		marginLeft: '20%',
 		marginTop: 60,

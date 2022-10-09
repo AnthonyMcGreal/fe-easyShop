@@ -12,6 +12,8 @@ function WelcomeScreen({navigation}) {
 		}, 3000)
 	}
 
+	timeOut()
+
 	let [fontsLoaded] = useFonts({
 		Nunito: require('../assets/fonts/Nunito-Bold.ttf')
 	})

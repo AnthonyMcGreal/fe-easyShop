@@ -101,8 +101,10 @@ function LogIn({navigation}) {
 					)}
 					<Pressable style={styles.registerButton} onPress={navigateToRegister}>
 						<Text style={styles.registerText}>
-							{' '}
-							Not registered? Register here
+							Not registered? Register 
+						</Text>
+						<Text style={styles.registerTextUnderline}>
+							here
 						</Text>
 					</Pressable>
 				</View>
@@ -125,7 +127,10 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito',
 		textShadowColor: 'white',
 		textShadowRadius: 20,
-		width: '100%'
+		textAlign: 'center',
+		paddingTop: 10,
+		width: 350,
+		height:85,
 	},
 	inputView: {
 		top: 100,
@@ -149,8 +154,15 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 14
 	},
+	registerTextUnderline: {
+		color: 'white',
+		fontSize: 14,
+		paddingLeft: 3,
+		textDecorationLine: 'underline'
+	},
 	registerButton: {
-		marginTop: 20
+		marginTop: 20,
+		flexDirection:'row'
 	},
 	hiddenText: {
 		color: '#2d556d',
@@ -160,7 +172,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#6D2D55',
 		marginTop: 20,
 		height: 40,
-		width: 120,
+		width: 200,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 10
@@ -169,7 +181,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#B5B5B5',
 		marginTop: 20,
 		height: 40,
-		width: 120,
+		width: 200,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 10

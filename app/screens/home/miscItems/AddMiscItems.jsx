@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		height: 50,
-		width: '60%',
+		width: 250,
 		margin: 12,
 		borderWidth: 1,
 		backgroundColor: 'lightgrey',
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
 		borderRadius: 10
 	},
 	dropDownStyle: {
-		width: '60%',
+		width: 250,
 		height: 50,
 		margin: 12,
 		borderWidth: 1,

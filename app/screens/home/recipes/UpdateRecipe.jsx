@@ -62,13 +62,13 @@ function UpdateRecipe({navigation}) {
 const styles = StyleSheet.create({
 	background: {
 		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#2d556d',
 		width: '100%'
 	},
 	contentContainer: {
-		height: '40%',
+		marginTop:150,
+		height: 120,
 		width: '80%',
 		alignItems: 'center'
 	},
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito'
 	},
 	dropDownStyle: {
-		width: 200,
+		width: 250,
 		height: 50,
 		margin: 12,
 		borderWidth: 1,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
 	},
 	modalButton: {
 		backgroundColor: '#6D2D55',
-		width: 200,
+		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
