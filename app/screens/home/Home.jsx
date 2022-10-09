@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		paddingTop: 10,
 		width: 350,
-		height:85,
+		height: 85,
 		margin: '10%'
 	},
 	buttonContainer: {

@@ -33,42 +33,42 @@ function AddNewRecipe({navigation}) {
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
-			<Text style={styles.text}>Recipe name</Text>
-			<TextInput
-				style={styles.input}
-				value={recipeName}
-				onChangeText={handleNameChange}
+				<Text style={styles.text}>Recipe name</Text>
+				<TextInput
+					style={styles.input}
+					value={recipeName}
+					onChangeText={handleNameChange}
 				/>
-			<Text style={styles.text}>Link to recipe</Text>
-			<TextInput
-				style={styles.input}
-				value={recipeLink}
-				onChangeText={handleLinkChange}
-			/>
-			<Text style={styles.text}>Portion size</Text>
-			<SelectDropdown
-				data={portionSizeOptions}
-				onSelect={handlePortionSizeChange}
-				buttonTextAfterSelection={() => recipePortionSize}
-				renderDropdownIcon={() => <FontAwesomeIcon icon={faChevronDown} />}
-				buttonStyle={styles.dropDownStyle}
-				buttonTextStyle={styles.dropDownText}
-				rowStyle={styles.rowStyle}
+				<Text style={styles.text}>Link to recipe</Text>
+				<TextInput
+					style={styles.input}
+					value={recipeLink}
+					onChangeText={handleLinkChange}
 				/>
-			<Pressable
-				style={styles.button}
-				disabled={disableButton}
-				onPress={() =>
-					navigation.navigate('AddIngredientToRecipe', {
-						recipe_name: recipeName,
-						link: recipeLink,
-						portions: recipePortionSize
-					})
-				}
-			>
-				<Text style={styles.text}>Add Ingredients to Recipe</Text>
-			</Pressable>
-</View>
+				<Text style={styles.text}>Portion size</Text>
+				<SelectDropdown
+					data={portionSizeOptions}
+					onSelect={handlePortionSizeChange}
+					buttonTextAfterSelection={() => recipePortionSize}
+					renderDropdownIcon={() => <FontAwesomeIcon icon={faChevronDown} />}
+					buttonStyle={styles.dropDownStyle}
+					buttonTextStyle={styles.dropDownText}
+					rowStyle={styles.rowStyle}
+				/>
+				<Pressable
+					style={styles.button}
+					disabled={disableButton}
+					onPress={() =>
+						navigation.navigate('AddIngredientToRecipe', {
+							recipe_name: recipeName,
+							link: recipeLink,
+							portions: recipePortionSize
+						})
+					}
+				>
+					<Text style={styles.text}>Add Ingredients to Recipe</Text>
+				</Pressable>
+			</View>
 		</SafeAreaView>
 	)
 }
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
 		width: '100%'
 	},
 	contentContainer: {
-		marginTop:80,
+		marginTop: 80,
 		width: '80%',
 		alignItems: 'center'
 	},

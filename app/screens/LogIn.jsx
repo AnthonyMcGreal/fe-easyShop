@@ -100,12 +100,8 @@ function LogIn({navigation}) {
 						</Pressable>
 					)}
 					<Pressable style={styles.registerButton} onPress={navigateToRegister}>
-						<Text style={styles.registerText}>
-							Not registered? Register 
-						</Text>
-						<Text style={styles.registerTextUnderline}>
-							here
-						</Text>
+						<Text style={styles.registerText}>Not registered? Register</Text>
+						<Text style={styles.registerTextUnderline}>here</Text>
 					</Pressable>
 				</View>
 			</SafeAreaView>
@@ -130,7 +126,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		paddingTop: 10,
 		width: 350,
-		height:85,
+		height: 85
 	},
 	inputView: {
 		top: 100,
@@ -162,7 +158,7 @@ const styles = StyleSheet.create({
 	},
 	registerButton: {
 		marginTop: 20,
-		flexDirection:'row'
+		flexDirection: 'row'
 	},
 	hiddenText: {
 		color: '#2d556d',
