@@ -99,10 +99,10 @@ function LogIn({navigation}) {
 							<Text style={styles.text}>Log in</Text>
 						</Pressable>
 					)}
-					<Pressable style={styles.registerButton} onPress={navigateToRegister}>
+					{/* <Pressable style={styles.registerButton} onPress={navigateToRegister}>
 						<Text style={styles.registerText}>Not registered? Register</Text>
 						<Text style={styles.registerTextUnderline}>here</Text>
-					</Pressable>
+					</Pressable> */}
 				</View>
 			</SafeAreaView>
 		)

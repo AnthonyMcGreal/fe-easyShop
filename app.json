@@ -21,10 +21,16 @@
 			"adaptiveIcon": {
 				"foregroundImage": "app/assets/adaptive-icon.png",
 				"backgroundColor": "#FFFFFF"
-			}
+			},
+			"package": "com.mvpant87.feeasyShop"
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "372cd697-7388-4277-a8b6-a10fe6a8df50"
+			}
 		}
 	}
 }

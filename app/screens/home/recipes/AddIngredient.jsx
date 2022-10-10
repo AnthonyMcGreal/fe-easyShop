@@ -213,7 +213,6 @@ const styles = StyleSheet.create({
 	},
 	modelContainer: {
 		backgroundColor: '#2d556d',
-		width: '80%',
 		height: '80%'
 	},
 	afterActionText: {
@@ -230,8 +229,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#6D2D55',
 		width: 250,
 		height: 50,
-		marginLeft: '20%',
-		marginTop: 60,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 10
