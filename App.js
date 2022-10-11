@@ -33,8 +33,8 @@ export default function App() {
 	return (
 		<AuthProvider>
 			<UserProvider>
-				<NavigationContainer style={{flex: 1, backgroundColor: 'transparent'}}>
-					<Stack.Navigator>
+				<NavigationContainer style={{flex: 1, backgroundColor: '#2d556d'}}>
+					<Stack.Navigator screenOptions={{presentation: 'transparentModal'}}>
 						<Stack.Screen
 							name="WelcomeScreen"
 							component={WelcomeScreen}
