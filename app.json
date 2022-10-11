@@ -1,7 +1,7 @@
 {
 	"expo": {
-		"name": "fe-easyShop",
-		"slug": "fe-easyShop",
+		"name": "easyShop",
+		"slug": "easyShop",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "app/assets/icon.png",
@@ -31,6 +31,7 @@
 			"eas": {
 				"projectId": "372cd697-7388-4277-a8b6-a10fe6a8df50"
 			}
-		}
+		},
+		"privacy": "public"
 	}
 }
