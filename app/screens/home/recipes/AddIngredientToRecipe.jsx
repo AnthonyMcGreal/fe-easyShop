@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#2d556d',
 		width: '100%',
-		height:'100%'
+		height: '100%'
 	},
 	buttonContainer: {
 		display: 'flex',

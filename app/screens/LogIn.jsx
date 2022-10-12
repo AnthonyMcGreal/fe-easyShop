@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {
 	Text,
 	View,
@@ -22,6 +22,12 @@ function LogIn({navigation}) {
 	const [password, setPassword] = useState('')
 	const [loginFailed, setLoginFailed] = useState(false)
 	const [loggingIn, setLoggingIn] = useState(false)
+
+	useEffect(() => {
+		navigation.addListener('beforeRemove', e => {
+			e.preventDefault()
+		})
+	}, [navigation])
 
 	let disableLogIn = true
 
