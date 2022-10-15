@@ -60,6 +60,10 @@ demo account. You can use the following credentials to log in;
 
 email: demoaccount@demo.co.uk password: demoPassword
 
+I have created a few recipes and a demo meal plan for you to see how the app
+works. This way you don't have to spend too much time creating and adding
+recipes to see the app in all its glory.
+
 ## Creating a personal account
 
 If you like the app and would like a personal account then reach out and I can
