@@ -65,3 +65,7 @@ email: demoaccount@demo.co.uk password: demoPassword
 If you like the app and would like a personal account then reach out and I can
 create one that doesn't include any personal info. That way I don't break any
 laws and you get to enjoy the app. Everyone wins.
+
+## Minimum Versions
+
+React-Native v 0.64.3 React v 17.0.1
