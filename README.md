@@ -16,7 +16,7 @@ noticed the same few issues creeping up;
 Easy Shop fixes these issues and makes creating a meal plan and shopping list
 nice, easy and quick.
 
-In summary the app allows users to add ingredients, users then create recipes
+In summary, the app allows users to add ingredients, users then create recipes
 using the added ingredients and then these recipes are used to build a meal
 plan. Finally, users create a shopping list by adding misc items that aren't
 recipe related. The app will collate all the ingredients and misc items and sort
@@ -30,7 +30,7 @@ go app. There are 2 methods of running the app, both are outlined below.
 
 ## Using the development link
 
-For android users the app can be run directly in the expo go app using the
+For android users the app can be run directly in the Expo Go app using the
 following link : https://expo.dev/@mvpant87/EasyShop
 
 Unfortunately this method doesn't work for iOS users
@@ -50,6 +50,8 @@ https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cl
 - To run the application locally use the following command in your terminal;
 
          npm start
+
+You can then use the Expo Go app to scan the QR code in the terminal.
 
 ## Logging in
 
