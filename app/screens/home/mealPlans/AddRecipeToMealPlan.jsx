@@ -142,6 +142,7 @@ const AddRecipeToMealPlan = ({navigation, route}) => {
 
 	const createMealPlanButton = () => {
 		let recipeTotals = calculateRecipeQuantities()
+		setConfirmModalVisible(false)
 		navigation.navigate('AddMiscItemsToShoppingList', {
 			recipes: recipeTotals
 		})

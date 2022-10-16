@@ -67,7 +67,11 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 	}
 
 	const handleQuantityChange = quantity => {
-		setQuantity(parseInt(quantity))
+		if(quantity >= 0) {
+			setQuantity(quantity)
+		} else {
+			setQuantity('')
+		}
 	}
 
 	const handleAddIngredientToRecipe = () => {
@@ -112,6 +116,7 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 			}
 		})
 		const result = await addRecipe(recipeToSubmit, user.user_id, token)
+		console.log(result)
 		setApiResult(result)
 	}
 
@@ -261,7 +266,7 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 						{apiResult === 500 ? (
 							<View>
 								<Text style={styles.afterActionText}>
-									Ooops! Something went wrong on our side, try again later
+								Ooops! Something went wrong, try again
 								</Text>
 								{backButton()}
 							</View>

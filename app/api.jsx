@@ -121,7 +121,9 @@ exports.addRecipe = async (recipe, user_id, token) => {
 		.then(result => {
 			return result.status
 		})
-		.catch(err => console.log(err))
+		.catch(err => {
+			return 500
+		})
 }
 
 exports.getRecipes = async (user_id, token) => {
