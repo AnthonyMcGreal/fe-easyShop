@@ -22,7 +22,7 @@ const AddMiscItems = ({navigation}) => {
 
 	const [itemName, onChangeItemName] = useState('')
 	const [itemCategory, onChangeItemCategory] = useState('')
-	const categories = ['Cleaning', 'Hygiene', 'Household Items', 'Other']
+	const categories = ['Cleaning', 'Hygiene', 'Household Items','Frozen', 'Chilled', 'Ambient', 'Produce', 'Bread', 'Other']
 	const [modalVisible, setModalVisible] = useState(false)
 	const [apiResult, setApiResult] = useState(0)
 

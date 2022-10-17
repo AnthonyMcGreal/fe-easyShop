@@ -116,7 +116,6 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 			}
 		})
 		const result = await addRecipe(recipeToSubmit, user.user_id, token)
-		console.log(result)
 		setApiResult(result)
 	}
 

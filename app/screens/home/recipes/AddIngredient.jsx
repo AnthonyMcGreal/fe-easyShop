@@ -25,7 +25,7 @@ function AddIngredient({navigation}) {
 	const [storageType, setStorageType] = useState('')
 	const [modalVisible, setModalVisible] = useState('false')
 	const [apiResult, setApiResult] = useState(0)
-	const storageCategories = ['Frozen', 'Chilled', 'Ambient', 'Produce']
+	const storageCategories = ['Frozen', 'Chilled', 'Ambient', 'Produce', 'Bread']
 	const measurementCategories = [
 		'individual',
 		'tsp',
