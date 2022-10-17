@@ -485,7 +485,8 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
-		width: '100%'
+		width: '100%',
+		marginTop: 20
 	},
 	text: {
 		color: 'white',
@@ -563,9 +564,9 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito'
 	},
 	flatListContainer: {
-		width: '70%',
+		width: 300,
 		height: 280,
-		marginBottom: 20
+		marginBottom: 0
 	},
 	flatList: {
 		backgroundColor: '#2d556d'
