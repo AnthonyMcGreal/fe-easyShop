@@ -49,13 +49,16 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 	let link
 	let portions
 
-	useEffect(async () => {
-		const items = await getIngredients(user.user_id, token)
-		const recipe = await getRecipeByName(recipe_name, user.user_id, token)
-		setUsersIngredients(items.data.ingredients)
-		setIngredientsInRecipe(recipe.data)
-		link = recipe.data[0].link
-		portions = recipe.data[0].portions
+	useEffect(() => {
+		const asyncGetIngredients = async() => {
+			const items = await getIngredients(user.user_id, token)
+			const recipe = await getRecipeByName(recipe_name, user.user_id, token)
+			setUsersIngredients(items.data.ingredients)
+			setIngredientsInRecipe(recipe.data)
+			link = recipe.data[0].link
+			portions = recipe.data[0].portions
+		}
+		asyncGetIngredients()
 	}, [])
 
 	useEffect(() => {

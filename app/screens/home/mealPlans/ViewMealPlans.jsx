@@ -17,11 +17,14 @@ function ViewMealPlans({navigation}) {
 	const [getMealPlansHasBeenCalled, setGetMealPlansHasBeenCalled] =
 		useState(false)
 
-	useEffect(async () => {
-		const plans = await getMealPlans(user.user_id, token)
-		const names = plans.data.mealPlans.map(plan => plan.name)
-		setMealPlanNames(names)
-		setGetMealPlansHasBeenCalled(false)
+	useEffect(() => {
+		const awaitGetMealPlans = async () => {
+			const plans = await getMealPlans(user.user_id, token)
+			const names = plans.data.mealPlans.map(plan => plan.name)
+			setMealPlanNames(names)
+			setGetMealPlansHasBeenCalled(false)
+		}
+		awaitGetMealPlans()
 	}, [getMealPlansHasBeenCalled])
 
 	async function handleUpdateMealPlan() {

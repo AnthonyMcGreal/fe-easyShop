@@ -26,13 +26,16 @@ function DeleteMealPlans({navigation}) {
 	const [getMealPlansHasBeenCalled, setMealPlansHasBeenCalled] = useState(false)
 	const [apiResult, setApiResult] = useState(0)
 
-	useEffect(async () => {
-		const mealPlanList = await getMealPlans(user.user_id, token)
-		setMealPlans(mealPlanList.data.mealPlans)
-		setApiResult(mealPlanList.status)
-		setMealPlansHasBeenCalled(true)
-		setPlanNames(mealPlans.map(planName => planName.name))
-		setModalVisible(false)
+	useEffect(() => {
+		const asyncGetMealPlans = async() => {
+			const mealPlanList = await getMealPlans(user.user_id, token)
+			setMealPlans(mealPlanList.data.mealPlans)
+			setApiResult(mealPlanList.status)
+			setMealPlansHasBeenCalled(true)
+			setPlanNames(mealPlans.map(planName => planName.name))
+			setModalVisible(false)
+		}
+		asyncGetMealPlans()
 	}, [getMealPlansHasBeenCalled])
 
 	const handleDeleteMealPlanButton = async () => {

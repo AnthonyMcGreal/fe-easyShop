@@ -28,13 +28,16 @@ const DeleteMiscItem = ({navigation}) => {
 	const [getIngredientsBeenCalled, setGetIngredientsBeenCalled] =
 		useState(false)
 
-	useEffect(async () => {
-		const items = await getIngredients(user.user_id, token)
-		setIngredients(items.data.ingredients)
-		setApiResult(items.status)
-		setGetIngredientsBeenCalled(true)
-		setIngredientNames(ingredients.map(ingredient => ingredient.name))
-		setModalVisible(false)
+	useEffect(() => {
+		const asyncGetIngredients = async () => {
+			const items = await getIngredients(user.user_id, token)
+			setIngredients(items.data.ingredients)
+			setApiResult(items.status)
+			setGetIngredientsBeenCalled(true)
+			setIngredientNames(ingredients.map(ingredient => ingredient.name))
+			setModalVisible(false)
+		}
+		asyncGetIngredients()
 	}, [getIngredientsBeenCalled])
 
 	useEffect(() => {

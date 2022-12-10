@@ -27,13 +27,16 @@ const DeleteMiscItem = ({navigation}) => {
 	const [apiResult, setApiResult] = useState(0)
 	const [getMiscItemsBeenCalled, setGetMiscItemsBeenCalled] = useState(false)
 
-	useEffect(async () => {
-		const items = await getMiscItems(user.user_id, token)
-		setChangeMiscItems(items.data.miscItems)
-		setApiResult(items.status)
-		setGetMiscItemsBeenCalled(true)
-		setItemNames(miscItems.map(item => item.name))
-		setModalVisible(false)
+	useEffect(() => {
+		const asyncGetMiscItems = async () => {
+			const items = await getMiscItems(user.user_id, token)
+			setChangeMiscItems(items.data.miscItems)
+			setApiResult(items.status)
+			setGetMiscItemsBeenCalled(true)
+			setItemNames(miscItems.map(item => item.name))
+			setModalVisible(false)
+		}
+		asyncGetMiscItems()
 	}, [getMiscItemsBeenCalled])
 
 	useEffect(() => {

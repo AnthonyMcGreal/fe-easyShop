@@ -40,9 +40,12 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 	const link = route.params.link
 	const portions = route.params.portions
 
-	useEffect(async () => {
+	useEffect(() => {
+		const asyncIngredients = async () => {
 		const items = await getIngredients(user.user_id, token)
 		setUsersIngredients(items.data.ingredients)
+		}
+		asyncIngredients()
 	}, [])
 
 	useEffect(() => {

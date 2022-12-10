@@ -23,10 +23,13 @@ const ShoppingList = ({navigation, route}) => {
 	const [shoppingList, setShoppingList] = useState({})
 	const [categories, setCategories] = useState([])
 
-	useEffect(async () => {
-		const shoppingList = await getShoppingList(recipes, user.user_id, token)
-		setShoppingList(shoppingList)
-		setCategories(Object.entries(shoppingList).map(category => category[0]))
+	useEffect(() => {
+		const asyncGetShoppingList = async () => {
+			const shoppingList = await getShoppingList(recipes, user.user_id, token)
+			setShoppingList(shoppingList)
+			setCategories(Object.entries(shoppingList).map(category => category[0]))
+		}
+		asyncGetShoppingList()
 	}, [])
 
 	return (

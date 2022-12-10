@@ -26,13 +26,16 @@ function DeleteRecipe({navigation}) {
 	const [apiResult, setApiResult] = useState(0)
 	const [getRecipesHasBeenCalled, setGetRecipesHasBeenCalled] = useState(false)
 
-	useEffect(async () => {
-		const items = await getRecipes(user.user_id, token)
-		setRecipes(items.data.recipes)
-		setApiResult(items.status)
-		setGetRecipesHasBeenCalled(true)
-		setRecipeNames(recipes.map(recipe => recipe.recipe_name))
-		setModalVisible(false)
+	useEffect(() => {
+		const asyncGetRecipes = async () => {
+			const items = await getRecipes(user.user_id, token)
+			setRecipes(items.data.recipes)
+			setApiResult(items.status)
+			setGetRecipesHasBeenCalled(true)
+			setRecipeNames(recipes.map(recipe => recipe.recipe_name))
+			setModalVisible(false)
+		}
+		asyncGetRecipes()
 	}, [getRecipesHasBeenCalled])
 
 	const handleDeleteRecipeButton = async () => {

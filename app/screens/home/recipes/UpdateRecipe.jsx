@@ -17,11 +17,14 @@ function UpdateRecipe({navigation}) {
 	const [recipeToUpdate, setRecipeToUpdate] = useState(0)
 	const [getRecipesHasBeenCalled, setGetRecipesHasBeenCalled] = useState(false)
 
-	useEffect(async () => {
-		const items = await getRecipes(user.user_id, token)
-		setRecipes(items.data.recipes)
-		setGetRecipesHasBeenCalled(true)
-		setRecipeNames(recipes.map(recipe => recipe.recipe_name))
+	useEffect(() => {
+		const asyncGetRecipes = async () => {
+			const items = await getRecipes(user.user_id, token)
+			setRecipes(items.data.recipes)
+			setGetRecipesHasBeenCalled(true)
+			setRecipeNames(recipes.map(recipe => recipe.recipe_name))
+		}
+		asyncGetRecipes()
 	}, [getRecipesHasBeenCalled])
 
 	return (

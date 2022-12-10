@@ -24,11 +24,14 @@ function AddMiscItemsToShoppingList({navigation, route}) {
 
 	const quantityAvailable = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-	useEffect(async () => {
-		const miscItems = await getMiscItems(user.user_id, token)
-		const miscItemNames = miscItems.data.miscItems.map(item => item.name)
-		setMiscItems(miscItems.data.miscItems)
-		setMiscItemNames(miscItemNames)
+	useEffect(() => {
+		const asyncGetMiscItems = async () => {
+			const miscItems = await getMiscItems(user.user_id, token)
+			const miscItemNames = miscItems.data.miscItems.map(item => item.name)
+			setMiscItems(miscItems.data.miscItems)
+			setMiscItemNames(miscItemNames)
+		}
+		asyncGetMiscItems()
 	}, [])
 
 	const handleMiscItemSelection = selectedMiscItem => {
