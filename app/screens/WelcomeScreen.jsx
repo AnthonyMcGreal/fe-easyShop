@@ -1,36 +1,23 @@
 import React from 'react'
 import {ImageBackground, StyleSheet, Text} from 'react-native'
-import AppLoading from 'expo-app-loading'
-import {useFonts} from 'expo-font'
-import {wakeBackend} from '../api'
 
 function WelcomeScreen({navigation}) {
 	function timeOut() {
-		wakeBackend()
 		setTimeout(() => {
 			navigation.navigate('LogIn')
-		}, 3000)
+		}, 2000)
 	}
 
 	timeOut()
-
-	let [fontsLoaded] = useFonts({
-		Nunito: require('../assets/fonts/Nunito-Bold.ttf')
-	})
-
-	if (!fontsLoaded) {
-		return <AppLoading />
-	} else {
-		return (
-			<ImageBackground
-				style={styles.background}
-				source={require('../assets/BG2.jpeg')}
-			>
-				{timeOut()}
-				<Text style={styles.title}>EasyShop</Text>
-			</ImageBackground>
-		)
-	}
+	return (
+		<ImageBackground
+			style={styles.background}
+			source={require('../assets/BG2.jpeg')}
+		>
+			{timeOut()}
+			<Text style={styles.title}>EasyShop</Text>
+		</ImageBackground>
+	)
 }
 
 const styles = StyleSheet.create({

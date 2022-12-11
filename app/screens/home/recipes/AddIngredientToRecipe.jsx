@@ -42,8 +42,8 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 
 	useEffect(() => {
 		const asyncIngredients = async () => {
-		const items = await getIngredients(user.user_id, token)
-		setUsersIngredients(items.data.ingredients)
+			const items = await getIngredients(user.user_id, token)
+			setUsersIngredients(items.data.ingredients)
 		}
 		asyncIngredients()
 	}, [])
@@ -70,7 +70,7 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 	}
 
 	const handleQuantityChange = quantity => {
-		if(quantity >= 0) {
+		if (quantity >= 0) {
 			setQuantity(quantity)
 		} else {
 			setQuantity('')
@@ -268,7 +268,7 @@ const AddIngredientToRecipe = ({navigation, route}) => {
 						{apiResult === 500 ? (
 							<View>
 								<Text style={styles.afterActionText}>
-								Ooops! Something went wrong, try again
+									Ooops! Something went wrong, try again
 								</Text>
 								{backButton()}
 							</View>

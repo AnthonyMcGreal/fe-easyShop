@@ -1,5 +1,9 @@
 import {createStackNavigator} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native'
+import * as SplashScreen from 'expo-splash-screen'
+import {wakeBackend} from '../fe-easyShop/app/api'
+import {useEffect, useState} from 'react'
+import * as Font from 'expo-font'
 
 import WelcomeScreen from './app/screens/WelcomeScreen'
 import LogIn from './app/screens/LogIn'
@@ -27,8 +31,38 @@ import AddMiscItemsToShoppingList from './app/screens/home/mealPlans/AddMiscItem
 import {UserProvider} from './app/components/UserContext'
 import {AuthProvider} from './app/components/AuthContext'
 
+SplashScreen.preventAutoHideAsync()
+
 export default function App() {
+	const [appIsReady, setAppIsReady] = useState(false)
+
 	const Stack = createStackNavigator()
+
+	useEffect(() => {
+		async function prepare() {
+			try {
+				wakeBackend()
+				await Font.loadAsync({
+					Nunito: require('./app/assets/fonts/Nunito-Bold.ttf')
+				})
+			} catch (e) {
+				console.warn(e)
+			} finally {
+				setAppIsReady(true)
+			}
+		}
+		prepare()
+	}, [])
+
+	useEffect(() => {
+		if (appIsReady) {
+			SplashScreen.hideAsync()
+		}
+	}, [appIsReady])
+
+	if (!appIsReady) {
+		return null
+	}
 
 	return (
 		<AuthProvider>

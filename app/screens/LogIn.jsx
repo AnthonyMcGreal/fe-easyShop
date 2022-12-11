@@ -7,8 +7,6 @@ import {
 	ActivityIndicator
 } from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import {useFonts} from 'expo-font'
-import AppLoading from 'expo-app-loading'
 import {TextInput} from 'react-native-gesture-handler'
 import {logIn} from '../api'
 import {updateUser} from '../components/UserContext'
@@ -35,10 +33,6 @@ function LogIn({navigation}) {
 		disableLogIn = false
 	}
 
-	let [fontsLoaded] = useFonts({
-		Nunito: require('../assets/fonts/Nunito-Bold.ttf')
-	})
-
 	const login = async () => {
 		setLoggingIn(true)
 		setLoginFailed(false)
@@ -63,56 +57,52 @@ function LogIn({navigation}) {
 		navigation.navigate('Register')
 	}
 
-	if (!fontsLoaded) {
-		return <AppLoading />
-	} else {
-		return (
-			<SafeAreaView style={styles.background}>
+	return (
+		<SafeAreaView style={styles.background}>
+			<View>
+				<Text style={styles.name}>EasyShop</Text>
+			</View>
+			<View style={styles.inputView}>
+				<Text style={styles.text}> Email Address </Text>
+				<TextInput
+					style={styles.input}
+					onChangeText={setEmailAddress}
+					value={emailAddress}
+				/>
+				<Text style={styles.text}> Password </Text>
+				<TextInput
+					style={styles.input}
+					onChangeText={setPassword}
+					value={password}
+					secureTextEntry={true}
+				/>
 				<View>
-					<Text style={styles.name}>EasyShop</Text>
+					<Text style={loginFailed ? styles.text : styles.hiddenText}>
+						log in attempt failed :(
+					</Text>
 				</View>
-				<View style={styles.inputView}>
-					<Text style={styles.text}> Email Address </Text>
-					<TextInput
-						style={styles.input}
-						onChangeText={setEmailAddress}
-						value={emailAddress}
-					/>
-					<Text style={styles.text}> Password </Text>
-					<TextInput
-						style={styles.input}
-						onChangeText={setPassword}
-						value={password}
-						secureTextEntry={true}
-					/>
-					<View>
-						<Text style={loginFailed ? styles.text : styles.hiddenText}>
-							log in attempt failed :(
-						</Text>
-					</View>
-					{loggingIn ? (
-						<ActivityIndicator size="large" color="#6D2D55" animating={true} />
-					) : (
-						<Pressable
-							disabled={disableLogIn}
-							style={
-								disableLogIn ? styles.disableLoginButton : styles.loginButton
-							}
-							onPress={() => {
-								login()
-							}}
-						>
-							<Text style={styles.text}>Log in</Text>
-						</Pressable>
-					)}
-					{/* <Pressable style={styles.registerButton} onPress={navigateToRegister}>
+				{loggingIn ? (
+					<ActivityIndicator size="large" color="#6D2D55" animating={true} />
+				) : (
+					<Pressable
+						disabled={disableLogIn}
+						style={
+							disableLogIn ? styles.disableLoginButton : styles.loginButton
+						}
+						onPress={() => {
+							login()
+						}}
+					>
+						<Text style={styles.text}>Log in</Text>
+					</Pressable>
+				)}
+				{/* <Pressable style={styles.registerButton} onPress={navigateToRegister}>
 						<Text style={styles.registerText}>Not registered? Register</Text>
 						<Text style={styles.registerTextUnderline}>here</Text>
 					</Pressable> */}
-				</View>
-			</SafeAreaView>
-		)
-	}
+			</View>
+		</SafeAreaView>
+	)
 }
 
 const styles = StyleSheet.create({

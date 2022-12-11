@@ -27,7 +27,7 @@ function DeleteMealPlans({navigation}) {
 	const [apiResult, setApiResult] = useState(0)
 
 	useEffect(() => {
-		const asyncGetMealPlans = async() => {
+		const asyncGetMealPlans = async () => {
 			const mealPlanList = await getMealPlans(user.user_id, token)
 			setMealPlans(mealPlanList.data.mealPlans)
 			setApiResult(mealPlanList.status)

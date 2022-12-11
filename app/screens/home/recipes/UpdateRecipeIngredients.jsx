@@ -50,7 +50,7 @@ const UpdateRecipeIngredients = ({navigation, route}) => {
 	let portions
 
 	useEffect(() => {
-		const asyncGetIngredients = async() => {
+		const asyncGetIngredients = async () => {
 			const items = await getIngredients(user.user_id, token)
 			const recipe = await getRecipeByName(recipe_name, user.user_id, token)
 			setUsersIngredients(items.data.ingredients)
