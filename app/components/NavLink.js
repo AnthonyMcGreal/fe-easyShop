@@ -16,12 +16,12 @@ const NavLink = ({navigation, navigateToPage, buttonText}) => {
 
 const styles = StyleSheet.create({
   button: {
-		backgroundColor: '#6D2D55',
+		backgroundColor: '#642CA9',
 		width: 250,
 		height: 50,
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderRadius: 10
+		borderRadius: 50
 	},
   text: {
 		color: 'white',

@@ -1,18 +1,19 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import {
 	Text,
 	View,
 	StyleSheet,
 	Pressable,
-	ActivityIndicator
+	ActivityIndicator,
+	Image
 } from 'react-native'
-import {SafeAreaView} from 'react-native-safe-area-context'
-import {TextInput} from 'react-native-gesture-handler'
-import {logIn} from '../api'
-import {updateUser} from '../components/UserContext'
-import {updateAuthContext} from '../components/AuthContext'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { TextInput } from 'react-native-gesture-handler'
+import { logIn } from '../api'
+import { updateUser } from '../components/UserContext'
+import { updateAuthContext } from '../components/AuthContext'
 
-function LogIn({navigation}) {
+function LogIn({ navigation }) {
 	const setUser = updateUser()
 	const setAuth = updateAuthContext()
 
@@ -34,23 +35,24 @@ function LogIn({navigation}) {
 	}
 
 	const login = async () => {
-		setLoggingIn(true)
-		setLoginFailed(false)
-		const userDetails = await logIn(emailAddress, password)
-		const fakeTimer = new Promise(resolve => {
-			setTimeout(resolve, 1000)
-		})
-		Promise.all([userDetails, fakeTimer]).then(() => {
-			if (userDetails) {
-				setUser(userDetails.user)
-				setAuth(userDetails.jwt)
-				setPassword('')
-				navigation.navigate('Home')
-			} else {
-				setLoginFailed(true)
-			}
-			setLoggingIn(false)
-		})
+		// setLoggingIn(true)
+		// setLoginFailed(false)
+		// const userDetails = await logIn(emailAddress, password)
+		// const fakeTimer = new Promise(resolve => {
+		// 	setTimeout(resolve, 1000)
+		// })
+		// Promise.all([userDetails, fakeTimer]).then(() => {
+		// 	if (userDetails) {
+		// 		setUser(userDetails.user)
+		// 		setAuth(userDetails.jwt)
+		// 		setPassword('')
+		// 		navigation.navigate('Home')
+		// 	} else {
+		// 		setLoginFailed(true)
+		// 	}
+		// 	setLoggingIn(false)
+		// })
+		navigation.navigate('Home')
 	}
 
 	const navigateToRegister = () => {
@@ -60,7 +62,7 @@ function LogIn({navigation}) {
 	return (
 		<SafeAreaView style={styles.background}>
 			<View>
-				<Text style={styles.name}>EasyShop</Text>
+				<Image style={styles.logo} source={require('../assets/easyShopLogo.png')} />
 			</View>
 			<View style={styles.inputView}>
 				<Text style={styles.text}> Email Address </Text>
@@ -108,21 +110,13 @@ function LogIn({navigation}) {
 const styles = StyleSheet.create({
 	background: {
 		flex: 1,
-		backgroundColor: '#2d556d',
+		backgroundColor: 'white',
 		width: '100%',
 		alignItems: 'center'
 	},
-	name: {
-		top: '50%',
-		color: '#6D2D55',
-		fontSize: 50,
-		fontFamily: 'Nunito',
-		textShadowColor: 'white',
-		textShadowRadius: 20,
-		textAlign: 'center',
-		paddingTop: 10,
-		width: 350,
-		height: 85
+	logo: {
+		height: 200,
+		width: 200
 	},
 	inputView: {
 		top: 100,
