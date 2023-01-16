@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import NavLink from '../../components/NavLink'
 
 function Home({ navigation }) {
 	return (
@@ -10,31 +11,9 @@ function Home({ navigation }) {
 					<Text style={styles.name}>EasyShop</Text>
 				</View>
 				<View style={styles.buttonContainer}>
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('MealPlansHome')
-						}}
-					>
-						<Text style={styles.text}>Meal plans</Text>
-					</Pressable>
-					<Pressable
-						accessibilityRole='Button'
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('RecipesHome')
-						}}
-					>
-						<Text style={styles.text}>Recipes</Text>
-					</Pressable>
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('MiscItems')
-						}}
-					>
-						<Text style={styles.text}>Misc. items</Text>
-					</Pressable>
+					<NavLink navigation={navigation} navigateToPage={'MealPlansHome'} buttonText={'Meal plans'} />
+					<NavLink navigation={navigation} navigateToPage={'RecipesHome'} buttonText={'Recipes'} />
+					<NavLink navigation={navigation} navigateToPage={'MiscItems'} buttonText={'Misc. items'} />
 				</View>
 			</View>
 		</SafeAreaView>
@@ -70,19 +49,6 @@ const styles = StyleSheet.create({
 		height: 300,
 		justifyContent: 'space-around',
 		alignItems: 'center'
-	},
-	button: {
-		backgroundColor: '#6D2D55',
-		width: 250,
-		height: 50,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10
-	},
-	text: {
-		color: 'white',
-		fontFamily: 'Nunito',
-		fontSize: 16
 	}
 })
 

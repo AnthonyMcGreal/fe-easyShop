@@ -2,6 +2,8 @@ import * as React from 'react'
 import {render, screen, fireEvent} from '@testing-library/react-native'
 import Home from '../app/screens/home/Home'
 
+const navigate = jest.fn()
+
 test('renders the home page title and nav buttons', () => {
 
 	const {getByText} = render(<Home />)
@@ -19,10 +21,8 @@ test('renders the home page title and nav buttons', () => {
 
 test('meal plan button navigates to the MealPlanHome screen', () => {
 
-	const navigate = jest.fn()
-
 	const {getByText, debug} = render(<Home navigation={{navigate}}/>)
-
+	
 	const mealPlanButton = getByText('Meal plans')
 
 	fireEvent.press(mealPlanButton)
@@ -31,8 +31,6 @@ test('meal plan button navigates to the MealPlanHome screen', () => {
 })
 
 test('recipes button navigates to the Recipes screen', () => {
-
-	const navigate = jest.fn()
 
 	const {getByText, debug} = render(<Home navigation={{navigate}}/>)
 
@@ -44,8 +42,6 @@ test('recipes button navigates to the Recipes screen', () => {
 })
 
 test('Misc. items button navigates to the MiscItems screen', () => {
-
-	const navigate = jest.fn()
 
 	const {getByText, debug} = render(<Home navigation={{navigate}}/>)
 
