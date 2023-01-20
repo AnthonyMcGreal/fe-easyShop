@@ -1,19 +1,36 @@
 import React from 'react'
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import {View, Text, StyleSheet, Pressable, Image} from 'react-native'
+import {SafeAreaView} from 'react-native-safe-area-context'
 import NavLink from '../../components/NavLink'
 
-function Home({ navigation }) {
+function Home({navigation}) {
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
 				<View>
-					<Image style={styles.logo} source={require('../../assets/easyShopLogo.png')} />
+					<Image
+						style={styles.logo}
+						source={require('../../assets/easyShopLogo.png')}
+						accessible={true}
+						accessibilityLabel={'Easy shop logo'}
+					/>
 				</View>
 				<View style={styles.buttonContainer}>
-					<NavLink navigation={navigation} navigateToPage={'MealPlansHome'} buttonText={'Meal plans'} />
-					<NavLink navigation={navigation} navigateToPage={'RecipesHome'} buttonText={'Recipes'} />
-					<NavLink navigation={navigation} navigateToPage={'MiscItems'} buttonText={'Misc. items'} />
+					<NavLink
+						navigation={navigation}
+						navigateToPage={'MealPlansHome'}
+						buttonText={'Meal plans'}
+					/>
+					<NavLink
+						navigation={navigation}
+						navigateToPage={'RecipesHome'}
+						buttonText={'Recipes'}
+					/>
+					<NavLink
+						navigation={navigation}
+						navigateToPage={'MiscItems'}
+						buttonText={'Misc. items'}
+					/>
 				</View>
 			</View>
 		</SafeAreaView>
@@ -33,7 +50,7 @@ const styles = StyleSheet.create({
 		width: '80%',
 		alignItems: 'center'
 	},
-	logo:{
+	logo: {
 		height: 200,
 		width: 200
 	},
