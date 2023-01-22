@@ -64,11 +64,11 @@ function LogIn({navigation}) {
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={{alignItems: 'center'}}>
-					<Image
-						style={styles.logo}
-						source={require('../assets/easyShopLogo.png')}
-					/>
-					<LoginForm />
+				<Image
+					style={styles.logo}
+					source={require('../assets/easyShopLogo.png')}
+				/>
+				<LoginForm />
 			</View>
 		</SafeAreaView>
 	)
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 	},
 	logo: {
 		height: 200,
-		width: 200,
+		width: 200
 	},
 	registerText: {
 		color: 'white',
@@ -102,15 +102,6 @@ const styles = StyleSheet.create({
 	hiddenText: {
 		color: '#2d556d',
 		fontSize: 18
-	},
-	disableLoginButton: {
-		backgroundColor: '#B5B5B5',
-		marginTop: 20,
-		height: 40,
-		width: 200,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10
 	}
 })
 
