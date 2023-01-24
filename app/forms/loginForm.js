@@ -1,5 +1,5 @@
 import react from 'react'
-import {Field, Formik, useFormik, validateYupSchema} from 'formik'
+import {Formik} from 'formik'
 import {Text, View, StyleSheet, Pressable, TextInput} from 'react-native'
 
 const LoginForm = ({onSubmit}) => {
@@ -21,7 +21,7 @@ const LoginForm = ({onSubmit}) => {
 		<Formik
 			initialValues={{emailAddress: '', password: ''}}
 			initialTouched={{emailAddress: false, password: false}}
-			onSubmit={values => console.log('onsubmit')}
+			onSubmit={values => onSubmit(values.emailAddress, values.password)}
 			validate={values => validateForm(values)}
 		>
 			{({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
