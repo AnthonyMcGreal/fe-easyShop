@@ -1,18 +1,19 @@
 import react from 'react'
 import {Formik} from 'formik'
 import {Text, View, StyleSheet, Pressable, TextInput} from 'react-native'
+import Spacer from '../components/Spacer'
 
 const LoginForm = ({onSubmit}) => {
 	const validateForm = values => {
 		const errors = {}
 
 		if (!values.emailAddress) {
-			errors.emailAddress = 'Email address is required'
+			errors.emailAddress = '*Email address is required'
 		} else if (!/^\S+@\S+$/.test(values.emailAddress)) {
-			errors.emailAddress = 'Not a valid email address'
+			errors.emailAddress = '*Not a valid email address'
 		}
 
-		if (!values.password) errors.password = 'Password is required'
+		if (!values.password) errors.password = '*Password is required'
 
 		return errors
 	}
@@ -27,7 +28,8 @@ const LoginForm = ({onSubmit}) => {
 			{({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
 				<>
 					<View>
-						<Text style={styles.text}> Email Address </Text>
+						<Text style={styles.text}>Email Address </Text>
+						<Spacer />
 						<TextInput
 							onChangeText={handleChange('emailAddress')}
 							onBlur={handleBlur('emailAddress')}
@@ -39,9 +41,10 @@ const LoginForm = ({onSubmit}) => {
 							}
 						/>
 						{errors.emailAddress && touched.emailAddress ? (
-							<Text>{errors.emailAddress}</Text>
-						) : null}
-						<Text style={styles.text}> Password </Text>
+							<Text style={styles.errorText}>{errors.emailAddress}</Text>
+						) : <Spacer size='xl'/>}
+						<Text style={styles.text}>Password </Text>
+						<Spacer />
 						<TextInput
 							onChangeText={handleChange('password')}
 							onBlur={handleBlur('password')}
@@ -54,6 +57,11 @@ const LoginForm = ({onSubmit}) => {
 							}
 							secureTextEntry={true}
 						/>
+						{errors.password && touched.password ? (
+							<Text style={styles.errorText}>{errors.password}</Text>
+						) : <Spacer size='xl'/>}
+						<Spacer size='xxxl' />
+						<Spacer size='xl'/>
 						<Pressable
 							disabled={
 								values.emailAddress === '' ||
@@ -85,7 +93,6 @@ const styles = StyleSheet.create({
 		height: 50,
 		width: 250,
 		borderWidth: 3,
-		padding: 10,
 		paddingLeft: 25,
 		borderColor: '#642CA9',
 		borderRadius: 50,
@@ -95,6 +102,10 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		fontSize: 24
+	},
+	errorText:{
+		fontSize: 15,
+		height:20
 	},
 	loginButton: {
 		backgroundColor: '#642CA9',

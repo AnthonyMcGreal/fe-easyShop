@@ -19,12 +19,6 @@ function LogIn({navigation}) {
 		})
 	}, [navigation])
 
-	let disableLogIn = true
-
-	if (emailAddress && password) {
-		disableLogIn = false
-	}
-
 	const login = async (emailAddress, password) => {
 		setLoggingIn(true)
 		setLoginFailed(false)
@@ -70,7 +64,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	logo: {
-		height: 200,
+		height: 170,
 		width: 200
 	},
 	registerText: {
