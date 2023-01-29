@@ -31,6 +31,7 @@ const LoginForm = ({onSubmit}) => {
 						<Text style={styles.text}>Email Address </Text>
 						<Spacer />
 						<TextInput
+							accessibilityLabel='email address input'
 							onChangeText={handleChange('emailAddress')}
 							onBlur={handleBlur('emailAddress')}
 							value={values.emailAddress}
@@ -46,6 +47,7 @@ const LoginForm = ({onSubmit}) => {
 						<Text style={styles.text}>Password </Text>
 						<Spacer />
 						<TextInput
+						accessibilityLabel='password input'
 							onChangeText={handleChange('password')}
 							onBlur={handleBlur('password')}
 							value={values.password}
