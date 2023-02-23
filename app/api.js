@@ -4,7 +4,7 @@ const baseURL = 'https://easy-shop-be.herokuapp.com/api'
 
 exports.logIn = async (email, password) => {
 	return axios
-	.post(`${baseURL}/login`, {
+		.post(`${baseURL}/login`, {
 			email: email,
 			password: password
 		})
