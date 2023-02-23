@@ -4,6 +4,8 @@ import {View, Text, StyleSheet, Pressable} from 'react-native'
 const NavLink = ({navigation, navigateToPage, buttonText}) => {
 	return (
 		<Pressable
+			accessibilityRole="button"
+			accessibilityLabel={`${buttonText}`}
 			style={styles.button}
 			onPress={() => {
 				navigation.navigate(`${navigateToPage}`)

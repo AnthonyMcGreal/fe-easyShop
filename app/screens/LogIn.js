@@ -13,30 +13,24 @@ function LogIn({navigation}) {
 	const [loginFailed, setLoginFailed] = useState(false)
 	const [loggingIn, setLoggingIn] = useState(false)
 
-	useEffect(() => {
-		navigation.addListener('beforeRemove', e => {
-			e.preventDefault()
-		})
-	}, [navigation])
+	// useEffect(() => {
+	// 	navigation.addListener('beforeRemove', e => {
+	// 		e.preventDefault()
+	// 	})
+	// }, [navigation])
 
 	const login = async (emailAddress, password) => {
 		setLoggingIn(true)
 		setLoginFailed(false)
 		const userDetails = await logIn(emailAddress, password)
-		const fakeTimer = new Promise(resolve => {
-			setTimeout(resolve, 1000)
-		})
-		Promise.all([userDetails, fakeTimer]).then(() => {
-			if (userDetails) {
-				setUser(userDetails.user)
-				setAuth(userDetails.jwt)
-				navigation.navigate('Home')
-			} else {
-				setLoginFailed(true)
-			}
-			setLoggingIn(false)
-		})
-		navigation.navigate('Home')
+		if (userDetails) {
+			setUser(userDetails.user)
+			// setAuth(userDetails.jwt)
+			navigation.navigate('Home')
+		} else {
+			setLoginFailed(true)
+		}
+		setLoggingIn(false)
 	}
 
 	const navigateToRegister = () => {
@@ -49,6 +43,8 @@ function LogIn({navigation}) {
 				<Image
 					style={styles.logo}
 					source={require('../assets/easyShopLogo.png')}
+					accessible={true}
+					accessibilityLabel={'Easy shop logo'}
 				/>
 				<LoginForm onSubmit={login} />
 			</View>

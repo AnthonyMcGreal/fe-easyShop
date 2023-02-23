@@ -4,14 +4,14 @@ const baseURL = 'https://easy-shop-be.herokuapp.com/api'
 
 exports.logIn = async (email, password) => {
 	return axios
-		.post(`${baseURL}/login`, {
+	.post(`${baseURL}/login`, {
 			email: email,
 			password: password
 		})
 		.then(result => {
 			return {
-				user: result.data,
-				jwt: result.headers['set-cookie'][0].slice(4, -8)
+				user: result.data
+				// jwt: result.headers['set-cookie'][0].slice(4, -8)
 			}
 		})
 		.catch(err => {

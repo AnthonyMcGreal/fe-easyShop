@@ -8,6 +8,7 @@ const LoginForm = ({onSubmit}) => {
 		const errors = {}
 
 		if (!values.emailAddress) {
+			console.log('inside error if')
 			errors.emailAddress = '*Email address is required'
 		} else if (!/^\S+@\S+$/.test(values.emailAddress)) {
 			errors.emailAddress = '*Not a valid email address'
@@ -31,7 +32,7 @@ const LoginForm = ({onSubmit}) => {
 						<Text style={styles.text}>Email Address </Text>
 						<Spacer />
 						<TextInput
-							accessibilityLabel='email address input'
+							accessibilityLabel="email address input"
 							onChangeText={handleChange('emailAddress')}
 							onBlur={handleBlur('emailAddress')}
 							value={values.emailAddress}
@@ -43,11 +44,13 @@ const LoginForm = ({onSubmit}) => {
 						/>
 						{errors.emailAddress && touched.emailAddress ? (
 							<Text style={styles.errorText}>{errors.emailAddress}</Text>
-						) : <Spacer size='xl'/>}
+						) : (
+							<Spacer size="xl" />
+						)}
 						<Text style={styles.text}>Password </Text>
 						<Spacer />
 						<TextInput
-						accessibilityLabel='password input'
+							accessibilityLabel="password input"
 							onChangeText={handleChange('password')}
 							onBlur={handleBlur('password')}
 							value={values.password}
@@ -61,10 +64,14 @@ const LoginForm = ({onSubmit}) => {
 						/>
 						{errors.password && touched.password ? (
 							<Text style={styles.errorText}>{errors.password}</Text>
-						) : <Spacer size='xl'/>}
-						<Spacer size='xxxl' />
-						<Spacer size='xl'/>
+						) : (
+							<Spacer size="xl" />
+						)}
+						<Spacer size="xxxl" />
+						<Spacer size="xl" />
 						<Pressable
+							accessibilityRole="button"
+							accessibilityLabel="log in"
 							disabled={
 								values.emailAddress === '' ||
 								values.password === '' ||
@@ -105,9 +112,9 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 24
 	},
-	errorText:{
+	errorText: {
 		fontSize: 15,
-		height:20
+		height: 20
 	},
 	loginButton: {
 		backgroundColor: '#642CA9',
