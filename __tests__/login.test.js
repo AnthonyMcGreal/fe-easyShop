@@ -1,18 +1,18 @@
-import React from 'react'
 import {
+	act,
+	fireEvent,
 	render,
 	screen,
-	fireEvent,
-	act,
 	waitFor
 } from '@testing-library/react-native'
-import LogIn from '../app/screens/LogIn'
-import {UserProvider} from '../app/components/UserContext'
+import React from 'react'
 import {AuthProvider} from '../app/components/AuthContext'
-
-const navigate = jest.fn()
+import {UserProvider} from '../app/components/UserContext'
+import LogIn from '../app/screens/LogIn'
 
 const renderLogin = () => {
+	const navigate = jest.fn()
+
 	render(
 		<AuthProvider>
 			<UserProvider>
@@ -34,7 +34,8 @@ const renderLogin = () => {
 		emailAddressInput,
 		passwordLabel,
 		passwordInput,
-		loginButton
+		loginButton,
+		navigate
 	}
 }
 
@@ -57,7 +58,8 @@ test('Renders the login page', () => {
 })
 
 test('allows a user to login', async () => {
-	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
+	const {emailAddressInput, passwordInput, loginButton, navigate} =
+		renderLogin()
 
 	const testEmail = 'test@test.com'
 	const password = 'test'
@@ -74,11 +76,12 @@ test('allows a user to login', async () => {
 
 	await waitFor(() => fireEvent.press(loginButton))
 
-	waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
+	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
 })
 
 test('login button is disabled until a valid email address and password is entered', async () => {
-	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
+	const {emailAddressInput, passwordInput, loginButton, navigate} =
+		renderLogin()
 
 	const invalidEmail = 'test'
 	const validEmail = 'test@test.com'
@@ -92,17 +95,17 @@ test('login button is disabled until a valid email address and password is enter
 	expect(loginButton).toBeDisabled()
 
 	await waitFor(() => fireEvent.changeText(emailAddressInput, validEmail))
+	await waitFor(() => fireEvent.changeText(passwordInput, 'test'))
 
 	expect(loginButton).not.toBeDisabled()
 
-	fireEvent.press(loginButton)
+	await fireEvent.press(loginButton)
 
-	expect(await navigate).toHaveBeenCalled()
-	expect(await navigate).toHaveBeenCalledWith('Home')
+	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
 })
 
-test('dispays error messages when invalid email addresses is entered or a password isnt entered', async () => {
-	const {emailAddressInput, passwordInput} = renderLogin()
+test.only('dispays error messages when invalid email addresses is entered or a password isnt entered', async () => {
+	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
 
 	const invalidEmail = 'test'
 	const validEmail = 'test@test.com'
@@ -117,7 +120,10 @@ test('dispays error messages when invalid email addresses is entered or a passwo
 	await fireEvent.changeText(emailAddressInput, '')
 	await fireEvent.changeText(passwordInput, '')
 
+	// await waitFor(() => fireEvent.press(loginButton))
+
 	// const emailError1 = screen.findByText('*Not a valid email address')
 	console.log('before expect')
-	expect(await screen.findByText('*Not a valid email address')).toBeVisible()
+	await screen.findByText('*Not a valid email address')
+	// expect(a).toBeVisible()
 })

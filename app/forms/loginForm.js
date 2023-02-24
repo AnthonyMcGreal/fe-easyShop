@@ -1,6 +1,6 @@
-import react from 'react'
 import {Formik} from 'formik'
-import {Text, View, StyleSheet, Pressable, TextInput} from 'react-native'
+import react from 'react'
+import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
 import Spacer from '../components/Spacer'
 
 const LoginForm = ({onSubmit}) => {
@@ -26,71 +26,75 @@ const LoginForm = ({onSubmit}) => {
 			onSubmit={values => onSubmit(values.emailAddress, values.password)}
 			validate={values => validateForm(values)}
 		>
-			{({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
-				<>
-					<View>
-						<Text style={styles.text}>Email Address </Text>
-						<Spacer />
-						<TextInput
-							accessibilityLabel="email address input"
-							onChangeText={handleChange('emailAddress')}
-							onBlur={handleBlur('emailAddress')}
-							value={values.emailAddress}
-							style={
-								errors.emailAddress && touched.emailAddress
-									? [styles.input, styles.inputError]
-									: styles.input
-							}
-						/>
-						{errors.emailAddress && touched.emailAddress ? (
-							<Text style={styles.errorText}>{errors.emailAddress}</Text>
-						) : (
+			{({handleChange, handleBlur, handleSubmit, values, errors, touched}) => {
+				console.log('ccc', errors)
+				console.log(touched)
+				return (
+					<>
+						<View>
+							<Text style={styles.text}>Email Address </Text>
+							<Spacer />
+							<TextInput
+								accessibilityLabel="email address input"
+								onChangeText={handleChange('emailAddress')}
+								onBlur={handleBlur('emailAddress')}
+								value={values.emailAddress}
+								style={
+									errors.emailAddress && touched.emailAddress
+										? [styles.input, styles.inputError]
+										: styles.input
+								}
+							/>
+							{errors.emailAddress && touched.emailAddress ? (
+								<Text style={styles.errorText}>{errors.emailAddress}</Text>
+							) : (
+								<Spacer size="xl" />
+							)}
+							<Text style={styles.text}>Password </Text>
+							<Spacer />
+							<TextInput
+								accessibilityLabel="password input"
+								onChangeText={handleChange('password')}
+								onBlur={handleBlur('password')}
+								value={values.password}
+								style={
+									(errors.password && touched.password) ||
+									(values.password === '' && touched.password)
+										? [styles.input, styles.inputError]
+										: styles.input
+								}
+								secureTextEntry={true}
+							/>
+							{errors.password && touched.password ? (
+								<Text style={styles.errorText}>{errors.password}</Text>
+							) : (
+								<Spacer size="xl" />
+							)}
+							<Spacer size="xxxl" />
 							<Spacer size="xl" />
-						)}
-						<Text style={styles.text}>Password </Text>
-						<Spacer />
-						<TextInput
-							accessibilityLabel="password input"
-							onChangeText={handleChange('password')}
-							onBlur={handleBlur('password')}
-							value={values.password}
-							style={
-								(errors.password && touched.password) ||
-								(values.password === '' && touched.password)
-									? [styles.input, styles.inputError]
-									: styles.input
-							}
-							secureTextEntry={true}
-						/>
-						{errors.password && touched.password ? (
-							<Text style={styles.errorText}>{errors.password}</Text>
-						) : (
-							<Spacer size="xl" />
-						)}
-						<Spacer size="xxxl" />
-						<Spacer size="xl" />
-						<Pressable
-							accessibilityRole="button"
-							accessibilityLabel="log in"
-							disabled={
-								values.emailAddress === '' ||
-								values.password === '' ||
-								errors.emailAddress
-							}
-							style={
-								values.emailAddress === '' ||
-								values.password === '' ||
-								errors.emailAddress
-									? [styles.loginButton, styles.disableLoginButton]
-									: styles.loginButton
-							}
-							onPress={handleSubmit}
-						>
-							<Text style={{color: 'white', fontSize: 24}}>Log in</Text>
-						</Pressable>
-					</View>
-				</>
-			)}
+							<Pressable
+								accessibilityRole="button"
+								accessibilityLabel="log in"
+								disabled={
+									values.emailAddress === '' ||
+									values.password === '' ||
+									errors.emailAddress
+								}
+								style={
+									values.emailAddress === '' ||
+									values.password === '' ||
+									errors.emailAddress
+										? [styles.loginButton, styles.disableLoginButton]
+										: styles.loginButton
+								}
+								onPress={handleSubmit}
+							>
+								<Text style={{color: 'white', fontSize: 24}}>Log in</Text>
+							</Pressable>
+						</View>
+					</>
+				)
+			}}
 		</Formik>
 	)
 }
