@@ -33,6 +33,13 @@ const LoginForm = ({onSubmit}) => {
 				touched,
 				setFieldTouched
 			}) => {
+				const isEmailAddressError = errors.emailAddress && touched.emailAddress
+				const isPasswordError = errors.password && touched.password
+				const isSubmitDisabled =
+					isEmailAddressError ||
+					isPasswordError ||
+					!touched.emailAddress ||
+					!touched.password
 				return (
 					<>
 						<View>
@@ -43,13 +50,12 @@ const LoginForm = ({onSubmit}) => {
 								onChangeText={handleChange('emailAddress')}
 								onBlur={() => setFieldTouched('emailAddress')}
 								value={values.emailAddress}
-								style={
-									errors.emailAddress && touched.emailAddress
-										? [styles.input, styles.inputError]
-										: styles.input
-								}
+								style={[
+									styles.input,
+									isEmailAddressError ? styles.inputError : null
+								]}
 							/>
-							{errors.emailAddress && touched.emailAddress ? (
+							{isEmailAddressError ? (
 								<Text style={styles.errorText}>{errors.emailAddress}</Text>
 							) : (
 								<Spacer size="xl" />
@@ -61,15 +67,13 @@ const LoginForm = ({onSubmit}) => {
 								onChangeText={handleChange('password')}
 								onBlur={() => setFieldTouched('password')}
 								value={values.password}
-								style={
-									(errors.password && touched.password) ||
-									(values.password === '' && touched.password)
-										? [styles.input, styles.inputError]
-										: styles.input
-								}
+								style={[
+									styles.input,
+									isPasswordError ? styles.inputError : null
+								]}
 								secureTextEntry={true}
 							/>
-							{errors.password && touched.password ? (
+							{isPasswordError ? (
 								<Text style={styles.errorText}>{errors.password}</Text>
 							) : (
 								<Spacer size="xl" />
@@ -79,15 +83,9 @@ const LoginForm = ({onSubmit}) => {
 							<Pressable
 								accessibilityRole="button"
 								accessibilityLabel="log in"
-								disabled={
-									values.emailAddress === '' ||
-									values.password === '' ||
-									errors.emailAddress
-								}
+								disabled={isSubmitDisabled}
 								style={
-									values.emailAddress === '' ||
-									values.password === '' ||
-									errors.emailAddress
+									isSubmitDisabled
 										? [styles.loginButton, styles.disableLoginButton]
 										: styles.loginButton
 								}

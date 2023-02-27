@@ -67,7 +67,9 @@ test('allows a user to login', async () => {
 	expect(loginButton).toBeDisabled()
 
 	await waitFor(() => fireEvent.changeText(emailAddressInput, testEmail))
+	fireEvent(emailAddressInput, 'blur')
 	await waitFor(() => fireEvent.changeText(passwordInput, 'test'))
+	fireEvent(passwordInput, 'blur')
 
 	expect(emailAddressInput.props.value).toEqual(testEmail)
 	expect(passwordInput.props.value).toEqual(password)
@@ -90,7 +92,9 @@ test('login button is disabled until a valid email address and password is enter
 	expect(emailAddressInput.props.value).toEqual('')
 
 	await waitFor(() => fireEvent.changeText(emailAddressInput, invalidEmail))
+	fireEvent(emailAddressInput, 'blur')
 	await waitFor(() => fireEvent.changeText(passwordInput, 'test'))
+	fireEvent(passwordInput, 'blur')
 
 	expect(loginButton).toBeDisabled()
 
