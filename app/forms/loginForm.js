@@ -5,11 +5,9 @@ import Spacer from '../components/Spacer'
 
 const LoginForm = ({onSubmit}) => {
 	const validateForm = values => {
-		console.log('VALIDATION RAN')
 		const errors = {}
 
 		if (!values.emailAddress) {
-			console.log('inside error if')
 			errors.emailAddress = '*Email address is required'
 		} else if (!/^\S+@\S+$/.test(values.emailAddress)) {
 			errors.emailAddress = '*Not a valid email address'
@@ -27,9 +25,14 @@ const LoginForm = ({onSubmit}) => {
 			onSubmit={values => onSubmit(values.emailAddress, values.password)}
 			validate={values => validateForm(values)}
 		>
-			{({handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldTouched}) => {
-				console.log('ccc', errors)
-				console.log(touched)
+			{({
+				handleChange,
+				handleSubmit,
+				values,
+				errors,
+				touched,
+				setFieldTouched
+			}) => {
 				return (
 					<>
 						<View>

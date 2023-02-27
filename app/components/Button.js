@@ -1,15 +1,13 @@
 import React from 'react'
 import {View, Text, StyleSheet, Pressable} from 'react-native'
 
-const NavLink = ({navigation, navigateToPage, buttonText}) => {
+const Button = ({onPress, buttonText}) => {
 	return (
 		<Pressable
 			accessibilityRole="button"
 			accessibilityLabel={`${buttonText}`}
 			style={styles.button}
-			onPress={() => {
-				navigation.navigate(`${navigateToPage}`)
-			}}
+			onPress={onPress}
 		>
 			<Text style={styles.text}>{`${buttonText}`}</Text>
 		</Pressable>
@@ -32,4 +30,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default NavLink
+export default Button

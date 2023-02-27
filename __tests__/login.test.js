@@ -100,38 +100,40 @@ test('login button is disabled until a valid email address and password is enter
 	expect(loginButton).not.toBeDisabled()
 
 	// you can remove await here as fireEvent itself is no a promise, so there is nothing to await
-	await fireEvent.press(loginButton)
+	fireEvent.press(loginButton)
 
 	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
 })
 
 test('dispays error messages when invalid email addresses is entered', async () => {
-
 	// get the email input from our setup
 	const {emailAddressInput} = renderLogin()
 
 	// fire a change event on the email input
-	fireEvent.changeText(emailAddressInput, 'test');
+	fireEvent.changeText(emailAddressInput, 'test')
 
 	// fire a blur event on the email input
-	fireEvent(emailAddressInput, 'blur');
+	fireEvent(emailAddressInput, 'blur')
 
 	// get the error message but wrap it in a waitFor as formik needs to run its validation and the element won't be immediately visible
-	const errorMessage = await waitFor(() => screen.getByText('*Not a valid email address'));
+	const errorMessage = await waitFor(() =>
+		screen.getByText('*Not a valid email address')
+	)
 
 	// do our assertion
 	expect(errorMessage).toBeVisible()
-
 })
 
 test('dispays error messages when no email address is entered', async () => {
 	const {emailAddressInput} = renderLogin()
 
-	fireEvent.changeText(emailAddressInput, '');
+	fireEvent.changeText(emailAddressInput, '')
 
-	fireEvent(emailAddressInput, 'blur');
+	fireEvent(emailAddressInput, 'blur')
 
-	const errorMessage = await waitFor(() => screen.getByText('*Email address is required'));
+	const errorMessage = await waitFor(() =>
+		screen.getByText('*Email address is required')
+	)
 
 	expect(errorMessage).toBeVisible()
 })
@@ -139,11 +141,13 @@ test('dispays error messages when no email address is entered', async () => {
 test('dispays error messages when no password is entered', async () => {
 	const {passwordInput} = renderLogin()
 
-	fireEvent.changeText(passwordInput, '');
+	fireEvent.changeText(passwordInput, '')
 
-	fireEvent(passwordInput, 'blur');
+	fireEvent(passwordInput, 'blur')
 
-	const errorMessage = await waitFor(() => screen.getByText('*Password is required'));
+	const errorMessage = await waitFor(() =>
+		screen.getByText('*Password is required')
+	)
 
 	expect(errorMessage).toBeVisible()
 })

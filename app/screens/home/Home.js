@@ -1,9 +1,13 @@
 import React from 'react'
 import {View, Text, StyleSheet, Pressable, Image} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import NavLink from '../../components/NavLink'
+import Button from '../../components/Button'
 
 function Home({navigation}) {
+	const navigate = pageName => {
+		navigation.navigate(`${pageName}`)
+	}
+
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
@@ -16,19 +20,16 @@ function Home({navigation}) {
 					/>
 				</View>
 				<View style={styles.buttonContainer}>
-					<NavLink
-						navigation={navigation}
-						navigateToPage={'MealPlansHome'}
+					<Button
+						onPress={() => navigate('MealPlansHome')}
 						buttonText={'Meal plans'}
 					/>
-					<NavLink
-						navigation={navigation}
-						navigateToPage={'RecipesHome'}
+					<Button
+						onPress={() => navigate('RecipesHome')}
 						buttonText={'Recipes'}
 					/>
-					<NavLink
-						navigation={navigation}
-						navigateToPage={'MiscItems'}
+					<Button
+						onPress={() => navigate('MiscItems')}
 						buttonText={'Misc. items'}
 					/>
 				</View>
