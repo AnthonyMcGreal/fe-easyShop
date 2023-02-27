@@ -1,18 +1,18 @@
-import React from 'react'
 import {
+	act,
+	fireEvent,
 	render,
 	screen,
-	fireEvent,
-	act,
 	waitFor
 } from '@testing-library/react-native'
-import LogIn from '../app/screens/LogIn'
-import {UserProvider} from '../app/components/UserContext'
+import React from 'react'
 import {AuthProvider} from '../app/components/AuthContext'
-
-const navigate = jest.fn()
+import {UserProvider} from '../app/components/UserContext'
+import LogIn from '../app/screens/LogIn'
 
 const renderLogin = () => {
+	const navigate = jest.fn()
+
 	render(
 		<AuthProvider>
 			<UserProvider>
@@ -34,7 +34,8 @@ const renderLogin = () => {
 		emailAddressInput,
 		passwordLabel,
 		passwordInput,
-		loginButton
+		loginButton,
+		navigate
 	}
 }
 
@@ -57,7 +58,8 @@ test('Renders the login page', () => {
 })
 
 test('allows a user to login', async () => {
-	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
+	const {emailAddressInput, passwordInput, loginButton, navigate} =
+		renderLogin()
 
 	const testEmail = 'test@test.com'
 	const password = 'test'
@@ -74,11 +76,12 @@ test('allows a user to login', async () => {
 
 	await waitFor(() => fireEvent.press(loginButton))
 
-	waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
+	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
 })
 
 test('login button is disabled until a valid email address and password is entered', async () => {
-	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
+	const {emailAddressInput, passwordInput, loginButton, navigate} =
+		renderLogin()
 
 	const invalidEmail = 'test'
 	const validEmail = 'test@test.com'
@@ -92,32 +95,55 @@ test('login button is disabled until a valid email address and password is enter
 	expect(loginButton).toBeDisabled()
 
 	await waitFor(() => fireEvent.changeText(emailAddressInput, validEmail))
+	await waitFor(() => fireEvent.changeText(passwordInput, 'test'))
 
 	expect(loginButton).not.toBeDisabled()
 
-	fireEvent.press(loginButton)
+	// you can remove await here as fireEvent itself is no a promise, so there is nothing to await
+	await fireEvent.press(loginButton)
 
-	expect(await navigate).toHaveBeenCalled()
-	expect(await navigate).toHaveBeenCalledWith('Home')
+	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
 })
 
-test('dispays error messages when invalid email addresses is entered or a password isnt entered', async () => {
-	const {emailAddressInput, passwordInput} = renderLogin()
+test('dispays error messages when invalid email addresses is entered', async () => {
 
-	const invalidEmail = 'test'
-	const validEmail = 'test@test.com'
-	const password = 'test'
+	// get the email input from our setup
+	const {emailAddressInput} = renderLogin()
 
-	const emailError = screen.queryByText('*Email address is required')
-	let passwordError = screen.queryByText('*Password is required')
+	// fire a change event on the email input
+	fireEvent.changeText(emailAddressInput, 'test');
 
-	expect(emailError).toBe(null)
-	expect(passwordError).toBe(null)
+	// fire a blur event on the email input
+	fireEvent(emailAddressInput, 'blur');
 
-	await fireEvent.changeText(emailAddressInput, '')
-	await fireEvent.changeText(passwordInput, '')
+	// get the error message but wrap it in a waitFor as formik needs to run its validation and the element won't be immediately visible
+	const errorMessage = await waitFor(() => screen.getByText('*Not a valid email address'));
 
-	// const emailError1 = screen.findByText('*Not a valid email address')
-	console.log('before expect')
-	expect(await screen.findByText('*Not a valid email address')).toBeVisible()
+	// do our assertion
+	expect(errorMessage).toBeVisible()
+
+})
+
+test('dispays error messages when no email address is entered', async () => {
+	const {emailAddressInput} = renderLogin()
+
+	fireEvent.changeText(emailAddressInput, '');
+
+	fireEvent(emailAddressInput, 'blur');
+
+	const errorMessage = await waitFor(() => screen.getByText('*Email address is required'));
+
+	expect(errorMessage).toBeVisible()
+})
+
+test('dispays error messages when no password is entered', async () => {
+	const {passwordInput} = renderLogin()
+
+	fireEvent.changeText(passwordInput, '');
+
+	fireEvent(passwordInput, 'blur');
+
+	const errorMessage = await waitFor(() => screen.getByText('*Password is required'));
+
+	expect(errorMessage).toBeVisible()
 })
