@@ -5,6 +5,7 @@ import Spacer from '../components/Spacer'
 
 const LoginForm = ({onSubmit}) => {
 	const validateForm = values => {
+		console.log('VALIDATION RAN')
 		const errors = {}
 
 		if (!values.emailAddress) {
@@ -26,7 +27,7 @@ const LoginForm = ({onSubmit}) => {
 			onSubmit={values => onSubmit(values.emailAddress, values.password)}
 			validate={values => validateForm(values)}
 		>
-			{({handleChange, handleBlur, handleSubmit, values, errors, touched}) => {
+			{({handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldTouched}) => {
 				console.log('ccc', errors)
 				console.log(touched)
 				return (
@@ -37,7 +38,7 @@ const LoginForm = ({onSubmit}) => {
 							<TextInput
 								accessibilityLabel="email address input"
 								onChangeText={handleChange('emailAddress')}
-								onBlur={handleBlur('emailAddress')}
+								onBlur={() => setFieldTouched('emailAddress')}
 								value={values.emailAddress}
 								style={
 									errors.emailAddress && touched.emailAddress
@@ -55,7 +56,7 @@ const LoginForm = ({onSubmit}) => {
 							<TextInput
 								accessibilityLabel="password input"
 								onChangeText={handleChange('password')}
-								onBlur={handleBlur('password')}
+								onBlur={() => setFieldTouched('password')}
 								value={values.password}
 								style={
 									(errors.password && touched.password) ||
