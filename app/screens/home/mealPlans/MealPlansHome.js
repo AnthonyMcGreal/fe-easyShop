@@ -1,41 +1,40 @@
 import React from 'react'
-import {View, Text, StyleSheet, Button, Pressable} from 'react-native'
+import {View, StyleSheet, Image} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
+import Button from '../../../components/Button'
 
 function MealPlansHome({navigation}) {
+
+	const navigate = pageName => {
+		navigation.navigate(`${pageName}`)
+	}
+
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
 				<View>
-					<Text style={styles.name}>EasyShop</Text>
+					<Image
+						style={styles.logo}
+						source={require('../../../assets/easyShopLogo.png')}
+						accessible={true}
+						accessibilityLabel={'Easy shop logo'}
+					/>
 				</View>
 				<View style={styles.buttonContainer}>
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('CreateMealPlan')
-						}}
-					>
-						<Text style={styles.text}>Create a meal plan</Text>
-					</Pressable>
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('ViewMealPlans')
-						}}
-					>
-						<Text style={styles.text}>View/Update a meal plan</Text>
-					</Pressable>
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('DeleteMealPlans')
-						}}
-					>
-						<Text style={styles.text}>Delete a meal plan</Text>
-					</Pressable>
+					<Button
+						onPress={() => navigate('CreateMealPlan')}
+						buttonText={'Create a meal plan'}
+					/>
+					<Button
+						onPress={() => navigate('ViewMealPlans')}
+						buttonText={'View/Update a meal plan'}
+					/>
+					<Button
+						onPress={() => navigate('DeleteMealPlans')}
+						buttonText={'Delete a meal plan'}
+					/>
 				</View>
-			</View>
+				</View>
 		</SafeAreaView>
 	)
 }
@@ -53,36 +52,14 @@ const styles = StyleSheet.create({
 		width: '80%',
 		alignItems: 'center'
 	},
-	name: {
-		color: '#6D2D55',
-		fontSize: 50,
-		fontFamily: 'Nunito',
-		textShadowColor: 'white',
-		textShadowRadius: 12,
-		textAlign: 'center',
-		paddingTop: 10,
-		width: 350,
-		height: 85,
-		margin: '10%'
+	logo: {
+		height: 200,
+		width: 200
 	},
 	buttonContainer: {
-		marginTop: 10,
-		height: 270,
+		height: 300,
 		justifyContent: 'space-around',
 		alignItems: 'center'
-	},
-	button: {
-		backgroundColor: '#6D2D55',
-		width: 250,
-		height: 50,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10
-	},
-	text: {
-		color: 'white',
-		fontFamily: 'Nunito',
-		fontSize: 16
 	}
 })
 
