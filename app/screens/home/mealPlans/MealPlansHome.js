@@ -4,7 +4,6 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import Button from '../../../components/Button'
 
 function MealPlansHome({navigation}) {
-
 	const navigate = pageName => {
 		navigation.navigate(`${pageName}`)
 	}
@@ -34,7 +33,7 @@ function MealPlansHome({navigation}) {
 						buttonText={'Delete a meal plan'}
 					/>
 				</View>
-				</View>
+			</View>
 		</SafeAreaView>
 	)
 }
