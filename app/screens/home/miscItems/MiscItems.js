@@ -4,7 +4,6 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import Button from '../../../components/Button'
 
 function MiscItems({navigation}) {
-
 	const navigate = pageName => {
 		navigation.navigate(`${pageName}`)
 	}
@@ -12,7 +11,7 @@ function MiscItems({navigation}) {
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
-			<View>
+				<View>
 					<Image
 						style={styles.logo}
 						source={require('../../../assets/easyShopLogo.png')}

@@ -15,7 +15,7 @@ const renderMiscItems = () => {
 		</AuthProvider>
 	)
 
-  const easyShopLogo = screen.getByLabelText(/Easy shop logo/)
+	const easyShopLogo = screen.getByLabelText(/Easy shop logo/)
 	const addMiscItemButton = screen.getByRole('button', {
 		name: /Add a misc. Item/
 	})
@@ -23,19 +23,21 @@ const renderMiscItems = () => {
 		name: /Delete a misc. Item/
 	})
 
-  return {
-    navigate,
-    easyShopLogo,
-    addMiscItemButton,
-    deleteMiscItemButton
-  }}
+	return {
+		navigate,
+		easyShopLogo,
+		addMiscItemButton,
+		deleteMiscItemButton
+	}
+}
 
 test('renders the miscItems screen with logo and links', () => {
-  const {easyShopLogo, addMiscItemButton, deleteMiscItemButton} = renderMiscItems()
+	const {easyShopLogo, addMiscItemButton, deleteMiscItemButton} =
+		renderMiscItems()
 
-  expect(easyShopLogo).toBeVisible()
-  expect(addMiscItemButton).toBeVisible()
-  expect(deleteMiscItemButton).toBeVisible()
+	expect(easyShopLogo).toBeVisible()
+	expect(addMiscItemButton).toBeVisible()
+	expect(deleteMiscItemButton).toBeVisible()
 })
 
 test('Add a misc item button navigates to the AddMiscItems screen', () => {

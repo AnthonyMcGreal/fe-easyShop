@@ -1,59 +1,45 @@
 import React from 'react'
-import {View, Text, StyleSheet, Pressable} from 'react-native'
+import {View, Image, StyleSheet} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
+import Button from '../../../components/Button'
 
 function RecipesHome({navigation}) {
+	const navigate = pageName => {
+		navigation.navigate(`${pageName}`)
+	}
+
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
 				<View>
-					<Text style={styles.name}>EasyShop</Text>
+					<Image
+						style={styles.logo}
+						source={require('../../../assets/easyShopLogo.png')}
+						accessible={true}
+						accessibilityLabel={'Easy shop logo'}
+					/>
 				</View>
 				<View style={styles.buttonContainer}>
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('AddNewRecipe')
-						}}
-					>
-						<Text style={styles.text}>Add a new recipe</Text>
-					</Pressable>
-
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('UpdateRecipe')
-						}}
-					>
-						<Text style={styles.text}>Update a recipe</Text>
-					</Pressable>
-
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('DeleteRecipe')
-						}}
-					>
-						<Text style={styles.text}>Delete a recipe</Text>
-					</Pressable>
-
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('AddIngredient')
-						}}
-					>
-						<Text style={styles.text}>Add an Ingredient</Text>
-					</Pressable>
-
-					<Pressable
-						style={styles.button}
-						onPress={() => {
-							navigation.navigate('DeleteIngredient')
-						}}
-					>
-						<Text style={styles.text}>Delete an Ingredient</Text>
-					</Pressable>
+					<Button
+						onPress={() => navigate('AddNewRecipe')}
+						buttonText={'Add a new recipe'}
+					/>
+					<Button
+						onPress={() => navigate('UpdateRecipe')}
+						buttonText={'Update a recipe'}
+					/>
+					<Button
+						onPress={() => navigate('DeleteRecipe')}
+						buttonText={'Delete a recipe'}
+					/>
+					<Button
+						onPress={() => navigate('AddIngredient')}
+						buttonText={'Add an ingredient'}
+					/>
+					<Button
+						onPress={() => navigate('DeleteIngredient')}
+						buttonText={'Delete an ingredient'}
+					/>
 				</View>
 			</View>
 		</SafeAreaView>
@@ -73,35 +59,14 @@ const styles = StyleSheet.create({
 		width: '80%',
 		alignItems: 'center'
 	},
-	name: {
-		color: '#6D2D55',
-		fontSize: 50,
-		fontFamily: 'Nunito',
-		textShadowColor: 'white',
-		textShadowRadius: 12,
-		textAlign: 'center',
-		paddingTop: 10,
-		width: 350,
-		height: 85
+	logo: {
+		height: 200,
+		width: 200
 	},
 	buttonContainer: {
-		height: '70%',
+		height: 300,
 		justifyContent: 'space-around',
-		alignItems: 'center',
-		marginTop: '5%'
-	},
-	button: {
-		backgroundColor: '#6D2D55',
-		width: 250,
-		height: 50,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10
-	},
-	text: {
-		color: 'white',
-		fontFamily: 'Nunito',
-		fontSize: 16
+		alignItems: 'center'
 	}
 })
 
