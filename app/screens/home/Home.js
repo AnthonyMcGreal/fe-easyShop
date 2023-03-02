@@ -11,7 +11,6 @@ function Home({navigation}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
-			<View style={styles.contentContainer}>
 					<Image
 						style={styles.logo}
 						source={require('../../assets/easyShopLogo.png')}
@@ -32,7 +31,6 @@ function Home({navigation}) {
 						onPress={() => navigate('MiscItems')}
 						buttonText={'Misc. items'}
 					/>
-			</View>
 		</SafeAreaView>
 	)
 }
@@ -43,12 +41,6 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white',
 		width: '100%',
 		alignItems: 'center',
-		justifyContent: 'center'
-	},
-	contentContainer: {
-		height: '90%',
-		width: '80%',
-		alignItems: 'center'
 	},
 	logo: {
 		height: 200,

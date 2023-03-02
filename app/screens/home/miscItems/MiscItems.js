@@ -11,7 +11,6 @@ function MiscItems({navigation}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
-			<View style={styles.contentContainer}>
 					<Image
 						style={styles.logo}
 						source={require('../../../assets/easyShopLogo.png')}
@@ -27,7 +26,6 @@ function MiscItems({navigation}) {
 						onPress={() => navigate('DeleteMiscItems')}
 						buttonText={'Delete a misc. Item'}
 					/>
-			</View>
 		</SafeAreaView>
 	)
 }
@@ -35,15 +33,9 @@ function MiscItems({navigation}) {
 const styles = StyleSheet.create({
 	background: {
 		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: 'white',
 		width: '100%'
-	},
-	contentContainer: {
-		height: '90%',
-		width: '80%',
-		alignItems: 'center'
 	},
 	logo: {
 		height: 200,

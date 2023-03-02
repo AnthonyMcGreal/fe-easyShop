@@ -11,15 +11,12 @@ function RecipesHome({navigation}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
-			<View style={styles.contentContainer}>
-				<View>
 					<Image
 						style={styles.logo}
 						source={require('../../../assets/easyShopLogo.png')}
 						accessible={true}
 						accessibilityLabel={'Easy shop logo'}
 					/>
-				</View>
 					<Button
 						onPress={() => navigate('AddNewRecipe')}
 						buttonText={'Add a new recipe'}
@@ -44,7 +41,6 @@ function RecipesHome({navigation}) {
 						onPress={() => navigate('DeleteIngredient')}
 						buttonText={'Delete an ingredient'}
 					/>
-			</View>
 		</SafeAreaView>
 	)
 }
@@ -52,15 +48,9 @@ function RecipesHome({navigation}) {
 const styles = StyleSheet.create({
 	background: {
 		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: 'white',
 		width: '100%'
-	},
-	contentContainer: {
-		height: '90%',
-		width: '80%',
-		alignItems: 'center'
 	},
 	logo: {
 		height: 200,
