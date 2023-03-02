@@ -41,7 +41,7 @@ function MealPlansHome({navigation}) {
 const styles = StyleSheet.create({
 	background: {
 		flex: 1,
-		backgroundColor: '#2d556d',
+		backgroundColor: 'white',
 		width: '100%',
 		alignItems: 'center',
 		justifyContent: 'center'
