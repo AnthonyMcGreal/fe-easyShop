@@ -2,6 +2,7 @@ import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import Button from '../../../components/Button'
+import Spacer from '../../../components/Spacer'
 
 function RecipesHome({navigation}) {
 	const navigate = pageName => {
@@ -19,28 +20,30 @@ function RecipesHome({navigation}) {
 						accessibilityLabel={'Easy shop logo'}
 					/>
 				</View>
-				<View style={styles.buttonContainer}>
 					<Button
 						onPress={() => navigate('AddNewRecipe')}
 						buttonText={'Add a new recipe'}
 					/>
+					<Spacer size='xl' />
 					<Button
 						onPress={() => navigate('UpdateRecipe')}
 						buttonText={'Update a recipe'}
 					/>
+					<Spacer size='xl' />
 					<Button
 						onPress={() => navigate('DeleteRecipe')}
 						buttonText={'Delete a recipe'}
 					/>
+					<Spacer size='xl' />
 					<Button
 						onPress={() => navigate('AddIngredient')}
 						buttonText={'Add an ingredient'}
 					/>
+					<Spacer size='xl' />
 					<Button
 						onPress={() => navigate('DeleteIngredient')}
 						buttonText={'Delete an ingredient'}
 					/>
-				</View>
 			</View>
 		</SafeAreaView>
 	)
@@ -63,11 +66,6 @@ const styles = StyleSheet.create({
 		height: 200,
 		width: 200
 	},
-	buttonContainer: {
-		height: 300,
-		justifyContent: 'space-around',
-		alignItems: 'center'
-	}
 })
 
 export default RecipesHome

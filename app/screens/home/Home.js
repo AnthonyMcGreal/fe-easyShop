@@ -2,6 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, Pressable, Image} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import Button from '../../components/Button'
+import Spacer from '../../components/Spacer'
 
 function Home({navigation}) {
 	const navigate = pageName => {
@@ -11,28 +12,26 @@ function Home({navigation}) {
 	return (
 		<SafeAreaView style={styles.background}>
 			<View style={styles.contentContainer}>
-				<View>
 					<Image
 						style={styles.logo}
 						source={require('../../assets/easyShopLogo.png')}
 						accessible={true}
 						accessibilityLabel={'Easy shop logo'}
 					/>
-				</View>
-				<View style={styles.buttonContainer}>
 					<Button
 						onPress={() => navigate('MealPlansHome')}
 						buttonText={'Meal plans'}
 					/>
+					<Spacer size='xl' />
 					<Button
 						onPress={() => navigate('RecipesHome')}
 						buttonText={'Recipes'}
 					/>
+					<Spacer size='xl' />
 					<Button
 						onPress={() => navigate('MiscItems')}
 						buttonText={'Misc. items'}
 					/>
-				</View>
 			</View>
 		</SafeAreaView>
 	)
@@ -55,11 +54,6 @@ const styles = StyleSheet.create({
 		height: 200,
 		width: 200
 	},
-	buttonContainer: {
-		height: 300,
-		justifyContent: 'space-around',
-		alignItems: 'center'
-	}
 })
 
 export default Home
