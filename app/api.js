@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-// const baseURL = 'https://be-easyshop.onrender.com/api'
-const baseURL = 'http://10.0.2.2:9090/api'
+const baseURL = process.env.API_URL ?? 'http://10.0.2.2:9090/api'
 
 exports.logIn = async (email, password) => {
 	return axios
@@ -11,8 +10,8 @@ exports.logIn = async (email, password) => {
 		})
 		.then(result => {
 			return {
-				user: result.data
-				// jwt: result.headers['set-cookie'][0].slice(4, -8)
+				user: result.data,
+				jwt: result.headers['set-cookie'][0].slice(4, -8)
 			}
 		})
 		.catch(err => {
