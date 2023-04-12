@@ -25,7 +25,7 @@ function LogIn({navigation}) {
 		const userDetails = await logIn(emailAddress, password)
 		if (userDetails) {
 			setUser(userDetails.user)
-			// setAuth(userDetails.jwt)
+			setAuth(userDetails.jwt)
 			navigation.navigate('Home')
 		} else {
 			setLoginFailed(true)

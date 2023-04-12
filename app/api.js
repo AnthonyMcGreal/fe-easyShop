@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const baseURL = 'https://easy-shop-be.herokuapp.com/api'
+// const baseURL = 'https://be-easyshop.onrender.com/api'
+const baseURL = 'http://10.0.2.2:9090/api'
 
 exports.logIn = async (email, password) => {
 	return axios
