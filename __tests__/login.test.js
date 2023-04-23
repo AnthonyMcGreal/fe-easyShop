@@ -1,14 +1,10 @@
-import {
-	act,
-	fireEvent,
-	render,
-	screen,
-	waitFor
-} from '@testing-library/react-native'
+import {fireEvent, render, screen, waitFor} from '@testing-library/react-native'
 import React from 'react'
 import {AuthProvider} from '../app/components/AuthContext'
 import {UserProvider} from '../app/components/UserContext'
 import LogIn from '../app/screens/LogIn'
+import {rest} from 'msw'
+import {server} from '../app/mocks/server'
 
 const renderLogin = () => {
 	const navigate = jest.fn()
@@ -68,7 +64,7 @@ test('allows a user to login', async () => {
 
 	await waitFor(() => fireEvent.changeText(emailAddressInput, testEmail))
 	fireEvent(emailAddressInput, 'blur')
-	await waitFor(() => fireEvent.changeText(passwordInput, 'test'))
+	await waitFor(() => fireEvent.changeText(passwordInput, password))
 	fireEvent(passwordInput, 'blur')
 
 	expect(emailAddressInput.props.value).toEqual(testEmail)
@@ -77,6 +73,11 @@ test('allows a user to login', async () => {
 	expect(loginButton).not.toBeDisabled()
 
 	await waitFor(() => fireEvent.press(loginButton))
+
+	await waitFor(() =>
+		expect(screen.queryByLabelText(/logging in/)).toBeVisible()
+	)
+	await waitFor(() => expect(screen.queryByLabelText(/logging in/)).toBeNull())
 
 	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
 })
@@ -103,13 +104,17 @@ test('login button is disabled until a valid email address and password is enter
 
 	expect(loginButton).not.toBeDisabled()
 
-	// you can remove await here as fireEvent itself is no a promise, so there is nothing to await
-	fireEvent.press(loginButton)
+	await waitFor(() => fireEvent.press(loginButton))
+
+	await waitFor(() =>
+		expect(screen.queryByLabelText(/logging in/)).toBeVisible()
+	)
+	await waitFor(() => expect(screen.queryByLabelText(/logging in/)).toBeNull())
 
 	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
 })
 
-test('dispays error messages when invalid email addresses is entered', async () => {
+test('displays error messages when invalid email addresses is entered', async () => {
 	// get the email input from our setup
 	const {emailAddressInput} = renderLogin()
 
@@ -128,7 +133,7 @@ test('dispays error messages when invalid email addresses is entered', async () 
 	expect(errorMessage).toBeVisible()
 })
 
-test('dispays error messages when no email address is entered', async () => {
+test('displays error messages when no email address is entered', async () => {
 	const {emailAddressInput} = renderLogin()
 
 	fireEvent.changeText(emailAddressInput, '')
@@ -142,7 +147,7 @@ test('dispays error messages when no email address is entered', async () => {
 	expect(errorMessage).toBeVisible()
 })
 
-test('dispays error messages when no password is entered', async () => {
+test('displays error messages when no password is entered', async () => {
 	const {passwordInput} = renderLogin()
 
 	fireEvent.changeText(passwordInput, '')
@@ -151,6 +156,42 @@ test('dispays error messages when no password is entered', async () => {
 
 	const errorMessage = await waitFor(() =>
 		screen.getByText('*Password is required')
+	)
+
+	expect(errorMessage).toBeVisible()
+})
+
+test('displays error message when login fails', async () => {
+	server.use(
+		rest.post(`http://10.0.2.2:9090/api/login`, (req, res, ctx) => {
+			return res(ctx.delay(), ctx.status(401), ctx.json({msg: 'Login failed'}))
+		})
+	)
+
+	const {emailAddressInput, passwordInput, loginButton, navigate} =
+		renderLogin()
+
+	const testEmail = 'test@test.com'
+	const password = 'test'
+
+	expect(loginButton).toBeDisabled()
+
+	await waitFor(() => fireEvent.changeText(emailAddressInput, testEmail))
+	fireEvent(emailAddressInput, 'blur')
+	await waitFor(() => fireEvent.changeText(passwordInput, password))
+	fireEvent(passwordInput, 'blur')
+
+	expect(loginButton).not.toBeDisabled()
+
+	await waitFor(() => fireEvent.press(loginButton))
+
+	await waitFor(() =>
+		expect(screen.queryByLabelText(/logging in/)).toBeVisible()
+	)
+	await waitFor(() => expect(screen.queryByLabelText(/logging in/)).toBeNull())
+
+	const errorMessage = await waitFor(() =>
+		screen.queryByText(/\*Log in failed :\(/)
 	)
 
 	expect(errorMessage).toBeVisible()

@@ -8,10 +8,10 @@ exports.logIn = async (email, password) => {
 			email: email,
 			password: password
 		})
-		.then(result => {
+		.then(res => {
 			return {
-				user: result.data,
-				jwt: result.headers['set-cookie'][0].slice(4, -8)
+				user: res.data,
+				jwt: res.headers['set-cookie'][0].slice(4, -8)
 			}
 		})
 		.catch(err => {

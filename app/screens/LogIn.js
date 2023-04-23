@@ -1,41 +1,21 @@
-import {useEffect, useState} from 'react'
 import {View, StyleSheet, Image} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import {logIn} from '../api'
-import {updateUser} from '../components/UserContext'
-import {updateAuthContext} from '../components/AuthContext'
 import LoginForm from '../forms/loginForm'
 
 function LogIn({navigation}) {
-	const setUser = updateUser()
-	const setAuth = updateAuthContext()
-
-	const [loginFailed, setLoginFailed] = useState(false)
-	const [loggingIn, setLoggingIn] = useState(false)
-
 	// useEffect(() => {
 	// 	navigation.addListener('beforeRemove', e => {
 	// 		e.preventDefault()
 	// 	})
 	// }, [navigation])
 
-	const login = async (emailAddress, password) => {
-		setLoggingIn(true)
-		setLoginFailed(false)
-		const userDetails = await logIn(emailAddress, password)
-		if (userDetails) {
-			setUser(userDetails.user)
-			setAuth(userDetails.jwt)
-			navigation.navigate('Home')
-		} else {
-			setLoginFailed(true)
-		}
-		setLoggingIn(false)
+	const navigateToHome = () => {
+		navigation.navigate('Home')
 	}
 
-	const navigateToRegister = () => {
-		navigation.navigate('Register')
-	}
+	// const navigateToRegister = () => {
+	// 	navigation.navigate('Register')
+	// }
 
 	return (
 		<SafeAreaView style={styles.background}>
@@ -46,7 +26,7 @@ function LogIn({navigation}) {
 					accessible={true}
 					accessibilityLabel={'Easy shop logo'}
 				/>
-				<LoginForm onSubmit={login} />
+				<LoginForm navigateToHome={navigateToHome} />
 			</View>
 		</SafeAreaView>
 	)

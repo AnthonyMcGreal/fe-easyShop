@@ -1,9 +1,23 @@
+import {useEffect} from 'react'
 import {Formik} from 'formik'
-import react from 'react'
-import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
+import {
+	Pressable,
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+	ActivityIndicator
+} from 'react-native'
 import Spacer from '../components/Spacer'
+import useLogin from '../hooks/useLogin'
 
-const LoginForm = ({onSubmit}) => {
+const LoginForm = ({navigateToHome}) => {
+	const {isloggingIn, hasloginFailed, isLoginSuccessful, login} = useLogin()
+
+	useEffect(() => {
+		if (isLoginSuccessful) navigateToHome()
+	}, [isLoginSuccessful])
+
 	const validateForm = values => {
 		const errors = {}
 
@@ -22,7 +36,7 @@ const LoginForm = ({onSubmit}) => {
 		<Formik
 			initialValues={{emailAddress: '', password: ''}}
 			initialTouched={{emailAddress: false, password: false}}
-			onSubmit={values => onSubmit(values.emailAddress, values.password)}
+			onSubmit={values => login(values.emailAddress, values.password)}
 			validate={values => validateForm(values)}
 		>
 			{({
@@ -79,7 +93,11 @@ const LoginForm = ({onSubmit}) => {
 								<Spacer size="xl" />
 							)}
 							<Spacer size="xxxl" />
-							<Spacer size="xl" />
+							{hasloginFailed ? (
+								<Text style={styles.errorText}> *Log in failed :( </Text>
+							) : (
+								<Spacer size="xl" />
+							)}
 							<Pressable
 								accessibilityRole="button"
 								accessibilityLabel="log in"
@@ -91,7 +109,16 @@ const LoginForm = ({onSubmit}) => {
 								}
 								onPress={handleSubmit}
 							>
-								<Text style={{color: 'white', fontSize: 24}}>Log in</Text>
+								{isloggingIn ? (
+									<ActivityIndicator
+										size="small"
+										color="#FFFFFF"
+										accessibilityLabel="logging in"
+										animating={true}
+									/>
+								) : (
+									<Text style={{color: 'white', fontSize: 24}}>Log in</Text>
+								)}
 							</Pressable>
 						</View>
 					</>

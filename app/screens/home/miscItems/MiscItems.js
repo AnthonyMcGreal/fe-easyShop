@@ -11,21 +11,21 @@ function MiscItems({navigation}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
-					<Image
-						style={styles.logo}
-						source={require('../../../assets/easyShopLogo.png')}
-						accessible={true}
-						accessibilityLabel={'Easy shop logo'}
-					/>
-					<Button
-						onPress={() => navigate('AddMiscItems')}
-						buttonText={'Add a misc. Item'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('DeleteMiscItems')}
-						buttonText={'Delete a misc. Item'}
-					/>
+			<Image
+				style={styles.logo}
+				source={require('../../../assets/easyShopLogo.png')}
+				accessible={true}
+				accessibilityLabel={'Easy shop logo'}
+			/>
+			<Button
+				onPress={() => navigate('AddMiscItems')}
+				buttonText={'Add a misc. Item'}
+			/>
+			<Spacer size="xl" />
+			<Button
+				onPress={() => navigate('DeleteMiscItems')}
+				buttonText={'Delete a misc. Item'}
+			/>
 		</SafeAreaView>
 	)
 }

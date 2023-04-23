@@ -11,36 +11,36 @@ function RecipesHome({navigation}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
-					<Image
-						style={styles.logo}
-						source={require('../../../assets/easyShopLogo.png')}
-						accessible={true}
-						accessibilityLabel={'Easy shop logo'}
-					/>
-					<Button
-						onPress={() => navigate('AddNewRecipe')}
-						buttonText={'Add a new recipe'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('UpdateRecipe')}
-						buttonText={'Update a recipe'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('DeleteRecipe')}
-						buttonText={'Delete a recipe'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('AddIngredient')}
-						buttonText={'Add an ingredient'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('DeleteIngredient')}
-						buttonText={'Delete an ingredient'}
-					/>
+			<Image
+				style={styles.logo}
+				source={require('../../../assets/easyShopLogo.png')}
+				accessible={true}
+				accessibilityLabel={'Easy shop logo'}
+			/>
+			<Button
+				onPress={() => navigate('AddNewRecipe')}
+				buttonText={'Add a new recipe'}
+			/>
+			<Spacer size="xl" />
+			<Button
+				onPress={() => navigate('UpdateRecipe')}
+				buttonText={'Update a recipe'}
+			/>
+			<Spacer size="xl" />
+			<Button
+				onPress={() => navigate('DeleteRecipe')}
+				buttonText={'Delete a recipe'}
+			/>
+			<Spacer size="xl" />
+			<Button
+				onPress={() => navigate('AddIngredient')}
+				buttonText={'Add an ingredient'}
+			/>
+			<Spacer size="xl" />
+			<Button
+				onPress={() => navigate('DeleteIngredient')}
+				buttonText={'Delete an ingredient'}
+			/>
 		</SafeAreaView>
 	)
 }
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 	logo: {
 		height: 200,
 		width: 200
-	},
+	}
 })
 
 export default RecipesHome

@@ -11,26 +11,23 @@ function Home({navigation}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
-					<Image
-						style={styles.logo}
-						source={require('../../assets/easyShopLogo.png')}
-						accessible={true}
-						accessibilityLabel={'Easy shop logo'}
-					/>
-					<Button
-						onPress={() => navigate('MealPlansHome')}
-						buttonText={'Meal plans'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('RecipesHome')}
-						buttonText={'Recipes'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('MiscItems')}
-						buttonText={'Misc. items'}
-					/>
+			<Image
+				style={styles.logo}
+				source={require('../../assets/easyShopLogo.png')}
+				accessible={true}
+				accessibilityLabel={'Easy shop logo'}
+			/>
+			<Button
+				onPress={() => navigate('MealPlansHome')}
+				buttonText={'Meal plans'}
+			/>
+			<Spacer size="xl" />
+			<Button onPress={() => navigate('RecipesHome')} buttonText={'Recipes'} />
+			<Spacer size="xl" />
+			<Button
+				onPress={() => navigate('MiscItems')}
+				buttonText={'Misc. items'}
+			/>
 		</SafeAreaView>
 	)
 }
@@ -40,12 +37,12 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: 'white',
 		width: '100%',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	logo: {
 		height: 200,
 		width: 200
-	},
+	}
 })
 
 export default Home

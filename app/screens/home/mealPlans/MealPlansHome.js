@@ -11,26 +11,26 @@ function MealPlansHome({navigation}) {
 
 	return (
 		<SafeAreaView style={styles.background}>
-					<Image
-						style={styles.logo}
-						source={require('../../../assets/easyShopLogo.png')}
-						accessible={true}
-						accessibilityLabel={'Easy shop logo'}
-					/>
-					<Button
-						onPress={() => navigate('CreateMealPlan')}
-						buttonText={'Create a meal plan'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('ViewMealPlans')}
-						buttonText={'View/Update a meal plan'}
-					/>
-					<Spacer size='xl' />
-					<Button
-						onPress={() => navigate('DeleteMealPlans')}
-						buttonText={'Delete a meal plan'}
-					/>
+			<Image
+				style={styles.logo}
+				source={require('../../../assets/easyShopLogo.png')}
+				accessible={true}
+				accessibilityLabel={'Easy shop logo'}
+			/>
+			<Button
+				onPress={() => navigate('CreateMealPlan')}
+				buttonText={'Create a meal plan'}
+			/>
+			<Spacer size="xl" />
+			<Button
+				onPress={() => navigate('ViewMealPlans')}
+				buttonText={'View/Update a meal plan'}
+			/>
+			<Spacer size="xl" />
+			<Button
+				onPress={() => navigate('DeleteMealPlans')}
+				buttonText={'Delete a meal plan'}
+			/>
 		</SafeAreaView>
 	)
 }
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: 'white',
 		width: '100%',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	logo: {
 		height: 200,
