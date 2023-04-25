@@ -10,6 +10,12 @@ import {
 } from 'react-native'
 import Spacer from '../components/Spacer'
 import useLogin from '../hooks/useLogin'
+import * as Yup from 'yup';
+
+const loginSchema = Yup.object().shape({
+	emailAddress: Yup.string().matches(/^\S+@\S+$/, '*Not a valid email address').required('*Email address is required'),
+	password: Yup.string().required('*Password is required')
+})
 
 const LoginForm = ({navigateToHome}) => {
 	const {isloggingIn, hasloginFailed, isLoginSuccessful, login} = useLogin()
@@ -18,26 +24,12 @@ const LoginForm = ({navigateToHome}) => {
 		if (isLoginSuccessful) navigateToHome()
 	}, [isLoginSuccessful])
 
-	const validateForm = values => {
-		const errors = {}
-
-		if (!values.emailAddress) {
-			errors.emailAddress = '*Email address is required'
-		} else if (!/^\S+@\S+$/.test(values.emailAddress)) {
-			errors.emailAddress = '*Not a valid email address'
-		}
-
-		if (!values.password) errors.password = '*Password is required'
-
-		return errors
-	}
-
 	return (
 		<Formik
 			initialValues={{emailAddress: '', password: ''}}
 			initialTouched={{emailAddress: false, password: false}}
 			onSubmit={values => login(values.emailAddress, values.password)}
-			validate={values => validateForm(values)}
+			validationSchema={loginSchema}
 		>
 			{({
 				handleChange,
