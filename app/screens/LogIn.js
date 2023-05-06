@@ -26,7 +26,7 @@ function LogIn({navigation}) {
 					accessible={true}
 					accessibilityLabel={'Easy shop logo'}
 				/>
-				<LoginForm navigateToHome={navigateToHome} />
+				<LoginForm />
 			</View>
 		</SafeAreaView>
 	)

@@ -8,20 +8,24 @@ import {
 	View,
 	ActivityIndicator
 } from 'react-native'
+import {useNavigation} from '@react-navigation/native'
 import Spacer from '../components/Spacer'
 import useLogin from '../hooks/useLogin'
-import * as Yup from 'yup';
+import * as Yup from 'yup'
 
 const loginSchema = Yup.object().shape({
-	emailAddress: Yup.string().matches(/^\S+@\S+$/, '*Not a valid email address').required('*Email address is required'),
+	emailAddress: Yup.string()
+		.matches(/^\S+@\S+$/, '*Not a valid email address')
+		.required('*Email address is required'),
 	password: Yup.string().required('*Password is required')
 })
 
-const LoginForm = ({navigateToHome}) => {
+const LoginForm = () => {
 	const {isloggingIn, hasloginFailed, isLoginSuccessful, login} = useLogin()
+	const navigation = useNavigation()
 
 	useEffect(() => {
-		if (isLoginSuccessful) navigateToHome()
+		if (isLoginSuccessful) navigation.navigate('Home')
 	}, [isLoginSuccessful])
 
 	return (

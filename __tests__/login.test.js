@@ -2,17 +2,25 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react-native'
 import React from 'react'
 import {AuthProvider} from '../app/components/AuthContext'
 import {UserProvider} from '../app/components/UserContext'
+import {useNavigation} from '@react-navigation/native'
 import LogIn from '../app/screens/LogIn'
 import {rest} from 'msw'
 import {server} from '../app/mocks/server'
 
-const renderLogin = () => {
-	const navigate = jest.fn()
+jest.mock('@react-navigation/native')
 
+let navigateMock;
+
+beforeEach(() => {
+	navigateMock = jest.fn();
+  useNavigation.mockReturnValue({ navigate: navigateMock });
+})
+
+const renderLogin = () => {
 	render(
 		<AuthProvider>
 			<UserProvider>
-				<LogIn navigation={{navigate}} />
+				<LogIn />
 			</UserProvider>
 		</AuthProvider>
 	)
@@ -30,8 +38,7 @@ const renderLogin = () => {
 		emailAddressInput,
 		passwordLabel,
 		passwordInput,
-		loginButton,
-		navigate
+		loginButton
 	}
 }
 
@@ -54,8 +61,8 @@ test('Renders the login page', () => {
 })
 
 test('allows a user to login', async () => {
-	const {emailAddressInput, passwordInput, loginButton, navigate} =
-		renderLogin()
+
+	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
 
 	const testEmail = 'test@test.com'
 	const password = 'test'
@@ -79,12 +86,12 @@ test('allows a user to login', async () => {
 	)
 	await waitFor(() => expect(screen.queryByLabelText(/logging in/)).toBeNull())
 
-	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
+	await waitFor(() => expect(navigateMock).toHaveBeenCalledWith('Home'))
 })
 
 test('login button is disabled until a valid email address and password is entered', async () => {
-	const {emailAddressInput, passwordInput, loginButton, navigate} =
-		renderLogin()
+
+	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
 
 	const invalidEmail = 'test'
 	const validEmail = 'test@test.com'
@@ -111,25 +118,20 @@ test('login button is disabled until a valid email address and password is enter
 	)
 	await waitFor(() => expect(screen.queryByLabelText(/logging in/)).toBeNull())
 
-	await waitFor(() => expect(navigate).toHaveBeenCalledWith('Home'))
+	await waitFor(() => expect(navigateMock).toHaveBeenCalledWith('Home'))
 })
 
 test('displays error messages when invalid email addresses is entered', async () => {
-	// get the email input from our setup
 	const {emailAddressInput} = renderLogin()
 
-	// fire a change event on the email input
 	fireEvent.changeText(emailAddressInput, 'test')
 
-	// fire a blur event on the email input
 	fireEvent(emailAddressInput, 'blur')
 
-	// get the error message but wrap it in a waitFor as formik needs to run its validation and the element won't be immediately visible
 	const errorMessage = await waitFor(() =>
 		screen.getByText('*Not a valid email address')
 	)
 
-	// do our assertion
 	expect(errorMessage).toBeVisible()
 })
 
