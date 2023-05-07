@@ -3,8 +3,12 @@ import {View, StyleSheet, Image} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import Button from '../../../components/Button'
 import Spacer from '../../../components/Spacer'
+import {useNavigation} from '@react-navigation/native'
 
-function MealPlansHome({navigation}) {
+function MealPlansHome() {
+
+	const navigation = useNavigation()
+	
 	const navigate = pageName => {
 		navigation.navigate(`${pageName}`)
 	}

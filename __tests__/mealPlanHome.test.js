@@ -2,15 +2,24 @@ import * as React from 'react'
 import {render, screen, fireEvent} from '@testing-library/react-native'
 import {AuthProvider} from '../app/components/AuthContext'
 import {UserProvider} from '../app/components/UserContext'
+import {useNavigation} from '@react-navigation/native'
 import MealPlansHome from '../app/screens/home/mealPlans/MealPlansHome'
 
+jest.mock('@react-navigation/native')
+
+let navigateMock;
+
+beforeEach(() => {
+	navigateMock = jest.fn();
+  useNavigation.mockReturnValue({ navigate: navigateMock });
+})
+
 const renderMealPlansHome = () => {
-	const navigate = jest.fn()
 
 	render(
 		<AuthProvider>
 			<UserProvider>
-				<MealPlansHome navigation={{navigate}} />
+				<MealPlansHome/>
 			</UserProvider>
 		</AuthProvider>
 	)
@@ -27,7 +36,6 @@ const renderMealPlansHome = () => {
 	})
 
 	return {
-		navigate,
 		easyShopLogo,
 		createMealPlanButton,
 		updateMealPlanButton,
@@ -50,25 +58,25 @@ test('Renders the meal plans homepage with logo and links', () => {
 })
 
 test('Create a meal plan button navigates to the CreateMealPlan screen', () => {
-	const {navigate, createMealPlanButton} = renderMealPlansHome()
+	const {createMealPlanButton} = renderMealPlansHome()
 
 	fireEvent.press(createMealPlanButton)
 
-	expect(navigate).toHaveBeenCalledWith('CreateMealPlan')
+	expect(navigateMock).toHaveBeenCalledWith('CreateMealPlan')
 })
 
 test('View/Update a meal plan button navigates to the ViewMealPlans screen', () => {
-	const {navigate, updateMealPlanButton} = renderMealPlansHome()
+	const {updateMealPlanButton} = renderMealPlansHome()
 
 	fireEvent.press(updateMealPlanButton)
 
-	expect(navigate).toHaveBeenCalledWith('ViewMealPlans')
+	expect(navigateMock).toHaveBeenCalledWith('ViewMealPlans')
 })
 
 test('Delete a meal plan button navigates to the DeleteMealPlans screen', () => {
-	const {navigate, deleteMealPlanButton} = renderMealPlansHome()
+	const {deleteMealPlanButton} = renderMealPlansHome()
 
 	fireEvent.press(deleteMealPlanButton)
 
-	expect(navigate).toHaveBeenCalledWith('DeleteMealPlans')
+	expect(navigateMock).toHaveBeenCalledWith('DeleteMealPlans')
 })
