@@ -1,10 +1,14 @@
 import React from 'react'
-import {View, Text, StyleSheet, Pressable, Image} from 'react-native'
+import {StyleSheet, Image} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
+import {useNavigation} from '@react-navigation/native'
 import Button from '../../components/Button'
 import Spacer from '../../components/Spacer'
 
-function Home({navigation}) {
+function Home() {
+
+	const navigation = useNavigation()
+	
 	const navigate = pageName => {
 		navigation.navigate(`${pageName}`)
 	}

@@ -9,10 +9,6 @@ function LogIn({navigation}) {
 	// 	})
 	// }, [navigation])
 
-	const navigateToHome = () => {
-		navigation.navigate('Home')
-	}
-
 	// const navigateToRegister = () => {
 	// 	navigation.navigate('Register')
 	// }
