@@ -2,15 +2,24 @@ import * as React from 'react'
 import {render, screen, fireEvent} from '@testing-library/react-native'
 import {AuthProvider} from '../app/components/AuthContext'
 import {UserProvider} from '../app/components/UserContext'
+import {useNavigation} from '@react-navigation/native'
 import MiscItems from '../app/screens/home/miscItems/MiscItems'
 
+jest.mock('@react-navigation/native')
+
+let navigateMock;
+
+beforeEach(() => {
+	navigateMock = jest.fn();
+  useNavigation.mockReturnValue({ navigate: navigateMock });
+})
+
 const renderMiscItems = () => {
-	const navigate = jest.fn()
 
 	render(
 		<AuthProvider>
 			<UserProvider>
-				<MiscItems navigation={{navigate}} />
+				<MiscItems />
 			</UserProvider>
 		</AuthProvider>
 	)
@@ -24,7 +33,6 @@ const renderMiscItems = () => {
 	})
 
 	return {
-		navigate,
 		easyShopLogo,
 		addMiscItemButton,
 		deleteMiscItemButton
@@ -41,17 +49,17 @@ test('renders the miscItems screen with logo and links', () => {
 })
 
 test('Add a misc item button navigates to the AddMiscItems screen', () => {
-	const {navigate, addMiscItemButton} = renderMiscItems()
+	const {addMiscItemButton} = renderMiscItems()
 
 	fireEvent.press(addMiscItemButton)
 
-	expect(navigate).toHaveBeenCalledWith('AddMiscItems')
+	expect(navigateMock).toHaveBeenCalledWith('AddMiscItems')
 })
 
 test('Delete a misc item button navigates to the DeleteMiscItems screen', () => {
-	const {navigate, deleteMiscItemButton} = renderMiscItems()
+	const { deleteMiscItemButton} = renderMiscItems()
 
 	fireEvent.press(deleteMiscItemButton)
 
-	expect(navigate).toHaveBeenCalledWith('DeleteMiscItems')
+	expect(navigateMock).toHaveBeenCalledWith('DeleteMiscItems')
 })
