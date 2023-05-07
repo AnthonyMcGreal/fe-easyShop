@@ -6,11 +6,11 @@ import Home from '../app/screens/home/Home'
 
 jest.mock('@react-navigation/native')
 
-let navigateMock;
+let navigateMock
 
 beforeEach(() => {
-	navigateMock = jest.fn();
-  useNavigation.mockReturnValue({ navigate: navigateMock });
+	navigateMock = jest.fn()
+	useNavigation.mockReturnValue({navigate: navigateMock})
 })
 
 test('Renders the home page logo and nav buttons', () => {

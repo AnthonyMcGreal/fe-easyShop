@@ -7,19 +7,18 @@ import MealPlansHome from '../app/screens/home/mealPlans/MealPlansHome'
 
 jest.mock('@react-navigation/native')
 
-let navigateMock;
+let navigateMock
 
 beforeEach(() => {
-	navigateMock = jest.fn();
-  useNavigation.mockReturnValue({ navigate: navigateMock });
+	navigateMock = jest.fn()
+	useNavigation.mockReturnValue({navigate: navigateMock})
 })
 
 const renderMealPlansHome = () => {
-
 	render(
 		<AuthProvider>
 			<UserProvider>
-				<MealPlansHome/>
+				<MealPlansHome />
 			</UserProvider>
 		</AuthProvider>
 	)

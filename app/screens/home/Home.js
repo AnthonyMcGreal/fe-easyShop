@@ -6,9 +6,8 @@ import Button from '../../components/Button'
 import Spacer from '../../components/Spacer'
 
 function Home() {
-
 	const navigation = useNavigation()
-	
+
 	const navigate = pageName => {
 		navigation.navigate(`${pageName}`)
 	}

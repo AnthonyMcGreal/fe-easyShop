@@ -7,15 +7,14 @@ import MiscItems from '../app/screens/home/miscItems/MiscItems'
 
 jest.mock('@react-navigation/native')
 
-let navigateMock;
+let navigateMock
 
 beforeEach(() => {
-	navigateMock = jest.fn();
-  useNavigation.mockReturnValue({ navigate: navigateMock });
+	navigateMock = jest.fn()
+	useNavigation.mockReturnValue({navigate: navigateMock})
 })
 
 const renderMiscItems = () => {
-
 	render(
 		<AuthProvider>
 			<UserProvider>
@@ -57,7 +56,7 @@ test('Add a misc item button navigates to the AddMiscItems screen', () => {
 })
 
 test('Delete a misc item button navigates to the DeleteMiscItems screen', () => {
-	const { deleteMiscItemButton} = renderMiscItems()
+	const {deleteMiscItemButton} = renderMiscItems()
 
 	fireEvent.press(deleteMiscItemButton)
 

@@ -9,11 +9,11 @@ import {server} from '../app/mocks/server'
 
 jest.mock('@react-navigation/native')
 
-let navigateMock;
+let navigateMock
 
 beforeEach(() => {
-	navigateMock = jest.fn();
-  useNavigation.mockReturnValue({ navigate: navigateMock });
+	navigateMock = jest.fn()
+	useNavigation.mockReturnValue({navigate: navigateMock})
 })
 
 const renderLogin = () => {
@@ -61,7 +61,6 @@ test('Renders the login page', () => {
 })
 
 test('allows a user to login', async () => {
-
 	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
 
 	const testEmail = 'test@test.com'
@@ -90,7 +89,6 @@ test('allows a user to login', async () => {
 })
 
 test('login button is disabled until a valid email address and password is entered', async () => {
-
 	const {emailAddressInput, passwordInput, loginButton} = renderLogin()
 
 	const invalidEmail = 'test'

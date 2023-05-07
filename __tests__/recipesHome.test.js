@@ -7,19 +7,18 @@ import RecipesHome from '../app/screens/home/recipes/RecipesHome'
 
 jest.mock('@react-navigation/native')
 
-let navigateMock;
+let navigateMock
 
 beforeEach(() => {
-	navigateMock = jest.fn();
-  useNavigation.mockReturnValue({ navigate: navigateMock });
+	navigateMock = jest.fn()
+	useNavigation.mockReturnValue({navigate: navigateMock})
 })
 
 const renderRecipesHome = () => {
-
 	render(
 		<AuthProvider>
 			<UserProvider>
-				<RecipesHome/>
+				<RecipesHome />
 			</UserProvider>
 		</AuthProvider>
 	)
@@ -76,7 +75,7 @@ test('add recipe button navigates to AddNewRecipe', () => {
 })
 
 test('update recipe button navigates to UpdateRecipe', () => {
-	const { updateRecipeButton} = renderRecipesHome()
+	const {updateRecipeButton} = renderRecipesHome()
 
 	fireEvent.press(updateRecipeButton)
 
@@ -92,7 +91,7 @@ test('delete recipe button navigates to DeleteRecipe', () => {
 })
 
 test('add an ingredient button navigates to AddIngredient', () => {
-	const { addIngredientButton} = renderRecipesHome()
+	const {addIngredientButton} = renderRecipesHome()
 
 	fireEvent.press(addIngredientButton)
 
@@ -100,7 +99,7 @@ test('add an ingredient button navigates to AddIngredient', () => {
 })
 
 test('delete an ingredient button navigates to DeleteIngredient', () => {
-	const { deleteIngredientButton} = renderRecipesHome()
+	const {deleteIngredientButton} = renderRecipesHome()
 
 	fireEvent.press(deleteIngredientButton)
 

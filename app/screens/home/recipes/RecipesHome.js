@@ -6,9 +6,8 @@ import Spacer from '../../../components/Spacer'
 import {useNavigation} from '@react-navigation/native'
 
 function RecipesHome() {
-
 	const navigation = useNavigation()
-	
+
 	const navigate = pageName => {
 		navigation.navigate(`${pageName}`)
 	}
