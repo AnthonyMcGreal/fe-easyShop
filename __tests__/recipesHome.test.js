@@ -2,15 +2,24 @@ import * as React from 'react'
 import {render, screen, fireEvent} from '@testing-library/react-native'
 import {AuthProvider} from '../app/components/AuthContext'
 import {UserProvider} from '../app/components/UserContext'
+import {useNavigation} from '@react-navigation/native'
 import RecipesHome from '../app/screens/home/recipes/RecipesHome'
 
+jest.mock('@react-navigation/native')
+
+let navigateMock;
+
+beforeEach(() => {
+	navigateMock = jest.fn();
+  useNavigation.mockReturnValue({ navigate: navigateMock });
+})
+
 const renderRecipesHome = () => {
-	const navigate = jest.fn()
 
 	render(
 		<AuthProvider>
 			<UserProvider>
-				<RecipesHome navigation={{navigate}} />
+				<RecipesHome/>
 			</UserProvider>
 		</AuthProvider>
 	)
@@ -31,7 +40,6 @@ const renderRecipesHome = () => {
 	})
 
 	return {
-		navigate,
 		easyShopLogo,
 		addRecipeButton,
 		updateRecipeButton,
@@ -43,7 +51,6 @@ const renderRecipesHome = () => {
 
 test('renders the RecipesHome screen with logo and buttons', () => {
 	const {
-		navigate,
 		easyShopLogo,
 		addRecipeButton,
 		updateRecipeButton,
@@ -61,41 +68,41 @@ test('renders the RecipesHome screen with logo and buttons', () => {
 })
 
 test('add recipe button navigates to AddNewRecipe', () => {
-	const {navigate, addRecipeButton} = renderRecipesHome()
+	const {addRecipeButton} = renderRecipesHome()
 
 	fireEvent.press(addRecipeButton)
 
-	expect(navigate).toHaveBeenCalledWith('AddNewRecipe')
+	expect(navigateMock).toHaveBeenCalledWith('AddNewRecipe')
 })
 
 test('update recipe button navigates to UpdateRecipe', () => {
-	const {navigate, updateRecipeButton} = renderRecipesHome()
+	const { updateRecipeButton} = renderRecipesHome()
 
 	fireEvent.press(updateRecipeButton)
 
-	expect(navigate).toHaveBeenCalledWith('UpdateRecipe')
+	expect(navigateMock).toHaveBeenCalledWith('UpdateRecipe')
 })
 
 test('delete recipe button navigates to DeleteRecipe', () => {
-	const {navigate, deleteRecipeButton} = renderRecipesHome()
+	const {deleteRecipeButton} = renderRecipesHome()
 
 	fireEvent.press(deleteRecipeButton)
 
-	expect(navigate).toHaveBeenCalledWith('DeleteRecipe')
+	expect(navigateMock).toHaveBeenCalledWith('DeleteRecipe')
 })
 
 test('add an ingredient button navigates to AddIngredient', () => {
-	const {navigate, addIngredientButton} = renderRecipesHome()
+	const { addIngredientButton} = renderRecipesHome()
 
 	fireEvent.press(addIngredientButton)
 
-	expect(navigate).toHaveBeenCalledWith('AddIngredient')
+	expect(navigateMock).toHaveBeenCalledWith('AddIngredient')
 })
 
 test('delete an ingredient button navigates to DeleteIngredient', () => {
-	const {navigate, deleteIngredientButton} = renderRecipesHome()
+	const { deleteIngredientButton} = renderRecipesHome()
 
 	fireEvent.press(deleteIngredientButton)
 
-	expect(navigate).toHaveBeenCalledWith('DeleteIngredient')
+	expect(navigateMock).toHaveBeenCalledWith('DeleteIngredient')
 })
