@@ -1,133 +1,59 @@
 import {useEffect, useState} from 'react'
-import {
-	Text,
-	StyleSheet,
-	Pressable,
-	Modal,
-	View,
-	ActivityIndicator
-} from 'react-native'
+import {Text, StyleSheet} from 'react-native'
+import Button from '../../../components/Button'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import SelectDropdown from 'react-native-select-dropdown'
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
-import {getMiscItems, deleteMiscItemById} from '../../../api'
-import {useUserContext} from '../../../components/UserContext'
-import {useAuthContext} from '../../../components/AuthContext'
+import useGetMiscItems from '../../../hooks/useGetMiscItems'
+import Spacer from '../../../components/Spacer'
+import DropDownList from '../../../components/DropDownList'
+import useDeleteMiscItems from '../../../hooks/useDeleteMiscItem'
+import PageLoading from '../../../components/PageLoading'
+import DeleteMiscItemModal from '../../../Models/DeleteMiscItemModal'
+import ApiFallback from '../../../Models/ApiFallback'
 
-const DeleteMiscItem = ({navigation}) => {
-	const user = useUserContext()
-	const token = useAuthContext()
-
-	const [miscItems, setChangeMiscItems] = useState([])
-	const [itemNames, setItemNames] = useState([])
-	const [itemToDelete, setChangeItemToDelete] = useState('')
-	const [itemIdToDeleted, setItemIdToDeleted] = useState()
-	const [modalVisible, setModalVisible] = useState(true)
-	const [apiResult, setApiResult] = useState(0)
-	const [getMiscItemsBeenCalled, setGetMiscItemsBeenCalled] = useState(false)
-
-	useEffect(() => {
-		const asyncGetMiscItems = async () => {
-			const items = await getMiscItems(user.user_id, token)
-			setChangeMiscItems(items.data.miscItems)
-			setApiResult(items.status)
-			setGetMiscItemsBeenCalled(true)
-			setItemNames(miscItems.map(item => item.name))
-			setModalVisible(false)
-		}
-		asyncGetMiscItems()
-	}, [getMiscItemsBeenCalled])
+const DeleteMiscItems = () => {
+	const [itemToBeDeleted, setItemToBeDeleted] = useState()
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	let {hasError, isLoading, miscItems, getMiscItems} = useGetMiscItems()
+	const {
+		hasError: hasDeleteError,
+		isLoading: isDeleteLoading,
+		isSuccess,
+		deleteMiscItem
+	} = useDeleteMiscItems()
 
 	useEffect(() => {
-		const itemId = miscItems
-			.filter(item => item.name === itemToDelete)
-			.map(item => {
-				return item.item_id
-			})
-		setItemIdToDeleted(itemId[0])
-	}, [itemToDelete])
+		getMiscItems()
+	}, [])
 
-	const handleDeleteItemButton = async () => {
-		setModalVisible(true)
-		let result = await deleteMiscItemById(itemIdToDeleted, token)
-		setApiResult(result.status)
+	const handleDeleteMiscItem = () => {
+		setIsModalOpen(true)
+		deleteMiscItem(itemToBeDeleted)
 	}
 
-	const backButton = () => {
+	if(hasError || hasDeleteError) return <ApiFallback goBackScreen={'MiscItems'} buttonText={'Misc items'} />
+	if (isLoading) return <PageLoading />
+	if (isModalOpen)
 		return (
-			<Pressable
-				style={styles.button}
-				onPress={() => {
-					navigation.navigate('MiscItems')
-				}}
-			>
-				<Text style={styles.text}>Back to Misc Items</Text>
-			</Pressable>
+			<DeleteMiscItemModal
+				isDeleteLoading={isDeleteLoading}
+				isSuccess={isSuccess}
+				isModalOpen={isModalOpen}
+				setIsModalOpen={setIsModalOpen}
+			/>
 		)
-	}
 
 	return (
 		<SafeAreaView style={styles.background}>
-			<Modal
-				animationType="fade"
-				visible={modalVisible}
-				onRequestClose={() => {
-					Alert.alert('Modal has been closed.')
-					setModalVisible(modalVisible)
+			<Spacer spaceRequired={40} />
+			<Text style={styles.text}>Pick a misc. item to delete</Text>
+			<DropDownList listData={miscItems} onSelect={setItemToBeDeleted} />
+			<Spacer spaceRequired={18} />
+			<Button
+				onPress={() => {
+					handleDeleteMiscItem()
 				}}
-			>
-				<View style={styles.background}>
-					<View style={styles.modelContainer}>
-						{apiResult === 204 ? (
-							<View>
-								<Text style={styles.afterActionText}>Item Deleted</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult > 0 && apiResult !== 204 ? (
-							<View>
-								<Text style={styles.afterActionText}>
-									Ooops! Something went wrong, try again
-								</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult === 0 ? (
-							<ActivityIndicator
-								size="large"
-								color="#6D2D55"
-								animating={true}
-							/>
-						) : null}
-					</View>
-				</View>
-			</Modal>
-			<View style={styles.contentContainer}>
-				<Text style={styles.text}>Pick a misc. item to delete</Text>
-				<SelectDropdown
-					data={itemNames}
-					onSelect={(selectedItem, index) => {
-						setChangeItemToDelete(selectedItem)
-					}}
-					buttonTextAfterSelection={(selectedItem, index) => {
-						return `${selectedItem}`
-					}}
-					renderDropdownIcon={() => {
-						return <FontAwesomeIcon icon={faChevronDown} />
-					}}
-					buttonStyle={styles.dropDownStyle}
-					buttonTextStyle={styles.dropDownText}
-					rowStyle={styles.rowStyle}
-				/>
-			</View>
-			<Pressable
-				style={styles.button}
-				disabled={!itemToDelete}
-				onPress={() => handleDeleteItemButton()}
-			>
-				<Text style={styles.text}>Delete Item</Text>
-			</Pressable>
+				buttonText="Delete item"
+			/>
 		</SafeAreaView>
 	)
 }
@@ -135,64 +61,14 @@ const DeleteMiscItem = ({navigation}) => {
 const styles = StyleSheet.create({
 	background: {
 		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#2d556d',
+		backgroundColor: 'white',
 		width: '100%'
 	},
-	contentContainer: {
-		height: 200,
-		width: '80%',
-		alignItems: 'center'
-	},
 	text: {
-		color: 'white',
-		fontSize: 18,
-		fontFamily: 'Nunito'
-	},
-	dropDownStyle: {
-		width: 250,
-		height: 50,
-		margin: 12,
-		borderWidth: 1,
-		backgroundColor: 'lightgrey',
-		marginBottom: 60
-	},
-	dropDownText: {
-		lineHeight: 20,
-		fontSize: 16,
-		paddingLeft: 10,
-		fontFamily: 'Nunito'
-	},
-	rowStyle: {
-		backgroundColor: 'lightgrey'
-	},
-	modelContainer: {
-		backgroundColor: '#2d556d',
-		width: '80%',
-		height: '80%',
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'space-around',
-		alignItems: 'center'
-	},
-	afterActionText: {
-		color: '#6D2D55',
-		fontSize: 30,
-		textAlign: 'center',
-		marginBottom: 70,
 		fontFamily: 'Nunito',
-		textShadowColor: 'white',
-		textShadowRadius: 12
-	},
-	button: {
-		backgroundColor: '#6D2D55',
-		width: 250,
-		height: 50,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10
+		fontSize: 20
 	}
 })
 
-export default DeleteMiscItem
+export default DeleteMiscItems
