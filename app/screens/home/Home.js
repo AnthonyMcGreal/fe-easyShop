@@ -24,9 +24,9 @@ function Home() {
 				onPress={() => navigate('MealPlansHome')}
 				buttonText={'Meal plans'}
 			/>
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button onPress={() => navigate('RecipesHome')} buttonText={'Recipes'} />
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button
 				onPress={() => navigate('MiscItems')}
 				buttonText={'Misc. items'}

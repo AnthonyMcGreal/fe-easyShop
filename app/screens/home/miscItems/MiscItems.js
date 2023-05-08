@@ -24,7 +24,7 @@ function MiscItems() {
 				onPress={() => navigate('AddMiscItems')}
 				buttonText={'Add a misc. Item'}
 			/>
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button
 				onPress={() => navigate('DeleteMiscItems')}
 				buttonText={'Delete a misc. Item'}

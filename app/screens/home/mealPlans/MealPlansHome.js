@@ -24,12 +24,12 @@ function MealPlansHome() {
 				onPress={() => navigate('CreateMealPlan')}
 				buttonText={'Create a meal plan'}
 			/>
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button
 				onPress={() => navigate('ViewMealPlans')}
 				buttonText={'View/Update a meal plan'}
 			/>
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button
 				onPress={() => navigate('DeleteMealPlans')}
 				buttonText={'Delete a meal plan'}

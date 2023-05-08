@@ -24,22 +24,22 @@ function RecipesHome() {
 				onPress={() => navigate('AddNewRecipe')}
 				buttonText={'Add a new recipe'}
 			/>
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button
 				onPress={() => navigate('UpdateRecipe')}
 				buttonText={'Update a recipe'}
 			/>
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button
 				onPress={() => navigate('DeleteRecipe')}
 				buttonText={'Delete a recipe'}
 			/>
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button
 				onPress={() => navigate('AddIngredient')}
 				buttonText={'Add an ingredient'}
 			/>
-			<Spacer size="xl" />
+			<Spacer spaceRequired={4} />
 			<Button
 				onPress={() => navigate('DeleteIngredient')}
 				buttonText={'Delete an ingredient'}

@@ -68,7 +68,7 @@ const LoginForm = () => {
 							{isEmailAddressError ? (
 								<Text style={styles.errorText}>{errors.emailAddress}</Text>
 							) : (
-								<Spacer size="xl" />
+								<Spacer spaceRequired={4} />
 							)}
 							<Text style={styles.text}>Password </Text>
 							<Spacer />
@@ -86,13 +86,13 @@ const LoginForm = () => {
 							{isPasswordError ? (
 								<Text style={styles.errorText}>{errors.password}</Text>
 							) : (
-								<Spacer size="xl" />
+								<Spacer spaceRequired={4} />
 							)}
 							<Spacer size="xxxl" />
 							{hasloginFailed ? (
 								<Text style={styles.errorText}> *Log in failed :( </Text>
 							) : (
-								<Spacer size="xl" />
+								<Spacer spaceRequired={4} />
 							)}
 							<Pressable
 								accessibilityRole="button"
