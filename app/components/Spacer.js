@@ -1,7 +1,7 @@
 import {View, StyleSheet} from 'react-native'
 
 const Spacer = ({spaceRequired = 1}) => {
-	return <View style={[styles.spacer, {height: (5*spaceRequired)}]} />
+	return <View style={[styles.spacer, {height: 5 * spaceRequired}]} />
 }
 
 const styles = StyleSheet.create({
