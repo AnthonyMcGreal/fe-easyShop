@@ -30,7 +30,8 @@ const DeleteMiscItems = () => {
 		deleteMiscItem(itemToBeDeleted)
 	}
 
-	if(hasError || hasDeleteError) return <ApiFallback goBackScreen={'MiscItems'} buttonText={'Misc items'} />
+	if (hasError || hasDeleteError)
+		return <ApiFallback goBackScreen={'MiscItems'} buttonText={'Misc items'} />
 	if (isLoading) return <PageLoading />
 	if (isModalOpen)
 		return (

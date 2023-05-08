@@ -13,15 +13,14 @@ const useDeleteMiscItems = () => {
 		setIsLoading(true)
 		const apiResponse = deleteMiscItemById(item.item_id, token)
 
-
-      if (apiResponse === 204) {
-        setIsSuccess(true)
-        setHasError(false)
-      } else {
-        setIsSuccess(false)
-        setHasError(true)
-      }
-      setIsLoading(false)
+		if (apiResponse === 204) {
+			setIsSuccess(true)
+			setHasError(false)
+		} else {
+			setIsSuccess(false)
+			setHasError(true)
+		}
+		setIsLoading(false)
 	}
 
 	return {hasError, isLoading, isSuccess, deleteMiscItem}

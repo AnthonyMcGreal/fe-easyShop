@@ -4,18 +4,18 @@ import Button from '../components/Button'
 import {useNavigation} from '@react-navigation/native'
 import Spacer from '../components/Spacer'
 
-const ApiFallback = ({goBackScreen, buttonText
-}) => {
+const ApiFallback = ({goBackScreen, buttonText}) => {
 	const navigation = useNavigation()
 
 	return (
-			<View style={styles.background}>
-				<Text style={styles.text}>Ooops, something went wrong</Text>
-				<Spacer spaceRequired={5} />
-				<Button
-					onPress={() => navigation.navigate(`${goBackScreen}`)}
-					buttonText={`Back to ${buttonText}`} />
-			</View>
+		<View style={styles.background}>
+			<Text style={styles.text}>Ooops, something went wrong</Text>
+			<Spacer spaceRequired={5} />
+			<Button
+				onPress={() => navigation.navigate(`${goBackScreen}`)}
+				buttonText={`Back to ${buttonText}`}
+			/>
+		</View>
 	)
 }
 
