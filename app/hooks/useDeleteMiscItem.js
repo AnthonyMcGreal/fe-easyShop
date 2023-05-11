@@ -9,11 +9,10 @@ const useDeleteMiscItems = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [isSuccess, setIsSuccess] = useState(false)
 
-	const deleteMiscItem = item => {
+	const deleteMiscItem = async item => {
 		setIsLoading(true)
-		const apiResponse = deleteMiscItemById(item.item_id, token)
-
-		if (apiResponse === 204) {
+		const apiResponse = await deleteMiscItemById(item.item_id, token)
+		if (apiResponse.status === 204) {
 			setIsSuccess(true)
 			setHasError(false)
 		} else {
