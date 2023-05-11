@@ -9,6 +9,7 @@ import useDeleteMiscItems from '../../../hooks/useDeleteMiscItem'
 import PageLoading from '../../../components/PageLoading'
 import DeleteMiscItemModal from '../../../Models/DeleteMiscItemModal'
 import ApiFallback from '../../../Models/ApiFallback'
+import ScreenBase from '../../../components/ScreenBase'
 
 const DeleteMiscItems = () => {
 	const [itemToBeDeleted, setItemToBeDeleted] = useState()
@@ -44,7 +45,7 @@ const DeleteMiscItems = () => {
 		)
 
 	return (
-		<SafeAreaView style={styles.background}>
+		<ScreenBase>
 			<Spacer spaceRequired={40} />
 			<Text style={styles.text}>Pick a misc. item to delete</Text>
 			<DropDownList listData={miscItems} onSelect={setItemToBeDeleted} />
@@ -55,17 +56,11 @@ const DeleteMiscItems = () => {
 				}}
 				buttonText="Delete item"
 			/>
-		</SafeAreaView>
+		</ScreenBase>
 	)
 }
 
 const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		alignItems: 'center',
-		backgroundColor: 'white',
-		width: '100%'
-	},
 	text: {
 		fontFamily: 'Nunito',
 		fontSize: 20

@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import Button from '../../../components/Button'
 import Spacer from '../../../components/Spacer'
 import {useNavigation} from '@react-navigation/native'
+import ScreenBase from '../../../components/ScreenBase'
 
 function MealPlansHome() {
 	const navigation = useNavigation()
@@ -13,7 +14,7 @@ function MealPlansHome() {
 	}
 
 	return (
-		<SafeAreaView style={styles.background}>
+		<ScreenBase>
 			<Image
 				style={styles.logo}
 				source={require('../../../assets/easyShopLogo.png')}
@@ -34,17 +35,11 @@ function MealPlansHome() {
 				onPress={() => navigate('DeleteMealPlans')}
 				buttonText={'Delete a meal plan'}
 			/>
-		</SafeAreaView>
+		</ScreenBase>
 	)
 }
 
 const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		backgroundColor: 'white',
-		width: '100%',
-		alignItems: 'center'
-	},
 	logo: {
 		height: 200,
 		width: 200

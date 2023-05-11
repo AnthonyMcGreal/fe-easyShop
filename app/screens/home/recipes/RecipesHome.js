@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import Button from '../../../components/Button'
 import Spacer from '../../../components/Spacer'
 import {useNavigation} from '@react-navigation/native'
+import ScreenBase from '../../../components/ScreenBase'
 
 function RecipesHome() {
 	const navigation = useNavigation()
@@ -13,7 +14,7 @@ function RecipesHome() {
 	}
 
 	return (
-		<SafeAreaView style={styles.background}>
+		<ScreenBase>
 			<Image
 				style={styles.logo}
 				source={require('../../../assets/easyShopLogo.png')}
@@ -44,17 +45,11 @@ function RecipesHome() {
 				onPress={() => navigate('DeleteIngredient')}
 				buttonText={'Delete an ingredient'}
 			/>
-		</SafeAreaView>
+		</ScreenBase>
 	)
 }
 
 const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		alignItems: 'center',
-		backgroundColor: 'white',
-		width: '100%'
-	},
 	logo: {
 		height: 200,
 		width: 200
