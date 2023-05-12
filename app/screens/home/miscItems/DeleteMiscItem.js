@@ -1,7 +1,5 @@
 import {useEffect, useState} from 'react'
-import {Text, StyleSheet} from 'react-native'
 import Button from '../../../components/Button'
-import {SafeAreaView} from 'react-native-safe-area-context'
 import useGetMiscItems from '../../../hooks/useGetMiscItems'
 import Spacer from '../../../components/Spacer'
 import DropDownList from '../../../components/DropDownList'
@@ -10,6 +8,7 @@ import PageLoading from '../../../components/PageLoading'
 import DeleteMiscItemModal from '../../../Models/DeleteMiscItemModal'
 import ApiFallback from '../../../Models/ApiFallback'
 import ScreenBase from '../../../components/ScreenBase'
+import Text from '../../../components/Text'
 
 const DeleteMiscItems = () => {
 	const [itemToBeDeleted, setItemToBeDeleted] = useState()
@@ -47,7 +46,7 @@ const DeleteMiscItems = () => {
 	return (
 		<ScreenBase>
 			<Spacer spaceRequired={40} />
-			<Text style={styles.text}>Pick a misc. item to delete</Text>
+			<Text>Pick an item to delete</Text>
 			<DropDownList listData={miscItems} onSelect={setItemToBeDeleted} />
 			<Spacer spaceRequired={18} />
 			<Button
@@ -59,12 +58,5 @@ const DeleteMiscItems = () => {
 		</ScreenBase>
 	)
 }
-
-const styles = StyleSheet.create({
-	text: {
-		fontFamily: 'Nunito',
-		fontSize: 20
-	}
-})
 
 export default DeleteMiscItems

@@ -3,7 +3,6 @@ import {Formik} from 'formik'
 import {
 	Pressable,
 	StyleSheet,
-	Text,
 	TextInput,
 	View,
 	ActivityIndicator
@@ -11,6 +10,7 @@ import {
 import {useNavigation} from '@react-navigation/native'
 import Spacer from '../components/Spacer'
 import useLogin from '../hooks/useLogin'
+import Text from '../components/Text'
 import * as Yup from 'yup'
 
 const loginSchema = Yup.object().shape({
@@ -53,7 +53,7 @@ const LoginForm = () => {
 				return (
 					<>
 						<View>
-							<Text style={styles.text}>Email Address </Text>
+							<Text>Email Address </Text>
 							<Spacer />
 							<TextInput
 								accessibilityLabel="email address input"
@@ -70,7 +70,7 @@ const LoginForm = () => {
 							) : (
 								<Spacer spaceRequired={4} />
 							)}
-							<Text style={styles.text}>Password </Text>
+							<Text>Password</Text>
 							<Spacer />
 							<TextInput
 								accessibilityLabel="password input"
@@ -113,7 +113,7 @@ const LoginForm = () => {
 										animating={true}
 									/>
 								) : (
-									<Text style={{color: 'white', fontSize: 24}}>Log in</Text>
+									<Text style={{color: 'white'}}>Log in</Text>
 								)}
 							</Pressable>
 						</View>
@@ -138,9 +138,6 @@ const styles = StyleSheet.create({
 		fontFamily: 'Nunito',
 		color: 'black'
 	},
-	text: {
-		fontSize: 24
-	},
 	errorText: {
 		fontSize: 15,
 		height: 20
@@ -152,7 +149,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 50,
-		color: 'white'
 	},
 	disableLoginButton: {
 		backgroundColor: '#F1F2F6',
@@ -161,6 +157,6 @@ const styles = StyleSheet.create({
 		color: '#B5B5B5'
 	},
 	inputError: {
-		borderColor: 'red'
+		borderColor: '#D2042D'
 	}
 })

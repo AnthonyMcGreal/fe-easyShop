@@ -1,5 +1,6 @@
 import React from 'react'
-import {View, Text, StyleSheet, Pressable} from 'react-native'
+import Text from './Text'
+import { StyleSheet, Pressable} from 'react-native'
 
 const Button = ({onPress, buttonText}) => {
 	return (
@@ -25,7 +26,6 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		color: 'white',
-		fontFamily: 'Nunito',
 		fontSize: 16
 	}
 })

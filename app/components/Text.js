@@ -1,7 +1,7 @@
 import {Text as RNText, StyleSheet} from 'react-native'
 
-const Text = ({children, size = 24}) => {
-	return <RNText style={[styles.text, {fontSize: size}]}>{children}</RNText>
+const Text = ({children, style, size = 24}) => {
+	return <RNText style={[styles.text, {fontSize: size}, style]}>{children}</RNText>
 }
 
 const styles = StyleSheet.create({

@@ -1,8 +1,8 @@
 import {View, StyleSheet, Image} from 'react-native'
-import {SafeAreaView} from 'react-native-safe-area-context'
 import LoginForm from '../forms/loginForm'
+import ScreenBase from '../components/ScreenBase'
 
-function LogIn({navigation}) {
+function LogIn() {
 	// useEffect(() => {
 	// 	navigation.addListener('beforeRemove', e => {
 	// 		e.preventDefault()
@@ -14,48 +14,25 @@ function LogIn({navigation}) {
 	// }
 
 	return (
-		<SafeAreaView style={styles.background}>
+		<ScreenBase>
+
 			<View style={{alignItems: 'center'}}>
 				<Image
 					style={styles.logo}
 					source={require('../assets/easyShopLogo.png')}
 					accessible={true}
 					accessibilityLabel={'Easy shop logo'}
-				/>
+					/>
 				<LoginForm />
 			</View>
-		</SafeAreaView>
+					</ScreenBase>
 	)
 }
 
 const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		backgroundColor: 'white',
-		width: '100%',
-		alignItems: 'center'
-	},
 	logo: {
 		height: 170,
 		width: 200
-	},
-	registerText: {
-		color: 'white',
-		fontSize: 14
-	},
-	registerTextUnderline: {
-		color: 'white',
-		fontSize: 14,
-		paddingLeft: 3,
-		textDecorationLine: 'underline'
-	},
-	registerButton: {
-		marginTop: 20,
-		flexDirection: 'row'
-	},
-	hiddenText: {
-		color: '#2d556d',
-		fontSize: 18
 	}
 })
 
