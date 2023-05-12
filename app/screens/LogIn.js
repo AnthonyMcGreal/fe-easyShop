@@ -15,17 +15,16 @@ function LogIn() {
 
 	return (
 		<ScreenBase>
-
 			<View style={{alignItems: 'center'}}>
 				<Image
 					style={styles.logo}
 					source={require('../assets/easyShopLogo.png')}
 					accessible={true}
 					accessibilityLabel={'Easy shop logo'}
-					/>
+				/>
 				<LoginForm />
 			</View>
-					</ScreenBase>
+		</ScreenBase>
 	)
 }
 

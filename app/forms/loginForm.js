@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
 		width: 250,
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderRadius: 50,
+		borderRadius: 50
 	},
 	disableLoginButton: {
 		backgroundColor: '#F1F2F6',

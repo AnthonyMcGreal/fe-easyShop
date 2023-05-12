@@ -1,6 +1,6 @@
 import React from 'react'
 import Text from './Text'
-import { StyleSheet, Pressable} from 'react-native'
+import {StyleSheet, Pressable} from 'react-native'
 
 const Button = ({onPress, buttonText}) => {
 	return (
