@@ -11,10 +11,10 @@ const DropDownList = ({listData, onSelect}) => {
 				onSelect(selectedItem)
 			}}
 			rowTextForSelection={selectedItem => {
-				return `${selectedItem.name}`
+				return `${selectedItem}`
 			}}
 			buttonTextAfterSelection={selectedItem => {
-				return `${selectedItem.name}`
+				return `${selectedItem}`
 			}}
 			renderDropdownIcon={() => {
 				return <FontAwesomeIcon icon={faChevronDown} />
