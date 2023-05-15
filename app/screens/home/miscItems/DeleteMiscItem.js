@@ -13,7 +13,8 @@ import Text from '../../../components/Text'
 const DeleteMiscItems = () => {
 	const [itemToBeDeleted, setItemToBeDeleted] = useState()
 	const [isModalOpen, setIsModalOpen] = useState(false)
-	let {hasError, isLoading, miscItems, getMiscItems} = useGetMiscItems()
+	const {hasError, isLoading, miscItems, getMiscItems} = useGetMiscItems()
+	const miscItemNames = miscItems? miscItems.map(item => item.name) : []
 	const {
 		hasError: hasDeleteError,
 		isLoading: isDeleteLoading,
@@ -42,18 +43,24 @@ const DeleteMiscItems = () => {
 				setIsModalOpen={setIsModalOpen}
 			/>
 		)
+	
+	const onDropDwonSelect = (itemName) => {
+		const selectedItem = miscItems.filter(item => item.name === itemName)
+		setItemToBeDeleted(selectedItem[0])
+	}	
 
 	return (
 		<ScreenBase>
 			<Spacer spaceRequired={40} />
 			<Text>Pick an item to delete</Text>
-			<DropDownList listData={miscItems} onSelect={setItemToBeDeleted} />
+			<DropDownList listData={miscItemNames} onSelect={onDropDwonSelect} />
 			<Spacer spaceRequired={18} />
 			<Button
 				onPress={() => {
 					handleDeleteMiscItem()
 				}}
 				buttonText="Delete item"
+				disabled={!itemToBeDeleted}
 			/>
 		</ScreenBase>
 	)

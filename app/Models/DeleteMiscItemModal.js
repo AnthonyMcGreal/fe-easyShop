@@ -1,4 +1,4 @@
-import {Modal, View, StyleSheet, Text, Pressable} from 'react-native'
+import {Modal, View, StyleSheet, Text} from 'react-native'
 import Button from '../components/Button'
 
 import {useNavigation} from '@react-navigation/native'
