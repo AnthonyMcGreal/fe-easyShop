@@ -4,11 +4,7 @@ import {useNavigation} from '@react-navigation/native'
 import Spacer from '../components/Spacer'
 import PageLoading from '../components/PageLoading'
 
-const AddMiscItemModal = ({
-	isLoading,
-				isModalOpen,
-				setIsModalOpen
-}) => {
+const AddMiscItemModal = ({isLoading, isModalOpen, setIsModalOpen}) => {
 	const navigation = useNavigation()
 
 	if (isLoading) return <PageLoading />

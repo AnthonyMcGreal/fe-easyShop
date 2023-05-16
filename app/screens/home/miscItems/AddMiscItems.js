@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {StyleSheet, Pressable} from 'react-native'
+import {Pressable} from 'react-native'
 import ScreenBase from '../../../components/ScreenBase'
 import Text from '../../../components/Text'
 import AddMiscItemForm from '../../../forms/addMiscItemForm'
@@ -49,61 +49,5 @@ const AddMiscItems = ({navigation}) => {
 		</ScreenBase>
 	)
 }
-
-const styles = StyleSheet.create({
-	input: {
-		height: 50,
-		width: 250,
-		margin: 12,
-		borderWidth: 1,
-		backgroundColor: 'lightgrey',
-		fontSize: 16,
-		textAlign: 'center',
-		fontFamily: 'Nunito'
-	},
-	button: {
-		backgroundColor: '#6D2D55',
-		width: 250,
-		height: 50,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10
-	},
-	dropDownStyle: {
-		width: 250,
-		height: 50,
-		margin: 12,
-		borderWidth: 1,
-		backgroundColor: 'lightgrey',
-		marginBottom: 60
-	},
-	dropDownText: {
-		lineHeight: 20,
-		fontSize: 16,
-		paddingLeft: 10,
-		fontFamily: 'Nunito'
-	},
-	rowStyle: {
-		backgroundColor: 'lightgrey'
-	},
-	modelContainer: {
-		backgroundColor: '#2d556d',
-		width: '80%',
-		height: '80%',
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'space-around',
-		alignItems: 'center'
-	},
-	afterActionText: {
-		color: '#6D2D55',
-		fontSize: 30,
-		textAlign: 'center',
-		marginBottom: 70,
-		fontFamily: 'Nunito',
-		textShadowColor: 'white',
-		textShadowRadius: 12
-	}
-})
 
 export default AddMiscItems
