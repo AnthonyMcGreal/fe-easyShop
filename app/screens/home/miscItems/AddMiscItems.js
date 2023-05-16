@@ -1,40 +1,16 @@
 import {useState} from 'react'
-import {
-	Text,
-	StyleSheet,
-	Pressable,
-	Modal,
-	View,
-	ActivityIndicator
-} from 'react-native'
-import {TextInput} from 'react-native-gesture-handler'
-import {SafeAreaView} from 'react-native-safe-area-context'
-import SelectDropdown from 'react-native-select-dropdown'
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
-import {addMiscItem} from '../../../api'
-import {useUserContext} from '../../../components/UserContext'
-import {useAuthContext} from '../../../components/AuthContext'
+import {StyleSheet, Pressable} from 'react-native'
+import ScreenBase from '../../../components/ScreenBase'
+import Text from '../../../components/Text'
+import AddMiscItemForm from '../../../forms/addMiscItemForm'
+import useAddMiscItems from '../../../hooks/useAddMiscItem'
+import ApiFallback from '../../../Models/ApiFallback'
+import PageLoading from '../../../components/PageLoading'
+import AddMiscItemModal from '../../../Models/AddMiscItemModal'
 
 const AddMiscItems = ({navigation}) => {
-	const user = useUserContext()
-	const token = useAuthContext()
-
-	const [itemName, onChangeItemName] = useState('')
-	const [itemCategory, onChangeItemCategory] = useState('')
-	const categories = [
-		'Cleaning',
-		'Hygiene',
-		'Household Items',
-		'Frozen',
-		'Chilled',
-		'Ambient',
-		'Produce',
-		'Bread',
-		'Other'
-	]
-	const [modalVisible, setModalVisible] = useState(false)
-	const [apiResult, setApiResult] = useState(0)
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const {hasError, isLoading, isSuccess, addMiscItem} = useAddMiscItems()
 
 	const backButton = () => {
 		return (
@@ -49,108 +25,32 @@ const AddMiscItems = ({navigation}) => {
 		)
 	}
 
-	return (
-		<SafeAreaView style={styles.background}>
-			<Modal
-				animationType="fade"
-				visible={modalVisible}
-				onRequestClose={() => {
-					setModalVisible(!modalVisible)
-				}}
-			>
-				<View style={styles.background}>
-					<View style={styles.modelContainer}>
-						{apiResult === 201 ? (
-							<View>
-								<Text style={styles.afterActionText}>Item Added</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult === 500 ? (
-							<View>
-								<Text style={styles.afterActionText}>
-									Ooops! Something went wrong on our side, try again later
-								</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult > 0 && apiResult !== 201 && apiResult !== 500 ? (
-							<View>
-								<Text style={styles.afterActionText}>
-									Ooops! Something went wrong, try again
-								</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult === 0 ? (
-							<ActivityIndicator
-								size="large"
-								color="#6D2D55"
-								animating={true}
-							/>
-						) : null}
-					</View>
-				</View>
-			</Modal>
+	const handleDeleteMiscItem = (miscItemName, itemCategory) => {
+		setIsModalOpen(true)
+		addMiscItem(miscItemName, itemCategory)
+	}
 
-			<Text style={styles.text}>Misc item Name</Text>
-			<TextInput
-				style={styles.input}
-				value={itemName}
-				onChangeText={val => {
-					const formattedVal = val.charAt(0).toUpperCase() + val.slice(1)
-					onChangeItemName(formattedVal)
-				}}
-			></TextInput>
-			<Text style={styles.text}>Item Category</Text>
-			<SelectDropdown
-				data={categories}
-				onSelect={(selectedItem, index) => {
-					onChangeItemCategory(selectedItem)
-				}}
-				buttonTextAfterSelection={(selectedItem, index) => {
-					return `${selectedItem}`
-				}}
-				renderDropdownIcon={() => {
-					return <FontAwesomeIcon icon={faChevronDown} />
-				}}
-				buttonStyle={styles.dropDownStyle}
-				buttonTextStyle={styles.dropDownText}
-				rowStyle={styles.rowStyle}
+	if (hasError)
+		return <ApiFallback goBackScreen={'MiscItems'} buttonText={'Misc items'} />
+	if (isLoading) return <PageLoading />
+
+	if (isModalOpen)
+		return (
+			<AddMiscItemModal
+				isLoading={isLoading}
+				isModalOpen={isModalOpen}
+				setIsModalOpen={setIsModalOpen}
 			/>
-			<Pressable
-				style={styles.button}
-				disabled={itemName && itemCategory ? false : true}
-				onPress={async () => {
-					setModalVisible(!modalVisible)
-					const result = await addMiscItem(
-						itemName,
-						itemCategory,
-						user.user_id,
-						token
-					)
-					setApiResult(result)
-				}}
-			>
-				<Text style={styles.text}>Add Misc Item</Text>
-			</Pressable>
-		</SafeAreaView>
+		)
+
+	return (
+		<ScreenBase>
+			<AddMiscItemForm onSubmit={handleDeleteMiscItem} />
+		</ScreenBase>
 	)
 }
 
 const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#2d556d',
-		width: '100%'
-	},
-	text: {
-		color: 'white',
-		fontSize: 18,
-		fontFamily: 'Nunito'
-	},
 	input: {
 		height: 50,
 		width: 250,

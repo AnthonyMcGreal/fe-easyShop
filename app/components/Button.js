@@ -7,7 +7,7 @@ const Button = ({onPress, buttonText, disabled}) => {
 		<Pressable
 			accessibilityRole="button"
 			accessibilityLabel={`${buttonText}`}
-			style={disabled? [styles.button, styles.disabled]: styles.button}
+			style={disabled ? [styles.button, styles.disabled] : styles.button}
 			onPress={onPress}
 			disabled={disabled}
 		>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 		borderColor: '#642CA9',
 		borderWidth: 3,
 		color: '#B5B5B5'
-	},
+	}
 })
 
 export default Button

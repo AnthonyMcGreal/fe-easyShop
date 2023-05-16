@@ -14,7 +14,7 @@ const DeleteMiscItems = () => {
 	const [itemToBeDeleted, setItemToBeDeleted] = useState()
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const {hasError, isLoading, miscItems, getMiscItems} = useGetMiscItems()
-	const miscItemNames = miscItems? miscItems.map(item => item.name) : []
+	const miscItemNames = miscItems ? miscItems.map(item => item.name) : []
 	const {
 		hasError: hasDeleteError,
 		isLoading: isDeleteLoading,
@@ -43,11 +43,11 @@ const DeleteMiscItems = () => {
 				setIsModalOpen={setIsModalOpen}
 			/>
 		)
-	
-	const onDropDwonSelect = (itemName) => {
+
+	const onDropDwonSelect = itemName => {
 		const selectedItem = miscItems.filter(item => item.name === itemName)
 		setItemToBeDeleted(selectedItem[0])
-	}	
+	}
 
 	return (
 		<ScreenBase>
