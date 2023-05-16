@@ -11,7 +11,7 @@ const Button = ({onPress, buttonText, disabled}) => {
 			onPress={onPress}
 			disabled={disabled}
 		>
-			<Text style={styles.text}>{`${buttonText}`}</Text>
+			<Text style={[styles.text, {color: disabled? '#A4A4A4': 'white'}]}>{`${buttonText}`}</Text>
 		</Pressable>
 	)
 }
@@ -26,14 +26,12 @@ const styles = StyleSheet.create({
 		borderRadius: 50
 	},
 	text: {
-		color: 'white',
 		fontSize: 16
 	},
 	disabled: {
 		backgroundColor: '#F1F2F6',
 		borderColor: '#642CA9',
 		borderWidth: 3,
-		color: '#B5B5B5'
 	}
 })
 
