@@ -10,7 +10,6 @@ const useDeleteIngredient = () => {
 	const [isSuccess, setIsSuccess] = useState(false)
 
 	const deleteIngredient = async ingredientID => {
-		console.log(ingredient)
 		setIsLoading(true)
 		const apiResponse = await deleteIngredientById(ingredientID, token)
 		if (apiResponse.status === 204) {

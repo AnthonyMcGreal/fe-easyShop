@@ -13,10 +13,10 @@ const DeleteIngredientModal = ({
 }) => {
 	const navigation = useNavigation()
 
-  if (isDeleteLoading) return <PageLoading />
+	if (isDeleteLoading) return <PageLoading />
 
-  return (
-    <Modal
+	return (
+		<Modal
 			visible={isModalOpen}
 			onRequestClose={() => {
 				Alert.alert('Modal has been closed.')
@@ -27,12 +27,26 @@ const DeleteIngredientModal = ({
 				<Text style={styles.text}>Ingredient deleted</Text>
 				<Spacer spaceRequired={5} />
 				<Button
-					onPress={() => navigation.navigate('RecipesHomes')}
+					onPress={() => navigation.navigate('RecipesHome')}
 					buttonText={'Back to Recipes'}
 				/>
 			</View>
 		</Modal>
-  )
+	)
 }
+
+const styles = StyleSheet.create({
+	background: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: 'white',
+		width: '100%'
+	},
+	text: {
+		fontSize: 24,
+		fontFamily: 'Nunito'
+	}
+})
 
 export default DeleteIngredientModal
