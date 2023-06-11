@@ -15,7 +15,7 @@ const useGetIngredients = () => {
 		setHasError(false)
 		setIsLoading(true)
 		const ingredients = await getIngredientsApiCall(user.user_id, token)
-		if (items.status === 200) {
+		if (ingredients.status === 200) {
 			setIngredients(ingredients.data.ingredients)
 			setHasError(false)
 		} else {
