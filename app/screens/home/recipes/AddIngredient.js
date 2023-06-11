@@ -1,238 +1,43 @@
 import {useState} from 'react'
-import {
-	Text,
-	StyleSheet,
-	Pressable,
-	Modal,
-	View,
-	ActivityIndicator
-} from 'react-native'
-import {SafeAreaView} from 'react-native-safe-area-context'
-import {TextInput} from 'react-native-gesture-handler'
-import SelectDropdown from 'react-native-select-dropdown'
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
-import {addIngredient} from '../../../api'
-import {useUserContext} from '../../../components/UserContext'
-import {useAuthContext} from '../../../components/AuthContext'
+import ScreenBase from '../../../components/ScreenBase'
+import AddIngredientForm from '../../../forms/addIngredientForm'
+import AddIngredientModal from '../../../Models/AddIngredientModal'
+import useAddIngredient from '../../../hooks/useAddIngredient'
+import PageLoading from '../../../components/PageLoading'
 
-function AddIngredient({navigation}) {
-	const user = useUserContext()
-	const token = useAuthContext()
+const AddIngredient = ({navigation}) => {
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const {hasError, isLoading, isSuccess, addIngredient} = useAddIngredient()
 
-	const [ingredientName, setIngredientName] = useState('')
-	const [unitOfMeasurement, setUnitOfMeasurement] = useState('')
-	const [storageType, setStorageType] = useState('')
-	const [modalVisible, setModalVisible] = useState('false')
-	const [apiResult, setApiResult] = useState(0)
-	const storageCategories = ['Frozen', 'Chilled', 'Ambient', 'Produce', 'Bread']
-	const measurementCategories = [
-		'individual',
-		'tsp',
-		'tbsp',
-		'fl oz',
-		'cup',
-		'ml',
-		'l',
-		'lb',
-		'oz',
-		'mg',
-		'g',
-		'kg'
-	]
-
-	const backButton = () => {
-		return (
-			<Pressable
-				style={styles.afterActionButton}
-				onPress={() => {
-					navigation.navigate('RecipesHome')
-				}}
-			>
-				<Text style={styles.text}>Back to Recipes</Text>
-			</Pressable>
-		)
+	const handleAddIngredient = (
+		ingredientName,
+		ingredientUOM,
+		ingredientStorageType
+	) => {
+		setIsModalOpen(true)
+		addIngredient(ingredientName, ingredientUOM, ingredientStorageType)
 	}
+
+	if (hasError)
+		return (
+			<ApiFallback goBackScreen={'RecipesHome'} buttonText={'Misc items'} />
+		)
+	if (isLoading) return <PageLoading />
+
+	if (isModalOpen)
+		return (
+			<AddIngredientModal
+				isLoading={isLoading}
+				isModalOpen={isModalOpen}
+				setIsModalOpen={setIsModalOpen}
+			/>
+		)
 
 	return (
-		<SafeAreaView style={styles.background}>
-			<Modal
-				animationType="fade"
-				visible={modalVisible}
-				onRequestClose={() => {
-					Alert.alert('Modal has been closed.')
-					setModalVisible(false)
-				}}
-			>
-				<View style={styles.background}>
-					<View style={styles.modelContainer}>
-						{apiResult === 201 ? (
-							<View>
-								<Text style={styles.afterActionText}>Ingredient Added</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult === 500 ? (
-							<View>
-								<Text style={styles.afterActionText}>
-									Ooops! Something went wrong on our side, try again later
-								</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult > 0 && apiResult !== 201 && apiResult !== 500 ? (
-							<View>
-								<Text style={styles.afterActionText}>
-									Ooops! Something went wrong, try again
-								</Text>
-								{backButton()}
-							</View>
-						) : null}
-						{apiResult === 0 ? (
-							<ActivityIndicator
-								size="large"
-								color="#6D2D55"
-								animating={true}
-							/>
-						) : null}
-					</View>
-				</View>
-			</Modal>
-
-			<Text style={styles.text}>Ingredient name</Text>
-			<TextInput
-				style={styles.input}
-				value={ingredientName}
-				onChangeText={val => {
-					const formattedVal = val.charAt(0).toUpperCase() + val.slice(1)
-					setIngredientName(formattedVal)
-				}}
-			></TextInput>
-			<Text style={styles.text}>Ingredients unit of measurement</Text>
-			<SelectDropdown
-				data={measurementCategories}
-				onSelect={(selectedItem, index) => {
-					setUnitOfMeasurement(selectedItem)
-				}}
-				buttonTextAfterSelection={(selectedItem, index) => {
-					return `${selectedItem}`
-				}}
-				renderDropdownIcon={() => {
-					return <FontAwesomeIcon icon={faChevronDown} />
-				}}
-				buttonStyle={styles.dropDownStyle}
-				buttonTextStyle={styles.dropDownText}
-				rowStyle={styles.rowStyle}
-			/>
-			<Text style={styles.text}>Ingredient storage type</Text>
-			<SelectDropdown
-				data={storageCategories}
-				onSelect={(selectedItem, index) => {
-					setStorageType(selectedItem)
-				}}
-				buttonTextAfterSelection={(selectedItem, index) => {
-					return `${selectedItem}`
-				}}
-				renderDropdownIcon={() => {
-					return <FontAwesomeIcon icon={faChevronDown} />
-				}}
-				buttonStyle={styles.dropDownStyle}
-				buttonTextStyle={styles.dropDownText}
-				rowStyle={styles.rowStyle}
-			/>
-			<Pressable
-				style={styles.button}
-				disabled={
-					ingredientName && unitOfMeasurement && storageType ? false : true
-				}
-				onPress={async () => {
-					setModalVisible(true)
-					const result = await addIngredient(
-						ingredientName,
-						unitOfMeasurement,
-						storageType,
-						user.user_id,
-						token
-					)
-					setApiResult(result)
-				}}
-			>
-				<Text style={styles.text}>Add Ingredient</Text>
-			</Pressable>
-		</SafeAreaView>
+		<ScreenBase>
+			<AddIngredientForm onSubmit={handleAddIngredient} />
+		</ScreenBase>
 	)
 }
-
-const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#2d556d',
-		width: '100%'
-	},
-	text: {
-		color: 'white',
-		fontSize: 18,
-		fontFamily: 'Nunito'
-	},
-	input: {
-		height: 50,
-		width: 250,
-		margin: 12,
-		borderWidth: 1,
-		backgroundColor: 'lightgrey',
-		fontSize: 16,
-		textAlign: 'center',
-		fontFamily: 'Nunito'
-	},
-	button: {
-		backgroundColor: '#6D2D55',
-		width: 250,
-		height: 50,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10,
-		marginTop: 60
-	},
-	dropDownStyle: {
-		width: 250,
-		height: 50,
-		margin: 12,
-		borderWidth: 1,
-		backgroundColor: 'lightgrey'
-	},
-	dropDownText: {
-		lineHeight: 20,
-		fontSize: 16,
-		paddingLeft: 10,
-		fontFamily: 'Nunito'
-	},
-	rowStyle: {
-		backgroundColor: 'lightgrey'
-	},
-	modelContainer: {
-		backgroundColor: '#2d556d',
-		height: '80%'
-	},
-	afterActionText: {
-		color: '#6D2D55',
-		fontSize: 30,
-		textAlign: 'center',
-		marginBottom: 70,
-		marginTop: 120,
-		fontFamily: 'Nunito',
-		textShadowColor: 'white',
-		textShadowRadius: 12
-	},
-	afterActionButton: {
-		backgroundColor: '#6D2D55',
-		width: 250,
-		height: 50,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 10
-	}
-})
 
 export default AddIngredient

@@ -1,19 +1,10 @@
-import {useEffect} from 'react'
 import {Formik} from 'formik'
-import {
-	Pressable,
-	StyleSheet,
-	TextInput,
-	View,
-	ActivityIndicator
-} from 'react-native'
-import {useNavigation} from '@react-navigation/native'
+import {StyleSheet, TextInput} from 'react-native'
 import Spacer from '../components/Spacer'
 import Text from '../components/Text'
 import * as Yup from 'yup'
 import DropDownList from '../components/DropDownList'
 import Button from '../components/Button'
-import useAddMiscItems from '../hooks/useAddMiscItem'
 
 const addMiscItemSchema = Yup.object().shape({
 	miscItemName: Yup.string().required('*Item name is required'),
