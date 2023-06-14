@@ -24,16 +24,17 @@ const AddNewRecipeForm = ({onSubmit}) => {
     onSubmit={values => onSubmit(values.recipeName, values.recipeLink, values.recipePortionSize)}
     validationSchema={addNewRecipeSchema}
     >
-      {(
+      {({
         handleChange,
 				handleSubmit,
 				values,
 				errors,
 				touched,
 				setFieldTouched
-      ) => {
+			}) => {
         const isRecipeNameError = errors.recipeName && touched.recipeName
-        const isSubmitDisabled = isRecipeNameError || !touched.recipeName || values.recipePortionSize === ''
+				const isRecipeLinkError = errors.recipeLink && touched.recipeLink
+        const isSubmitDisabled = isRecipeNameError || !touched.recipeName || isRecipeLinkError || values.recipePortionSize === ''
 
         const onPortionSizeSelect = portionSize => {
           handleChange('recipePortionSize')(portionSize)
@@ -52,7 +53,7 @@ const AddNewRecipeForm = ({onSubmit}) => {
 							value={values.recipeName}
 							style={[
 								styles.input,
-								ismiscItemNameError ? styles.inputError : null
+								isRecipeNameError ? styles.inputError : null
 							]}
               />
               <Spacer spaceRequired={3} />
@@ -67,7 +68,7 @@ const AddNewRecipeForm = ({onSubmit}) => {
 							value={values.recipeLink}
 							style={[
 								styles.input,
-								ismiscItemNameError ? styles.inputError : null
+								isRecipeLinkError ? styles.inputError : null
 							]}
               />
               <Spacer spaceRequired={3} />
