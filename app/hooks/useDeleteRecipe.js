@@ -5,16 +5,20 @@ import {useAuthContext} from '../components/AuthContext'
 
 const useDeleteRecipe = () => {
 	const user = useUserContext()
-  const token = useAuthContext()
+	const token = useAuthContext()
 
-  const [hasError, setHasError] = useState(false)
+	const [hasError, setHasError] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [isSuccess, setIsSuccess] = useState(false)
 
-  const deleteRecipe = async recipeName => {
-    setIsLoading(true)
-    const apiResponse = await deleteRecipeByName(recipeName, user.user_id, token)
-    if (apiResponse.status === 204) {
+	const deleteRecipe = async recipeName => {
+		setIsLoading(true)
+		const apiResponse = await deleteRecipeByName(
+			recipeName,
+			user.user_id,
+			token
+		)
+		if (apiResponse.status === 204) {
 			setIsSuccess(true)
 			setHasError(false)
 		} else {
@@ -22,8 +26,8 @@ const useDeleteRecipe = () => {
 			setHasError(true)
 		}
 		setIsLoading(false)
-  }
-  return {hasError, isLoading, isSuccess, deleteRecipe}
+	}
+	return {hasError, isLoading, isSuccess, deleteRecipe}
 }
 
 export default useDeleteRecipe
