@@ -18,17 +18,18 @@ const RoundButton = ({onPress, buttonText}) => {
 const styles = StyleSheet.create({
 	roundButton: {
 		backgroundColor: '#642CA9',
-		width: 80,
-		height: 80,
-		justifyContent: 'center',
+		width: 60,
+		height: 60,
 		alignItems: 'center',
 		borderRadius: 50
+		
 	},
 	roundButtonText: {
 		color: 'white',
+		padding: 'auto',
+		textAlign: 'center',
 		fontSize: 50,
-		fontFamily: 'Nunito',
-		marginBottom: 10
+		lineHeight: 60,
 	}
 })
 
