@@ -1,20 +1,9 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {
 	StyleSheet,
-	Pressable,
-	Modal,
 	View,
 	FlatList,
-	ActivityIndicator
 } from 'react-native'
-import {SafeAreaView} from 'react-native-safe-area-context'
-import {TextInput} from 'react-native-gesture-handler'
-import SelectDropdown from 'react-native-select-dropdown'
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
-import {getIngredients, addRecipe} from '../../../api'
-import {useUserContext} from '../../../components/UserContext'
-import {useAuthContext} from '../../../components/AuthContext'
 import ScreenBase from '../../../components/ScreenBase'
 import Text from '../../../components/Text'
 import RoundButton from '../../../components/RoundButton'
@@ -86,12 +75,18 @@ const AddIngredientToRecipe = ({route}) => {
 	}
 
 	if (hasError)
-		return <ApiFallback goBackScreen={'RecipesHome'} buttonText={'Recipe home'} />
+		return (
+			<ApiFallback goBackScreen={'RecipesHome'} buttonText={'Recipe home'} />
+		)
 
-	if(submitModalVisible)
-	return (
-		<SubmitRecipeModal isLoading={isLoading} isModalOpen={submitModalVisible} setIsModalOpen={setSubmitModalVisible} />
-	)
+	if (submitModalVisible)
+		return (
+			<SubmitRecipeModal
+				isLoading={isLoading}
+				isModalOpen={submitModalVisible}
+				setIsModalOpen={setSubmitModalVisible}
+			/>
+		)
 
 	if (addModalVisible)
 		return (
@@ -149,7 +144,7 @@ const AddIngredientToRecipe = ({route}) => {
 			<Button
 				onPress={onPressCompleteRecipe}
 				buttonText={'Complete recipe'}
-				disabled={ingredientsInRecipe.length < 0}
+				disabled={ingredientsInRecipe.length < 1}
 			/>
 			<Spacer spaceRequired={7} />
 		</ScreenBase>
