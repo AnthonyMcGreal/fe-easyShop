@@ -1,8 +1,5 @@
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
 import {Modal, View, StyleSheet, Text} from 'react-native'
-import Button from '../components/Button'
-import {useNavigation} from '@react-navigation/native'
-import Spacer from '../components/Spacer'
 import PageLoading from '../components/PageLoading'
 import useGetIngredients from '../hooks/useGetIngredients'
 import AddIngredientsToRecipeForm from '../forms/addIngredientToRecipeForm'
@@ -12,8 +9,6 @@ const AddIngredientToRecipeModal = ({
 	setIsModalOpen,
 	addIngredientToRecipe
 }) => {
-	const navigation = useNavigation()
-
 	const {hasError, isLoading, ingredients, getIngredients} = useGetIngredients()
 
 	useEffect(() => {

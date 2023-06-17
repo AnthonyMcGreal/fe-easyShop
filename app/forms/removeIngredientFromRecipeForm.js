@@ -1,5 +1,4 @@
 import {Formik} from 'formik'
-import {StyleSheet, TextInput} from 'react-native'
 import Spacer from '../components/Spacer'
 import Text from '../components/Text'
 import * as Yup from 'yup'
