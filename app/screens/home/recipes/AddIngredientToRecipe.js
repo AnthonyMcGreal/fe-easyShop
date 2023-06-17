@@ -22,11 +22,14 @@ import Button from '../../../components/Button'
 import Spacer from '../../../components/Spacer'
 import AddIngredientToRecipeModal from '../../../Models/AddIngredientToRecipeModal'
 import RemoveIngredientFromRecipeModal from '../../../Models/RemoveIngredientFromRecipeModal'
+import ConfrimIngredientsInRecipeModal from '../../../Models/ConfirmIngredientsInRecipeModal'
 
 const AddIngredientToRecipe = ({route}) => {
 	const [ingredientsInRecipe, setIngredientsInRecipe] = useState([])
 	const [addModalVisible, setAddModalVisible] = useState(false)
 	const [removeModalVisible, setRemoveModalVisible] = useState(false)
+	const [confirmModalVisible, setConfirmModalVisible] = useState(false)
+	const [submitModalVisible, setSubmitModalVisible] = useState(false)
 
 	const recipe_name = route.params.recipeName
 	const link = route.params.link
@@ -34,12 +37,12 @@ const AddIngredientToRecipe = ({route}) => {
 
 	const displayAddIngredientModal = () => setAddModalVisible(true)
 	const displayRemoveIngredientModal = () => setRemoveModalVisible(true)
-	const onPressCompleteRecipe = () => {}
+	const onPressCompleteRecipe = () => setConfirmModalVisible(true)
 
 	const addIngredientToRecipe = (ingredient, quantity) => {
 		let newIngredient = {
 			recipe_name: recipe_name,
-			link: link,
+			link: link || '',
 			name: ingredient.name,
 			ingredient_quantity: quantity,
 			unit_of_measurement: ingredient.unit_of_measurement,
@@ -61,6 +64,14 @@ const AddIngredientToRecipe = ({route}) => {
 		setRemoveModalVisible(false)
 	}
 
+	const confirmRecipe = () => {
+		console.log('recipe confirmed')
+	}
+
+	const editRecipe = () => {
+		setConfirmModalVisible(false)
+	}
+
 	if (addModalVisible)
 		return (
 			<AddIngredientToRecipeModal
@@ -77,6 +88,17 @@ const AddIngredientToRecipe = ({route}) => {
 				setisModalOpen={setRemoveModalVisible}
 				ingredientsInRecipe={ingredientsInRecipe}
 				removeIngredientFromRecipe={removeIngredientFromRecipe}
+			/>
+		)
+
+	if (confirmModalVisible)
+		return (
+			<ConfrimIngredientsInRecipeModal
+				isModalOpen={confirmModalVisible}
+				confirmRecipe={confirmRecipe}
+				ingredientsInRecipe={ingredientsInRecipe}
+				setIsModalOpen={editRecipe}
+				recipeName={recipe_name}
 			/>
 		)
 
