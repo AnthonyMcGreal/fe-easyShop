@@ -23,6 +23,8 @@ import Spacer from '../../../components/Spacer'
 import AddIngredientToRecipeModal from '../../../Models/AddIngredientToRecipeModal'
 import RemoveIngredientFromRecipeModal from '../../../Models/RemoveIngredientFromRecipeModal'
 import ConfrimIngredientsInRecipeModal from '../../../Models/ConfirmIngredientsInRecipeModal'
+import useAddRecipe from '../../../hooks/useAddRecipe'
+import SubmitRecipeModal from '../../../Models/SubmitRecipeModal'
 
 const AddIngredientToRecipe = ({route}) => {
 	const [ingredientsInRecipe, setIngredientsInRecipe] = useState([])
@@ -30,6 +32,7 @@ const AddIngredientToRecipe = ({route}) => {
 	const [removeModalVisible, setRemoveModalVisible] = useState(false)
 	const [confirmModalVisible, setConfirmModalVisible] = useState(false)
 	const [submitModalVisible, setSubmitModalVisible] = useState(false)
+	const {hasError, isLoading, isSuccess, addRecipe} = useAddRecipe()
 
 	const recipe_name = route.params.recipeName
 	const link = route.params.link
@@ -65,12 +68,30 @@ const AddIngredientToRecipe = ({route}) => {
 	}
 
 	const confirmRecipe = () => {
-		console.log('recipe confirmed')
+		setSubmitModalVisible(true)
+		const recipeToSubmit = ingredientsInRecipe.map(ingredient => {
+			return {
+				ingredients: ingredient.ingredients,
+				recipe_name: ingredient.recipe_name,
+				link: ingredient.link,
+				ingredient_quantity: ingredient.ingredient_quantity,
+				portions: ingredient.portions
+			}
+		})
+		addRecipe(recipeToSubmit)
 	}
 
 	const editRecipe = () => {
 		setConfirmModalVisible(false)
 	}
+
+	if (hasError)
+		return <ApiFallback goBackScreen={'RecipesHome'} buttonText={'Recipe home'} />
+
+	if(submitModalVisible)
+	return (
+		<SubmitRecipeModal isLoading={isLoading} isModalOpen={submitModalVisible} setIsModalOpen={setSubmitModalVisible} />
+	)
 
 	if (addModalVisible)
 		return (
