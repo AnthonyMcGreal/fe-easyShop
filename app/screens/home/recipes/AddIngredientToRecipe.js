@@ -21,6 +21,7 @@ import RoundButton from '../../../components/RoundButton'
 import Button from '../../../components/Button'
 import Spacer from '../../../components/Spacer'
 import AddIngredientToRecipeModal from '../../../Models/AddIngredientToRecipeModal'
+import RemoveIngredientFromRecipeModal from '../../../Models/RemoveIngredientFromRecipeModal'
 
 const AddIngredientToRecipe = ({route}) => {
 	const [ingredientsInRecipe, setIngredientsInRecipe] = useState([])
@@ -51,6 +52,15 @@ const AddIngredientToRecipe = ({route}) => {
 		setAddModalVisible(false)
 	}
 
+	const removeIngredientFromRecipe = ingredientName => {
+		const newIngredientList = ingredientsInRecipe.filter(
+			ingredient => ingredient.name !== ingredientName
+		)
+
+		setIngredientsInRecipe(newIngredientList)
+		setRemoveModalVisible(false)
+	}
+
 	if (addModalVisible)
 		return (
 			<AddIngredientToRecipeModal
@@ -59,6 +69,17 @@ const AddIngredientToRecipe = ({route}) => {
 				addIngredientToRecipe={addIngredientToRecipe}
 			/>
 		)
+
+	if (removeModalVisible)
+		return (
+			<RemoveIngredientFromRecipeModal
+				isModalOpen={removeModalVisible}
+				setisModalOpen={setRemoveModalVisible}
+				ingredientsInRecipe={ingredientsInRecipe}
+				removeIngredientFromRecipe={removeIngredientFromRecipe}
+			/>
+		)
+
 	return (
 		<ScreenBase>
 			<View style={styles.flatListContainer}>
@@ -85,7 +106,7 @@ const AddIngredientToRecipe = ({route}) => {
 			<Button
 				onPress={onPressCompleteRecipe}
 				buttonText={'Complete recipe'}
-				disabled={true}
+				disabled={ingredientsInRecipe.length < 0}
 			/>
 			<Spacer spaceRequired={7} />
 		</ScreenBase>
