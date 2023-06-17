@@ -10,6 +10,7 @@ import RemoveIngredientFromRecipeModal from '../../../Models/RemoveIngredientFro
 import ConfrimIngredientsInRecipeModal from '../../../Models/ConfirmIngredientsInRecipeModal'
 import useAddRecipe from '../../../hooks/useAddRecipe'
 import SubmitRecipeModal from '../../../Models/SubmitRecipeModal'
+import useDeleteRecipe from '../../../hooks/useDeleteRecipe'
 
 const AddIngredientToRecipe = ({route}) => {
 	const [ingredientsInRecipe, setIngredientsInRecipe] = useState([])
@@ -18,10 +19,12 @@ const AddIngredientToRecipe = ({route}) => {
 	const [confirmModalVisible, setConfirmModalVisible] = useState(false)
 	const [submitModalVisible, setSubmitModalVisible] = useState(false)
 	const {hasError, isLoading, isSuccess, addRecipe} = useAddRecipe()
-
-	//route.params.previousScreen
-
-	console.log(route.params)
+	const {
+		hasError: hasDeleteError,
+		isLoading: isDeleteLoading,
+		isSuccess: isDeleteSuccess,
+		deleteRecipe
+	} = useDeleteRecipe()
 
 	const previousScreen = route.params.previousScreen
 	const recipe_name = route.params.recipeName
@@ -63,11 +66,13 @@ const AddIngredientToRecipe = ({route}) => {
 		setRemoveModalVisible(false)
 	}
 
-	const confirmRecipe = () => {
+	const confirmRecipe = async () => {
 		setSubmitModalVisible(true)
+
 		if (previousScreen === 'UpdateRecipe') {
-			console.log('updateBlock')
+			await deleteRecipe(recipe_name)
 		}
+
 		const recipeToSubmit = ingredientsInRecipe.map(ingredient => {
 			return {
 				ingredients: ingredient.ingredients,

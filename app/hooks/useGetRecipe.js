@@ -8,7 +8,7 @@ const useGetRecipe = () => {
 	const token = useAuthContext()
 
 	const [hasError, setHasError] = useState(false)
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 	const [recipe, setRecipe] = useState([])
 
 	const getRecipe = async recipeName => {

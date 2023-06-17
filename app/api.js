@@ -143,7 +143,6 @@ exports.deleteRecipeByName = async (name, user_id, token) => {
 }
 
 exports.getRecipeByName = async (name, user_id, token) => {
-	console.log('inside api call', name, user_id, token)
 	const config = {
 		headers: {Authorization: `Bearer ${token}`}
 	}
