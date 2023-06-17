@@ -22,7 +22,7 @@ const SubmitRecipeModal = ({isLoading, isModalOpen, setIsModalOpen}) => {
 				<Spacer spaceRequired={5} />
 				<Button
 					onPress={() => navigation.navigate('RecipesHome')}
-					buttonText={'Back to Misc Items'}
+					buttonText={'Back to Recipes'}
 				/>
 			</View>
 		</Modal>

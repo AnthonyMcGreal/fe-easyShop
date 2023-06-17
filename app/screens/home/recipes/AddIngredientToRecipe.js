@@ -1,9 +1,5 @@
-import {useState} from 'react'
-import {
-	StyleSheet,
-	View,
-	FlatList,
-} from 'react-native'
+import {useEffect, useState} from 'react'
+import {StyleSheet, View, FlatList} from 'react-native'
 import ScreenBase from '../../../components/ScreenBase'
 import Text from '../../../components/Text'
 import RoundButton from '../../../components/RoundButton'
@@ -23,9 +19,20 @@ const AddIngredientToRecipe = ({route}) => {
 	const [submitModalVisible, setSubmitModalVisible] = useState(false)
 	const {hasError, isLoading, isSuccess, addRecipe} = useAddRecipe()
 
+	//route.params.previousScreen
+
+	console.log(route.params)
+
+	const previousScreen = route.params.previousScreen
 	const recipe_name = route.params.recipeName
 	const link = route.params.link
 	const portions = route.params.portions
+
+	useEffect(() => {
+		if (previousScreen === 'UpdateRecipe') {
+			setIngredientsInRecipe([...route.params.recipe])
+		}
+	}, [])
 
 	const displayAddIngredientModal = () => setAddModalVisible(true)
 	const displayRemoveIngredientModal = () => setRemoveModalVisible(true)
@@ -58,6 +65,9 @@ const AddIngredientToRecipe = ({route}) => {
 
 	const confirmRecipe = () => {
 		setSubmitModalVisible(true)
+		if (previousScreen === 'UpdateRecipe') {
+			console.log('updateBlock')
+		}
 		const recipeToSubmit = ingredientsInRecipe.map(ingredient => {
 			return {
 				ingredients: ingredient.ingredients,
