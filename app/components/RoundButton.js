@@ -22,14 +22,13 @@ const styles = StyleSheet.create({
 		height: 60,
 		alignItems: 'center',
 		borderRadius: 50
-		
 	},
 	roundButtonText: {
 		color: 'white',
 		padding: 'auto',
 		textAlign: 'center',
 		fontSize: 50,
-		lineHeight: 60,
+		lineHeight: 60
 	}
 })
 
