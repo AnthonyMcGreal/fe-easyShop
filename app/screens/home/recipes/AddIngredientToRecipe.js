@@ -42,18 +42,27 @@ const AddIngredientToRecipe = ({route}) => {
 	const onPressCompleteRecipe = () => setConfirmModalVisible(true)
 
 	const addIngredientToRecipe = (ingredient, quantity) => {
-		let newIngredient = {
-			recipe_name: recipe_name,
-			link: link || '',
-			name: ingredient.name,
-			ingredient_quantity: quantity,
-			unit_of_measurement: ingredient.unit_of_measurement,
-			portions: portions,
-			storage_type: ingredient.storage_type,
-			ingredients: ingredient.ingredient_id
-		}
+		const ingredientIsAlreadyInRecipe = ingredientsInRecipe.filter(
+			ingredientInRecipe => ingredientInRecipe.name === ingredient.name
+		)
+		if (ingredientIsAlreadyInRecipe.length > 0) {
+			const currentQuantity = ingredientIsAlreadyInRecipe[0].ingredient_quantity
+			const updatedQuantity = +currentQuantity + +quantity
+			ingredientIsAlreadyInRecipe[0].ingredient_quantity = updatedQuantity
+		} else {
+			let newIngredient = {
+				recipe_name: recipe_name,
+				link: link || '',
+				name: ingredient.name,
+				ingredient_quantity: quantity,
+				unit_of_measurement: ingredient.unit_of_measurement,
+				portions: portions,
+				storage_type: ingredient.storage_type,
+				ingredients: ingredient.ingredient_id
+			}
 
-		setIngredientsInRecipe([...ingredientsInRecipe, newIngredient])
+			setIngredientsInRecipe([...ingredientsInRecipe, newIngredient])
+		}
 		setAddModalVisible(false)
 	}
 

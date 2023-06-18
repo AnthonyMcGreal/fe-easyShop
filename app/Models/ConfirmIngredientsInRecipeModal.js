@@ -1,8 +1,6 @@
-import {Modal, View, StyleSheet, FlatList} from 'react-native'
+import {Modal, View, StyleSheet, FlatList, Alert} from 'react-native'
 import Button from '../components/Button'
-import {useNavigation} from '@react-navigation/native'
 import Spacer from '../components/Spacer'
-import PageLoading from '../components/PageLoading'
 import ScreenBase from '../components/ScreenBase'
 import Text from '../components/Text'
 
