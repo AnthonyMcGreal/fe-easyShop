@@ -15,11 +15,9 @@ const useGetMealPlans = () => {
 		setHasError(false)
 		setIsLoading(true)
 		const response = await getMealPlansApiCall(user.user_id, token)
-
 		if (response.status === 200) {
-			setMealPlans(response.data)
+			setMealPlans(response.data.mealPlans)
 			setHasError(false)
-			return response.data
 		} else {
 			setMealPlans([])
 			setHasError(true)

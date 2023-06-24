@@ -18,17 +18,7 @@ const createNewMealPLanSchema = Yup.object().shape({
 
 const MEAL_PLAN_LENGTH_OPTIONS = ['1', '2', '3', '4', '5', '6', '7']
 
-const DAYS = [
-	'Monday',
-	'Tuesday',
-	'Wednesday',
-	'Thursday',
-	'Friday',
-	'Saturday',
-	'Sunday'
-]
-
-const createNewMealPLanForm = ({onSubmit}) => {
+const CreateNewMealPlanForm = ({onSubmit, days}) => {
 	return (
 		<Formik
 			initialValues={{
@@ -44,8 +34,8 @@ const createNewMealPLanForm = ({onSubmit}) => {
 			onSubmit={values =>
 				onSubmit(
 					values.mealPlanName,
-					values.mealPlanLength,
-					values.mealPlanStartDay
+					values.mealPlanStartDay,
+					values.mealPlanLength
 				)
 			}
 			validationSchema={createNewMealPLanSchema}
@@ -93,7 +83,7 @@ const createNewMealPLanForm = ({onSubmit}) => {
 						<Spacer spaceRequired={3} />
 						<Text>Meal plan start day</Text>
 						<Spacer spaceRequired={3} />
-						<DropDownList listData={DAYS} onSelect={onStartDaySelect} />
+						<DropDownList listData={days} onSelect={onStartDaySelect} />
 						<Spacer spaceRequired={3} />
 						<Text>Number of days in meal plan</Text>
 						<Spacer spaceRequired={3} />
@@ -131,4 +121,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default createNewMealPLanForm
+export default CreateNewMealPlanForm
