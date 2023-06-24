@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native'
 import Spacer from '../components/Spacer'
 import PageLoading from '../components/PageLoading'
 
-const DeleteIngredientModal = ({
+const DeleteMealPlanModal = ({
 	isDeleteLoading,
 	isSuccess,
 	isModalOpen,
@@ -23,11 +23,11 @@ const DeleteIngredientModal = ({
 			}}
 		>
 			<View style={styles.background}>
-				<Text style={styles.text}>Ingredient deleted</Text>
+				<Text style={styles.text}>Meal plan deleted</Text>
 				<Spacer spaceRequired={5} />
 				<Button
-					onPress={() => navigation.navigate('RecipesHome')}
-					buttonText={'Back to Recipes'}
+					onPress={() => navigation.navigate('MealPlansHome')}
+					buttonText={'Back to meal plans'}
 				/>
 			</View>
 		</Modal>
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default DeleteIngredientModal
+export default DeleteMealPlanModal

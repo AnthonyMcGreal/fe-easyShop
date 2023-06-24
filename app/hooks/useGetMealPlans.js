@@ -11,7 +11,7 @@ const useGetMealPlans = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [mealPlans, setMealPlans] = useState([])
 
-	const getMealPlans = async() => {
+	const getMealPlans = async () => {
 		setHasError(false)
 		setIsLoading(true)
 		const response = await getMealPlansApiCall(user.user_id, token)
