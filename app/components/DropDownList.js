@@ -3,9 +3,10 @@ import SelectDropdown from 'react-native-select-dropdown'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 
-const DropDownList = ({listData, onSelect}) => {
+const DropDownList = ({listData, onSelect, disabled = false}) => {
 	return (
 		<SelectDropdown
+			disabled={disabled}
 			data={listData}
 			onSelect={selectedItem => {
 				onSelect(selectedItem)
