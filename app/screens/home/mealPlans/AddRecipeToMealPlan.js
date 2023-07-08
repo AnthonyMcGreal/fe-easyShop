@@ -81,20 +81,17 @@ const AddRecipeToMealPlan = ({route}) => {
 	}
 
 	const removeRecipeFromMealPlan = (day, recipeName) => {
+		const dayIndex = mealPlanDays.indexOf(day) 
 		const mealPlanCopy = ([...mealPlan.recipes])
-		const getCorrectDay = mealPlanCopy.filter(recipe => {
-			return Object.keys(recipe)[0] === day
-		})[0][day]
-		const removeRecipeFromDay = getCorrectDay.filter(recipe => {
+		const recipesForSelectedDay = mealPlanCopy[dayIndex][day]
+		const removeRecipeFromDay = recipesForSelectedDay.filter(recipe => {
 			return recipe.recipe_name !== recipeName
 		})
-		const recipesWithReplacedDay = mealPlanCopy.map(recipe => {
-		return Object.keys(recipe)[0] === day ? {[day]:removeRecipeFromDay} : recipe
-		})
+		mealPlanCopy[dayIndex][day] = removeRecipeFromDay
 
 		setMealPlan(prevState => ({
 			...prevState,
-			recipes:recipesWithReplacedDay
+			recipes:mealPlanCopy
 		}))
 
 		setIsRemoveRecipeModalVisible(false)

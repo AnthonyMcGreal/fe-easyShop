@@ -20,11 +20,7 @@ const RemoveRecipeFromMealPlanForm = ({daysWithRecipes, recipes, onSubmit}) => {
 			onSubmit={values => onSubmit(values.selectedDay, values.selectedRecipe)}
 			validationSchema={removeRecipeFromMealPlanSchema}
 		>
-			{({
-				handleChange,
-				handleSubmit,
-				values,
-			}) => {
+			{({handleChange, handleSubmit, values}) => {
 				const isSubmitDisabled =
 					values.selectedDay === '' || values.selectedRecipe === ''
 
