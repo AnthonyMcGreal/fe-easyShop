@@ -40,7 +40,7 @@ const AddRecipeToMealPlan = ({route}) => {
 
 	useEffect(() => {
 		getRecipes()
-	},[])
+	}, [])
 
 	useEffect(() => {
 		if (previousPage === 'CreateMealPlan') {
@@ -81,8 +81,8 @@ const AddRecipeToMealPlan = ({route}) => {
 	}
 
 	const removeRecipeFromMealPlan = (day, recipeName) => {
-		const dayIndex = mealPlanDays.indexOf(day) 
-		const mealPlanCopy = ([...mealPlan.recipes])
+		const dayIndex = mealPlanDays.indexOf(day)
+		const mealPlanCopy = [...mealPlan.recipes]
 		const recipesForSelectedDay = mealPlanCopy[dayIndex][day]
 		const removeRecipeFromDay = recipesForSelectedDay.filter(recipe => {
 			return recipe.recipe_name !== recipeName
@@ -91,7 +91,7 @@ const AddRecipeToMealPlan = ({route}) => {
 
 		setMealPlan(prevState => ({
 			...prevState,
-			recipes:mealPlanCopy
+			recipes: mealPlanCopy
 		}))
 
 		setIsRemoveRecipeModalVisible(false)
