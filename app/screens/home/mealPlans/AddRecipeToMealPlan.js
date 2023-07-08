@@ -12,61 +12,98 @@ import useAddRecipe from '../../../hooks/useAddRecipe'
 import SubmitRecipeModal from '../../../Models/SubmitRecipeModal'
 import useGetRecipes from '../../../hooks/useGetRecipes'
 import useDeleteRecipe from '../../../hooks/useDeleteRecipe'
+import AddRecipeToMealPlanModal from '../../../Models/AddRecipeToMealPlanModal'
 
-const PORTION_SIZES = [1, 2, 3, 4, 5, 6, 7, 8]
+const PORTION_SIZES = ['1', '2', '3', '4', '5', '6', '7', '8']
 
 const AddRecipeToMealPlan = ({route}) => {
-
-  const mealPlanName = route.params.mealPlanName
+	const mealPlanName = route.params.mealPlanName
 	const mealPlanLength = route.params.mealPlanLength
 	const mealPlanDays = route.params.mealPlanDays
 	const mealPlanToUpdate = route.params.mealPlan
 	const previousPage = route.params.route
 
 	const [availableRecipes, setAvailableRecipes] = useState([])
-  const [mealPlan, setMealPlan] = useState({})
-  const [daysAvailable, setDaysAvailable] = useState([])
+	const [mealPlan, setMealPlan] = useState({})
+	const [daysAvailable, setDaysAvailable] = useState([])
 	const [selectedRecipe, setSelectedRecipe] = useState('')
 	const [selectedDay, setSelectedDay] = useState('')
 	const [selectedPortionSize, setSelectionPortionSize] = useState('')
+	const [isAddRecipeModalVisible, setIsAddRecipeModalVisible] = useState('')
+	const [isRemoveRecipeModalVisible, setIsRemoveRecipeModalVisible] =
+		useState('')
+	const [isConfirmModalVisible, setIsConfirmModalVisible] = useState('')
 
-  const {hasError, isLoading, recipes, getRecipes} = useGetRecipes()
+	const {hasError, isLoading, recipes, getRecipes} = useGetRecipes()
 
-  let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
+	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
 
-  useEffect(() => {
-    if(previousPage === 'CreateMealPlan') {
-      const daysAvailable = []
-      const mealPlan = {
-        mealPlanName: mealPlanName,
+	useEffect(() => {
+		if (previousPage === 'CreateMealPlan') {
+			const daysAvailable = []
+			const mealPlan = {
+				mealPlanName: mealPlanName,
 				mealPlanLength: mealPlanLength,
 				recipes: []
-      }
-      for (let i = 0; i < mealPlanLength; i++) {
+			}
+			for (let i = 0; i < mealPlanLength; i++) {
 				mealPlan.recipes.push({[mealPlanDays[i]]: []})
 				daysAvailable.push(mealPlanDays[i])
-    }
-    setMealPlan(mealPlan)
-    setDaysAvailable(daysAvailable) 
-    }
+			}
+			setMealPlan(mealPlan)
+			setDaysAvailable(daysAvailable)
+		}
 
-    getRecipes()
-    const recipeNames = recipes.map(recipe => {
-      return recipe.recipe_name
-    })
-    setAvailableRecipes(recipeNames)
-    },[])
+		getRecipes()
+		const recipeNames = recipes.map(recipe => {
+			return recipe.recipe_name
+		})
+		setAvailableRecipes(recipeNames)
+	}, [])
 
-  const displayAddRecipeModal = () => {setIsAddRecipeModalModal(true)}  
-  const displayRemoveRecipeModal = () => {setIsRemoveRecipeModalVisible(true)}
-  const onPressCompleteMealPlan = () => {setIsConfirmModalVisible(true)}
+	const displayAddRecipeModal = () => {
+		setIsAddRecipeModalVisible(true)
+	}
+	const displayRemoveRecipeModal = () => {
+		setIsRemoveRecipeModalVisible(true)
+	}
+	const onPressCompleteMealPlan = () => {
+		setIsConfirmModalVisible(true)
+	}
 
-  return (
-    <ScreenBase>
-      <Text style={styles.title}>{mealPlanName}</Text>
+	const addRecipeToMealPlan = (name, portionSize, day) => {
+		const dayIndex = mealPlanDays.indexOf(day)
+		const recipe = {
+			recipe_name: name,
+			portions: portionSize
+		}
+
+		mealPlan.recipes[dayIndex][day].push(recipe)
+		setIsAddRecipeModalVisible(false)
+	}
+
+	if (isAddRecipeModalVisible)
+		return (
+			<AddRecipeToMealPlanModal
+				isModalOpen={isAddRecipeModalVisible}
+				setIsModalOpen={setIsAddRecipeModalVisible}
+				addRecipeToMealPlan={addRecipeToMealPlan}
+				recipes={availableRecipes}
+				days={daysAvailable}
+				portionSizes={PORTION_SIZES}
+			/>
+		)
+
+	if (isRemoveRecipeModalVisible) return console.log('remove modal is open')
+
+	if (isConfirmModalVisible) return console.log('confirm modal is open')
+
+	return (
+		<ScreenBase>
+			<Text style={styles.title}>{mealPlanName}</Text>
 			<Spacer spaceRequired={7} />
-      <View style={styles.flatListContainer}>
-      <FlatList
+			<View style={styles.flatListContainer}>
+				<FlatList
 					data={mealPlan.recipes}
 					renderItem={({item}) => (
 						<View>
@@ -91,21 +128,21 @@ const AddRecipeToMealPlan = ({route}) => {
 					)}
 					keyExtractor={(item, index) => index.toString()}
 				></FlatList>
-      </View>
+			</View>
 			<Spacer spaceRequired={7} />
-      <View style={styles.buttonContainer}>
+			<View style={styles.buttonContainer}>
 				<RoundButton onPress={displayAddRecipeModal} buttonText={'+'} />
 				<RoundButton onPress={displayRemoveRecipeModal} buttonText={'-'} />
 			</View>
-      <Spacer spaceRequired={7} />
-      <Button
+			<Spacer spaceRequired={7} />
+			<Button
 				onPress={onPressCompleteMealPlan}
 				buttonText={'Confirm meal plam'}
 				disabled={false}
 			/>
 			<Spacer spaceRequired={7} />
-    </ScreenBase>
-  )
+		</ScreenBase>
+	)
 }
 
 const styles = StyleSheet.create({
@@ -114,12 +151,12 @@ const styles = StyleSheet.create({
 		height: 400,
 		flex: 1
 	},
-  title: {
+	title: {
 		fontSize: 30,
 		textAlign: 'center',
 		marginBottom: 10
 	},
-  flatList: {
+	flatList: {
 		overflow: 'scroll'
 	},
 	buttonContainer: {
@@ -128,7 +165,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		width: '70%'
 	},
-  subTitle: {
+	subTitle: {
 		textDecorationLine: 'underline'
 	}
 })
