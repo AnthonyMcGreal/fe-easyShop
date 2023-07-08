@@ -13,6 +13,7 @@ import SubmitRecipeModal from '../../../Models/SubmitRecipeModal'
 import useGetRecipes from '../../../hooks/useGetRecipes'
 import useDeleteRecipe from '../../../hooks/useDeleteRecipe'
 import AddRecipeToMealPlanModal from '../../../Models/AddRecipeToMealPlanModal'
+import RemoveRecipeFromMealPlan from '../../../Models/RemoveRecipeFromMealPlanModal'
 
 const PORTION_SIZES = ['1', '2', '3', '4', '5', '6', '7', '8']
 
@@ -35,8 +36,11 @@ const AddRecipeToMealPlan = ({route}) => {
 	const [isConfirmModalVisible, setIsConfirmModalVisible] = useState('')
 
 	const {hasError, isLoading, recipes, getRecipes} = useGetRecipes()
+	const recipeNames = recipes ? recipes.map(recipe => recipe.recipe_name) : []
 
-	let dayIndex = mealPlanDays.indexOf(selectedDay) || 0
+	useEffect(() => {
+		getRecipes()
+	},[])
 
 	useEffect(() => {
 		if (previousPage === 'CreateMealPlan') {
@@ -53,12 +57,6 @@ const AddRecipeToMealPlan = ({route}) => {
 			setMealPlan(mealPlan)
 			setDaysAvailable(daysAvailable)
 		}
-
-		getRecipes()
-		const recipeNames = recipes.map(recipe => {
-			return recipe.recipe_name
-		})
-		setAvailableRecipes(recipeNames)
 	}, [])
 
 	const displayAddRecipeModal = () => {
@@ -82,19 +80,48 @@ const AddRecipeToMealPlan = ({route}) => {
 		setIsAddRecipeModalVisible(false)
 	}
 
+	const removeRecipeFromMealPlan = (day, recipeName) => {
+		const mealPlanCopy = ([...mealPlan.recipes])
+		const getCorrectDay = mealPlanCopy.filter(recipe => {
+			return Object.keys(recipe)[0] === day
+		})[0][day]
+		const removeRecipeFromDay = getCorrectDay.filter(recipe => {
+			return recipe.recipe_name !== recipeName
+		})
+		const recipesWithReplacedDay = mealPlanCopy.map(recipe => {
+		return Object.keys(recipe)[0] === day ? {[day]:removeRecipeFromDay} : recipe
+		})
+
+		setMealPlan(prevState => ({
+			...prevState,
+			recipes:recipesWithReplacedDay
+		}))
+
+		setIsRemoveRecipeModalVisible(false)
+	}
+
 	if (isAddRecipeModalVisible)
 		return (
 			<AddRecipeToMealPlanModal
 				isModalOpen={isAddRecipeModalVisible}
 				setIsModalOpen={setIsAddRecipeModalVisible}
 				addRecipeToMealPlan={addRecipeToMealPlan}
-				recipes={availableRecipes}
+				recipes={recipeNames}
 				days={daysAvailable}
 				portionSizes={PORTION_SIZES}
 			/>
 		)
 
-	if (isRemoveRecipeModalVisible) return console.log('remove modal is open')
+	if (isRemoveRecipeModalVisible)
+		return (
+			<RemoveRecipeFromMealPlan
+				isModalOpen={isRemoveRecipeModalVisible}
+				setIsModalOpen={setIsRemoveRecipeModalVisible}
+				removeRecipeFromMealPlan={removeRecipeFromMealPlan}
+				mealPlan={mealPlan}
+				daysAvailable={daysAvailable}
+			/>
+		)
 
 	if (isConfirmModalVisible) return console.log('confirm modal is open')
 
